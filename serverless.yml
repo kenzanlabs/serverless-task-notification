@@ -1,0 +1,54 @@
+#serverless project yaml
+
+service: serverless-messenger
+frameworkVersion: ">=1.30.0"
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  memorySize: 512
+
+functions:
+  getContacts:
+    handler: handlers/contacts.get
+    events:
+      - http:
+          path: contacts
+          method: get
+          cors: true
+  sendMessage:
+    handler: handlers/messages.send
+    events:
+      - http:
+          path: message
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    contactsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: contacts
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    messagesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: messages
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
