@@ -1,5 +1,3 @@
 # serverless-task-notification
 
-![CodeBuild badge](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiaEo4SUhnc1ltL1NBSU1CSUExeVFKNlFGaHhpZ2l1Q2VYL0M5eTBTREtjYlRseGxOZDdkMnZja3RKa0RtR2V6WHJjWXVTWVRNS2kwZ3FSM2l6NmRUV0ZnPSIsIml2UGFyYW1ldGVyU3BlYyI6IjgvWmFYVzZXdFdhOFFJVXEiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
-
 Serverless Task Notification

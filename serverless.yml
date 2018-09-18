@@ -27,6 +27,13 @@ functions:
           path: tasks
           method: post
           cors: true
+  deleteTask:
+    handler: api/deleteTask.delete
+    events:
+      - http:
+          path: tasks
+          method: post
+          cors: true
   processTask:
     handler: api/processTask.process
     events:
