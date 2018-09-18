@@ -30,7 +30,7 @@ functions:
           path: tasks
           method: post
   deleteTask:
-    handler: api/deleteTask.deleteTask
+    handler: api/deleteTask.delete
     events:
       - http:
           path: tasks

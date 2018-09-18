@@ -1,5 +1,5 @@
 "use strict";
 
-import { DynamoDB } from "aws-sdk";
+const aws = require("aws-sdk");
 
-export function get(event, context, callback) {}
+module.exports.get = (event, context, callback) => {};
