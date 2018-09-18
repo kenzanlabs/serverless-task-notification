@@ -1,0 +1,22 @@
+{
+  "name": "serverless-task-notification",
+  "version": "1.0.0",
+  "description": "serverless framework task notification app",
+  "dependencies": {
+    "aws-sdk": "^2.316.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenzanlabs/serverless-task-notification.git"
+  },
+  "author": "Kenzan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kenzanlabs/serverless-task-notification/issues"
+  },
+  "homepage": "https://github.com/kenzanlabs/serverless-task-notification#readme"
+}

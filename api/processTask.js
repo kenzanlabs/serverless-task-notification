@@ -1,2 +1,5 @@
 "use strict";
-module.exports.process = {};
+
+import { DynamoDB } from "aws-sdk";
+
+export function process(event, context, callback) {}

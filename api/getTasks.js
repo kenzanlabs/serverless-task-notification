@@ -1,2 +1,5 @@
 "use strict";
-module.exports.get = {};
+
+import { DynamoDB } from "aws-sdk";
+
+export function get(event, context, callback) {}
