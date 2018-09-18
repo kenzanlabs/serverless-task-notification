@@ -7,21 +7,28 @@ provider:
 
 functions:
   getUsers:
-    handler: handlers/users.get
+    handler: lambdas/users.get
     events:
       - http:
-          path: api/users
+          path: users
+          method: get
+          cors: true
+  getTasks:
+    handler: lambdas/tasks.get
+    events:
+      - http:
+          path: tasks
           method: get
           cors: true
   createTask:
-    handler: handlers/tasks.create
+    handler: lambdas/tasks.create
     events:
       - http:
-          path: api/tasks
+          path: tasks
           method: post
           cors: true
   processTask:
-    handler: handlers/tasks.process
+    handler: lambdas/tasks.process
     events:
       - sns: taskCreated
 
@@ -57,6 +64,10 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: task-notification-ui
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
         CorsConfiguration:
           CorsRules:
             - AllowedHeaders:
