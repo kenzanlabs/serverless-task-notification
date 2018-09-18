@@ -7,28 +7,28 @@ provider:
 
 functions:
   getUsers:
-    handler: lambdas/users.get
+    handler: lambdas/getUsers.get
     events:
       - http:
           path: users
           method: get
           cors: true
   getTasks:
-    handler: lambdas/tasks.get
+    handler: lambdas/getTasks.get
     events:
       - http:
           path: tasks
           method: get
           cors: true
   createTask:
-    handler: lambdas/tasks.create
+    handler: lambdas/createTask.create
     events:
       - http:
           path: tasks
           method: post
           cors: true
   processTask:
-    handler: lambdas/tasks.process
+    handler: lambdas/processTask.process
     events:
       - sns: taskCreated
 
