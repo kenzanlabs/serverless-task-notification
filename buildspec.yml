@@ -11,5 +11,7 @@ phases:
       - echo "build FE static assets"
   post_build:
     commands:
+      - export AWS_ACCESS_KEY_ID=AKIAQ5VWXCYXNTAPZUPF
+      - export AWS_SECRET_ACCESS_KEY=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
       - serverless deploy -v
   
