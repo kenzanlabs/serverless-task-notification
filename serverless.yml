@@ -10,14 +10,14 @@ functions:
     handler: handlers/users.get
     events:
       - http:
-          path: users
+          path: api/users
           method: get
           cors: true
   createTask:
     handler: handlers/tasks.create
     events:
       - http:
-          path: tasks
+          path: api/tasks
           method: post
           cors: true
   processTask:
@@ -53,3 +53,17 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    uiBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: task-notification-ui
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - GET
+              AllowedOrigins:
+                - "*"
+
+# iot stuff needed
