@@ -1,35 +1,36 @@
-#serverless project yaml
-
-service: serverless-messenger
-frameworkVersion: ">=1.30.0"
+service: serverless-task-notification
 
 provider:
   name: aws
   runtime: nodejs8.10
-  memorySize: 512
+  memorySize: 256
 
 functions:
-  getContacts:
-    handler: handlers/contacts.get
+  getUsers:
+    handler: handlers/users.get
     events:
       - http:
-          path: contacts
+          path: users
           method: get
           cors: true
-  sendMessage:
-    handler: handlers/messages.send
+  createTask:
+    handler: handlers/tasks.create
     events:
       - http:
-          path: message
+          path: tasks
           method: post
           cors: true
+  processTask:
+    handler: handlers/tasks.process
+    events:
+      - sns: taskCreated
 
 resources:
   Resources:
-    contactsTable:
+    usersTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: contacts
+        TableName: users
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
@@ -39,10 +40,10 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-    messagesTable:
+    tasksTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: messages
+        TableName: tasks
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
