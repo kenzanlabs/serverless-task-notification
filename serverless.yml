@@ -32,7 +32,7 @@ functions:
     events:
       - http:
           path: tasks
-          method: post
+          method: delete
           cors: true
   processTask:
     handler: api/processTask.process
