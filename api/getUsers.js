@@ -3,7 +3,7 @@
 const aws = require("aws-sdk");
 
 module.exports.get = (event, context, callback) => {
-  let dynamo = new DynamoDB.DocumentClient();
+  let dynamo = new aws.DynamoDB.DocumentClient();
   dynamo.scan({ TableName: "users" }, (err, result) => {
     if (err) {
       console.log(err);

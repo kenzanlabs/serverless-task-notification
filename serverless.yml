@@ -1,4 +1,6 @@
 service: serverless-task-notification
+app: app
+tenant: serverlesstasknotification
 
 provider:
   name: aws
@@ -8,7 +10,11 @@ provider:
     - Effect: Allow
       Action:
         - dynamodb:Scan
-      Resource: "arn:aws:dynamodb:us-east-1:884956725745:table/users"
+        - dynamodb:PutItem
+        - dynamodb:DeleteItem
+      Resource:
+        - "arn:aws:dynamodb:us-east-1:884956725745:table/users"
+        - "arn:aws:dynamodb:us-east-1:884956725745:table/tasks"
 
 functions:
   getUsers:
