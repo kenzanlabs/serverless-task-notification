@@ -29,6 +29,12 @@ functions:
       - http:
           path: tasks
           method: post
+  deleteTask:
+    handler: api/deleteTask.delete
+    events:
+      - http:
+          path: tasks
+          method: delete
   processTask:
     handler: api/processTask.process
     events:
@@ -79,5 +85,3 @@ resources:
                 - GET
               AllowedOrigins:
                 - "*"
-
-# iot stuff needed
