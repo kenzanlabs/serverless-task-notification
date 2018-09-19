@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "serverless framework api",
   "scripts": {
-    "test": "echo HELLO TESTS"
+    "test": "echo PASS"
   },
   "repository": {
     "type": "git",

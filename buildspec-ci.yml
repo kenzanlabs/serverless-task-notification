@@ -5,5 +5,4 @@ phases:
       - npm install && cd app && npm install && cd ..
   build:
     commands:
-      - cd api && npm test && cd ..
-      - cd app && npm test && cd ..
+      - npm test

@@ -2,12 +2,10 @@ version: 0.2
 phases:
   install:
     commands:
-      - npm install -g serverless
-      - npm install
-      - cd app && npm install && cd ..
+      - npm install -g serverless && npm install
   build:
     commands:
       - serverless deploy -v
   post_build:
     commands:
-      - node api/users/populate.js
+      - node api/users/populateUsers.js

@@ -4,7 +4,8 @@ const AWS = require("aws-sdk");
 AWS.config.update({ region: "us-east-1" });
 const dynamoClient = new AWS.DynamoDB.DocumentClient();
 
-function populate() {
+populateUsers();
+function populateUsers() {
   console.log("populating users table...");
   dynamoClient.batchWrite(
     {
@@ -50,4 +51,3 @@ function populate() {
   );
   console.log("table populated");
 }
-populate();
