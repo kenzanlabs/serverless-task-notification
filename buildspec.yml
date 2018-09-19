@@ -3,6 +3,10 @@ phases:
   install:
     commands:
       - npm install -g serverless
+      - export BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
   build:
     commands:
-      - serverless deploy -v
+      - if [[ $BRANCH = "master" ]]; then serverless deploy -v; fi
+  post_build:
+    commands:
+      - if [[ $BRANCH = "master" ]]; then node api/users/populate.js; fi
