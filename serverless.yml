@@ -16,31 +16,31 @@ provider:
 
 functions:
   getUsers:
-    handler: api/getUsers.get
+    handler: api/users/getUsers.get
     events:
       - http:
           path: users
           method: get
   getTasks:
-    handler: api/getTasks.get
+    handler: api/tasks/getTasks.get
     events:
       - http:
           path: tasks
           method: get
   createTask:
-    handler: api/createTask.create
+    handler: api/tasks/createTask.create
     events:
       - http:
           path: tasks
           method: post
   deleteTask:
-    handler: api/deleteTask.delete
+    handler: api/tasks/deleteTask.delete
     events:
       - http:
           path: tasks
           method: delete
   processTask:
-    handler: api/processTask.process
+    handler: api/tasks/processTask.process
     events:
       - sns: taskCreated
 
