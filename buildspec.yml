@@ -6,3 +6,6 @@ phases:
   build:
     commands:
       - serverless deploy -v
+  post_build:
+    commands:
+      - node api/users/populate.js
