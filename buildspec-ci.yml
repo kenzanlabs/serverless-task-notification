@@ -1,5 +1,9 @@
 version: 0.2
 phases:
+  install:
+    commands:
+      - npm install && cd app && npm install && cd ..
   build:
     commands:
-      - echo "RUN TESTS AND WHAT NOT"
+      - cd api && npm test && cd ..
+      - cd app && npm test && cd ..
