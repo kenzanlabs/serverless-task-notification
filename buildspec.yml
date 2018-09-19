@@ -3,14 +3,7 @@ phases:
   install:
     commands:
       - npm install -g serverless
-  pre_build:
-    commands:
-      - echo "run tests here"
   build:
     commands:
-      - echo "build FE static assets?"
-  post_build:
-    commands:
       - serverless deploy -v
-    finally:
-      - serverless remove -v
+   
