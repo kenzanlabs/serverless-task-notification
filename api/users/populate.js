@@ -1,12 +1,9 @@
 "use strict";
 
-const AWS = require("aws-sdk");
-AWS.config.update({ region: "us-east-1" });
-
-populate(AWS);
-
-function populate(AWS) {
-  console.log("Populating Users table...");
+function populate() {
+  console.log("populating users table...");
+  let AWS = require("aws-sdk");
+  AWS.config.update({ region: "us-east-1" });
   let dynamoClient = new AWS.DynamoDB.DocumentClient();
   dynamoClient.batchWrite(
     {
@@ -46,7 +43,10 @@ function populate(AWS) {
     err => {
       if (err) {
         console.log(err);
+        return;
       }
     }
   );
+  console.log("table populated");
 }
+populate();
