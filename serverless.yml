@@ -4,6 +4,15 @@ provider:
   name: aws
   runtime: nodejs8.10
   memorySize: 256
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Scan
+        - dynamodb:PutItem
+        - dynamodb:DeleteItem
+      Resource:
+        - "arn:aws:dynamodb:us-east-1:884956725745:table/users"
+        - "arn:aws:dynamodb:us-east-1:884956725745:table/tasks"
 
 functions:
   getUsers:
@@ -12,28 +21,24 @@ functions:
       - http:
           path: users
           method: get
-          cors: true
   getTasks:
     handler: api/getTasks.get
     events:
       - http:
           path: tasks
           method: get
-          cors: true
   createTask:
     handler: api/createTask.create
     events:
       - http:
           path: tasks
           method: post
-          cors: true
   deleteTask:
     handler: api/deleteTask.delete
     events:
       - http:
           path: tasks
           method: delete
-          cors: true
   processTask:
     handler: api/processTask.process
     events:
@@ -67,6 +72,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+
     uiBucket:
       Type: AWS::S3::Bucket
       Properties:
@@ -83,5 +89,3 @@ resources:
                 - GET
               AllowedOrigins:
                 - "*"
-
-# iot stuff needed

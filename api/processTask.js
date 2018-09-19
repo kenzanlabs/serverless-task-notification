@@ -1,2 +1,7 @@
 "use strict";
-module.exports.process = {};
+
+const aws = require("aws-sdk");
+
+module.exports.process = (event, context, callback) => {
+  let dynamo = new aws.DynamoDB.DocumentClient();
+};
