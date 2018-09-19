@@ -1,7 +1,0 @@
-npm install -g recursive-install
-npm install -g serverless
-npm install -g mocha 
-
-npm-recursive-install
-
-
