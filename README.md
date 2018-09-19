@@ -6,6 +6,7 @@ assuming you have the appropriate aws key and secret set:
 
 install dependencies
 ```
+npm install -g serverless
 npm install
 ```
 
