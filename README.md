@@ -5,17 +5,20 @@
 assuming you have the appropriate aws key and secret set:
 
 install dependencies
-```
+
+```bash
 npm install -g serverless
 npm install
 ```
 
 deploy api
-```
+
+```bash
 serverless deploy -v
 ```
 
 teardown api
-```
+
+```bash
 serverless remove -v
 ```
