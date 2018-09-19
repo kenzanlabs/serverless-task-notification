@@ -15,7 +15,7 @@ deploy api and populate users table
 
 ```bash
 serverless deploy -v
-node api/users/populate.js
+node api/users/populateUsers.js
 ```
 
 teardown api
