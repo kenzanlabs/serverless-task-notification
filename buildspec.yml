@@ -5,12 +5,11 @@ phases:
       - npm install -g serverless
   pre_build:
     commands:
-      - echo "run tests here"
+      - cd app && npm test
   build:
     commands:
-      - echo "build FE static assets?"
+      - cd app && npm run build
   post_build:
     commands:
       - serverless deploy -v
-    finally:
-      - serverless remove -v
+   
