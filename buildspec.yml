@@ -6,4 +6,3 @@ phases:
   build:
     commands:
       - serverless deploy -v
-   
