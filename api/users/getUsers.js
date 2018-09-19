@@ -1,7 +1,7 @@
 "use strict";
 
-const aws = require("aws-sdk");
-const dynamoClient = new aws.DynamoDB.DocumentClient();
+const AWS = require("aws-sdk");
+const dynamoClient = new AWS.DynamoDB.DocumentClient();
 
 module.exports.get = (event, context, callback) => {
   dynamoClient.scan({ TableName: "users" }, (err, result) => {
