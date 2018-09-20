@@ -1,3 +1,4 @@
+sleep 3
 node ./api/users/populateUsers.js
 #aws s3 sync ./app/build s3://serverless-task-notification-app
 
