@@ -1,5 +1,4 @@
-npm install -g serverless
 npm install
-cd app
+cd app 
 npm install
 cd ..
