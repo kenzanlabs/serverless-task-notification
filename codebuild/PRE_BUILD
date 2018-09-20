@@ -1,7 +1,1 @@
-echo $CODEBUILD_GIT_BRANCH
-#npm test && export TEST_RESULTS=true
-#if [ "$TEST_RESULTS" = "true" ]; then
-#    export TEST_RESULTS=false;
-#    cd app && npm test && export TEST_RESULTS=true;
-#    cd ..;
-#fi
+echo TESTS HERE
