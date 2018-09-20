@@ -1,3 +1,2 @@
-npm install -g serverless mocha
+npm install -g serverless mocha nyc
 npm install
-cd app && npm install && cd ..
