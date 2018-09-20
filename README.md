@@ -7,8 +7,7 @@ assuming you have the appropriate AWS access key and secret key set:
 install dependencies
 
 ```bash
-npm install -g serverless
-npm install
+bash codebuild/INSTALL
 ```
 
 deploy api and populate users table
