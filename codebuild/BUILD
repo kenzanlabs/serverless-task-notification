@@ -5,5 +5,5 @@ if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
 fi
                  
 if [ "$CODEBUILD_GIT_BRANCH" = "master" ] ; then
-  serverless deploy -v
+  serverless deploy
 fi
