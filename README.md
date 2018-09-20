@@ -7,18 +7,17 @@ assuming you have the appropriate AWS access key and secret key set:
 install dependencies
 
 ```bash
-bash codebuild/INSTALL
+npm install -g serverless && npm install
 ```
 
 deploy api and populate users table
 
 ```bash
-serverless deploy -v
-node api/users/populateUsers.js
+serverless deploy && node api/users/populateUsers.js
 ```
 
 teardown api
 
 ```bash
-serverless remove -v
+serverless remove
 ```
