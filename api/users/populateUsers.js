@@ -46,8 +46,8 @@ function populateUsers() {
       if (err) {
         console.log(err);
         return;
+      } else {
+        console.log("table populated");
       }
-    }
-  );
-  console.log("table populated");
+    });
 }
