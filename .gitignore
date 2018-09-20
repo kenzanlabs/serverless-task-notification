@@ -1,4 +1,6 @@
+app/build/
 app/build
+
 # Created by https://www.gitignore.io/api/node,linux,macos,windows,serverless
 
 ### Linux ###
