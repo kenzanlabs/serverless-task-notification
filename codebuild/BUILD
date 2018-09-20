@@ -1,3 +1,4 @@
 if [ "$TEST_RESULTS" = "true" ]; then
-    serverless deploy;
+    echo "deploying";
+    serverless deploy -v;
 fi
