@@ -1,8 +1,0 @@
-version: 0.2
-phases:
-  install:
-    commands:
-      - npm install && cd app && npm install && cd ..
-  build:
-    commands:
-      - npm test

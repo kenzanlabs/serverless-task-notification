@@ -1,0 +1,14 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - bash codebuild/INSTALL
+  pre_build:
+    commands:
+      - bash codebuild/PRE_BUILD
+  build:
+    commands:
+      - bash codebuild/BUILD
+  post_build:
+    commands:
+      - bash codebuild/POST_BUILD
