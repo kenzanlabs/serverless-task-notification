@@ -10,7 +10,7 @@ module.exports.get = (event, context, callback) => {
       callback(null, {
         statusCode: err.statusCode || 500,
         headers: { "Content-Type": "application/json" },
-        body: { message: "error getting users" }
+        body: { message: "error getting tasks" }
       });
       return;
     }
