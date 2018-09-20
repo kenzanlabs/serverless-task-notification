@@ -6,4 +6,7 @@ fi
                  
 if [ "$CODEBUILD_GIT_BRANCH" = "master" ] ; then
   serverless deploy
+  cd app
+  npm run build
+  cd ..
 fi
