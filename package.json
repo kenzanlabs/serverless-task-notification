@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "serverless framework api",
   "scripts": {
-    "test": "nyc --reporter=text-summary mocha"
+    "test": "npm install -g mocha nyc && nyc --reporter=text-summary mocha"
   },
   "repository": {
     "type": "git",
