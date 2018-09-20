@@ -73,10 +73,10 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
-    uiBucket:
+    appBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: task-notification-ui
+        BucketName: serverless-task-notification-app
         AccessControl: PublicRead
         WebsiteConfiguration:
           IndexDocument: index.html
