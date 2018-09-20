@@ -1,4 +1,4 @@
-import CssBaseline from '@material-ui/core/es/CssBaseline'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import { SFC } from 'react'
 import * as React from 'react'
 import { createGlobalStyle } from 'styled-components'

@@ -1,4 +1,4 @@
-import TextField, { TextFieldProps } from '@material-ui/core/es/TextField'
+import TextField, { TextFieldProps } from '@material-ui/core/TextField'
 import * as React from 'react'
 import { SFC } from 'react'
 
