@@ -5,7 +5,7 @@ class App extends React.Component {
   public render() {
     return (
       <>
-        <GlobalStyles/>
+        <GlobalStyles />
         <h1>Nothing to see here</h1>
       </>
     )
