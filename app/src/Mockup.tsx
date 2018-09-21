@@ -7,7 +7,12 @@ import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import Paper from '@material-ui/core/Paper/Paper'
-import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles'
+import {
+  createStyles,
+  Theme,
+  WithStyles,
+  withStyles,
+} from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField/TextField'
 import * as React from 'react'
 import { SFC } from 'react'
