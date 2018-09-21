@@ -44,7 +44,7 @@ module.exports.create = (event, context, callback) => {
     snsClient.publish(
       {
         TopicArn: topicArn,
-        Message: concat(item.id)
+        Message: item.id
       },
       (err, data) => {
         if (err) console.log(err);

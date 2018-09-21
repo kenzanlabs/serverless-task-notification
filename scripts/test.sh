@@ -1,4 +1,4 @@
-npm test 
-cd app 
-npm test
-cd ..
+npm test -s
+# cd app 
+# npm test
+# cd ..
