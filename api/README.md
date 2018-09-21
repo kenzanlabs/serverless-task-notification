@@ -10,7 +10,7 @@ fire up the API from the root directory:
 npm install -g serverless
 npm install
 serverless deploy -v
-node api/users/populateUsers.js
+node api/test/populateUsers.js
 ```
 
 if you ever need to teardown the API:

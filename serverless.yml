@@ -3,16 +3,15 @@ service: serverless-task-notification
 provider:
   name: aws
   runtime: nodejs8.10
+  region: us-east-1
   memorySize: 256
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dynamodb:Scan
-        - dynamodb:PutItem
-        - dynamodb:DeleteItem
-      Resource:
-        - "arn:aws:dynamodb:us-east-1:884956725745:table/users"
-        - "arn:aws:dynamodb:us-east-1:884956725745:table/tasks"
+        - dynamodb:*
+        - s3:*
+        - sns:*
+      Resource: "*"
 
 functions:
   getUsers:
@@ -37,12 +36,12 @@ functions:
     handler: api/tasks/deleteTask.delete
     events:
       - http:
-          path: tasks
+          path: tasks/{id}
           method: delete
   processTask:
     handler: api/tasks/processTask.process
     events:
-      - sns: taskCreated
+      - sns: newTask
 
 resources:
   Resources:
@@ -72,20 +71,28 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-
-    appBucket:
-      Type: AWS::S3::Bucket
+    resultsTable:
+      Type: AWS::DynamoDB::Table
       Properties:
-        BucketName: serverless-task-notification-app
-        AccessControl: PublicRead
-        WebsiteConfiguration:
-          IndexDocument: index.html
-          ErrorDocument: index.html
-        CorsConfiguration:
-          CorsRules:
-            - AllowedHeaders:
-                - "*"
-              AllowedMethods:
-                - GET
-              AllowedOrigins:
-                - "*"
+        TableName: results
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    sendMessage:
+      Type: AWS::SNS::Topic
+
+plugins:
+  - serverless-finch
+
+custom:
+  client:
+    bucketName: serverless-task-notification-app
+    distributionFolder: app/build
+    indexDocument: index.html
