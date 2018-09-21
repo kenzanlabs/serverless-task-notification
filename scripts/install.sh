@@ -1,4 +1,5 @@
-npm install -s --no-color
+export NO_COLOR=true
+npm install -s
 cd app 
-npm install -s --no-color
+npm install -s
 cd ..
