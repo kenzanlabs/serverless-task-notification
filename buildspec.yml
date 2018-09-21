@@ -2,10 +2,14 @@ version: 0.2
 phases:
   install:
     commands:
-      - npm install && cd app && npm install && cd ..
+      - npm install
+      - cd app
+      - npm install
+      - cd ..
   pre_build:
     commands:
-      - bash codebuild/pre_build.sh
+      - npm install -g mocha nyc
+      - npm test # && cd app && npm test; cd ..
   build:
     commands:
       - bash codebuild/build.sh
