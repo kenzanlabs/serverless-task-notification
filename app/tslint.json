@@ -2,7 +2,10 @@
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "defaultSeverity": "warning",
   "rules": {
-    "interface-name": false
+    "curly": false,
+    "interface-name": false,
+    "object-literal-sort-keys": false,
+    "member-access": false
   },
   "linterOptions": {
     "exclude": [

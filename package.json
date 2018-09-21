@@ -27,7 +27,6 @@
   "devDependencies": {
     "lambda-tester": "^3.5.0",
     "mocha": "^5.2.0",
-    "nyc": "^13.0.1",
-    "serverless-domain-manager": "^2.6.5"
+    "nyc": "^13.0.1"
   }
 }
