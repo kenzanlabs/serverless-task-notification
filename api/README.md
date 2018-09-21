@@ -16,5 +16,5 @@ node api/test/populateUsers.js
 if you ever need to teardown the API:
 
 ```bash
-serverless remove -v
+serverless remove -v && serverless client remove
 ```

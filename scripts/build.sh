@@ -5,10 +5,10 @@ if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
 fi
 
 if [ "$CODEBUILD_GIT_BRANCH" = "master" ] ; then
-  npm install -g serverless
+  npm install -g serverless -s
   serverless deploy
   cd app
-  npm run build
+  npm run build -s
   cd ..
   serverless client deploy --no-confirm
 fi
