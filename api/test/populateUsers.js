@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 "use strict";
 
 const AWS = require("aws-sdk");
@@ -6,7 +7,6 @@ const dynamoClient = new AWS.DynamoDB.DocumentClient();
 
 populateUsers();
 function populateUsers() {
-  console.log("populating users table...");
   dynamoClient.batchWrite(
     {
       RequestItems: {
@@ -45,9 +45,6 @@ function populateUsers() {
     err => {
       if (err) {
         console.log(err);
-        return;
-      } else {
-        console.log("table populated");
       }
     }
   );

@@ -5,7 +5,6 @@ if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
 fi
 
 if [ "$CODEBUILD_GIT_BRANCH" = "master" ] ; then
-  node ./api/users/populateUsers.js
-  aws s3 rm s3://serverless-task-notification-app --recursive
-  aws s3 cp ./app/build s3://serverless-task-notification-app --recursive
+  node ./api/test/populateUsers.js
+  aws s3 sync ./app/build s3://serverless-task-notification-app --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 fi

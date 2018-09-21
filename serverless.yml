@@ -41,7 +41,7 @@ functions:
   processTask:
     handler: api/tasks/processTask.process
     events:
-      - sns: taskCreated
+      - sns: taskEvents
 
 resources:
   Resources:
@@ -62,6 +62,19 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: tasks
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    resultsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: results
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
