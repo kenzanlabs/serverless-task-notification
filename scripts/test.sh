@@ -1,4 +1,4 @@
-npm test -s
+npm test -s --no-color
 # cd app 
 # npm test
 # cd ..

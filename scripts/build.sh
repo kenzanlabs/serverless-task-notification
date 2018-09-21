@@ -8,7 +8,7 @@ if [ "$CODEBUILD_GIT_BRANCH" = "master" ] ; then
   npm install -g serverless -s
   serverless deploy
   cd app
-  npm run build -s
+  npm run build -s --no-color
   cd ..
   serverless client deploy --no-confirm
 fi
