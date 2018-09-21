@@ -8,7 +8,6 @@ phases:
       - cd ..
   pre_build:
     commands:
-      - npm install -g mocha nyc
       - npm test # && cd app && npm test; cd ..
   build:
     commands:

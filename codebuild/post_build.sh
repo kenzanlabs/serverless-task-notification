@@ -6,5 +6,4 @@ fi
 
 if [ "$CODEBUILD_GIT_BRANCH" = "master" ] ; then
   node ./api/test/populateUsers.js
-  aws s3 sync ./app/build s3://serverless-task-notification-app --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 fi

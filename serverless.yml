@@ -41,7 +41,7 @@ functions:
   processTask:
     handler: api/tasks/processTask.process
     events:
-      - sns: taskEvents
+      - sns: newTask
 
 resources:
   Resources:
@@ -85,19 +85,14 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
-    appBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: serverless-task-notification-app
-        AccessControl: PublicRead
-        WebsiteConfiguration:
-          IndexDocument: index.html
-          ErrorDocument: index.html
-        CorsConfiguration:
-          CorsRules:
-            - AllowedHeaders:
-                - "*"
-              AllowedMethods:
-                - GET
-              AllowedOrigins:
-                - "*"
+    sendMessage:
+      Type: AWS::SNS::Topic
+
+plugins:
+  - serverless-finch
+
+custom:
+  client:
+    bucketName: serverless-task-notification-app
+    distributionFolder: app/build
+    indexDocument: index.html
