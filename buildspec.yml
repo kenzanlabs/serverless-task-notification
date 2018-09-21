@@ -2,16 +2,13 @@ version: 0.2
 phases:
   install:
     commands:
-      - npm install
-      - cd app
-      - npm install
-      - cd ..
+      - bash scripts/install.sh
   pre_build:
     commands:
-      - npm test # && cd app && npm test; cd ..
+      - bash scripts/test.sh
   build:
     commands:
-      - bash codebuild/build.sh
+      - bash scripts/build.sh
   post_build:
     commands:
-      - bash codebuild/post_build.sh
+      - bash scripts/post_build.sh
