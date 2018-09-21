@@ -3,6 +3,9 @@
 const AWS = require("aws-sdk");
 AWS.config.update({ region: "us-east-1" });
 const dynamoClient = new AWS.DynamoDB.DocumentClient();
+const snsClient = new AWS.SNS();
+
+const topicArn = "arn:aws:sns:us-east-1:884956725745:newTask";
 
 module.exports.create = (event, context, callback) => {
   let tablename = event.tablename;
@@ -37,6 +40,16 @@ module.exports.create = (event, context, callback) => {
       callback(null, error);
       return;
     }
+
+    snsClient.publish(
+      {
+        TopicArn: topicArn,
+        Message: concat(item.id)
+      },
+      (err, data) => {
+        if (err) console.log(err);
+      }
+    );
 
     callback(null, {
       statusCode: 200,

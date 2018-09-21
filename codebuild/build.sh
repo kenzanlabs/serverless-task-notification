@@ -10,4 +10,5 @@ if [ "$CODEBUILD_GIT_BRANCH" = "master" ] ; then
   cd app
   npm run build
   cd ..
+  serverless client deploy
 fi
