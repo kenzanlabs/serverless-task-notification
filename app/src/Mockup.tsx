@@ -1,6 +1,3 @@
-import Avatar from '@material-ui/core/Avatar/Avatar'
-import Button from '@material-ui/core/Button/Button'
-import { deepOrange, lightGreen } from '@material-ui/core/colors'
 import Divider from '@material-ui/core/Divider/Divider'
 import Grid from '@material-ui/core/Grid/Grid'
 import List from '@material-ui/core/List/List'
@@ -13,9 +10,9 @@ import {
   WithStyles,
   withStyles,
 } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField/TextField'
 import * as React from 'react'
-import { SFC } from 'react'
+import AddTaskForm, { Task } from './components/AddTaskForm/AddTaskForm'
+import UserAvatar from './components/UserAvatar/UserAvatar'
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -28,91 +25,71 @@ const styles = (theme: Theme) =>
         padding: `${theme.spacing.unit * 5}px 0`,
       },
     },
-    addTaskWrap: {
-      paddingRight: theme.spacing.unit * 2,
-    },
-    userListRoot: {
-      padding: `${theme.spacing.unit * 2}px 0`,
+    taskFormRoot: {
+      width: '100%',
     },
     taskListRoot: {
       flex: 1,
-    },
-    orangeAvatar: {
-      marginLeft: '8px',
-      color: '#fff',
-      backgroundColor: lightGreen[500],
-    },
-    purpleAvatar: {
-      marginLeft: '8px',
-      color: '#fff',
-      backgroundColor: deepOrange[500],
     },
   })
 
 interface MockupProps extends WithStyles<typeof styles> {}
 
-const Mockup: SFC<MockupProps> = ({ classes }) => {
-  return (
-    <Grid
-      direction="column"
-      container={true}
-      justify="center"
-      alignItems="center"
-      className={classes.root}
-    >
-      <Grid item={true} container={true} xs={12} alignItems="center">
-        <Grid item={true} xs={true} className={classes.addTaskWrap}>
-          <TextField
-            label="Add task"
-            fullWidth={true}
-            defaultValue="Buy groceries at a later point in time @"
-            autoFocus={true}
-          />
-        </Grid>
-        <Button variant="contained" color="primary" size="large">
-          Send
-        </Button>
-      </Grid>
+interface MockupState {
+  tasks: Task[]
+}
 
+const users = [
+  { name: 'John Connor' },
+  { name: 'Luis Hernandez' },
+  { name: 'Bob' },
+  { name: 'Kelly' },
+]
+
+class Mockup extends React.Component<MockupProps, MockupState> {
+  state: MockupState = {
+    tasks: [],
+  }
+
+  handleTaskCreated = (task: Task) => {
+    this.setState(({ tasks }) => ({ tasks: [task, ...tasks] }))
+  }
+
+  render() {
+    const { classes } = this.props
+
+    return (
       <Grid
-        item={true}
+        direction="column"
         container={true}
-        xs={12}
-        justify="flex-end"
-        className={classes.userListRoot}
+        justify="center"
+        alignItems="center"
+        className={classes.root}
       >
-        <Avatar className={classes.orangeAvatar}>LH</Avatar>
-        <Avatar className={classes.purpleAvatar}>B</Avatar>
-      </Grid>
+        <Grid item={true} xs={12} className={classes.taskFormRoot}>
+          <AddTaskForm users={users} onTaskCreated={this.handleTaskCreated} />
+        </Grid>
 
-      <Grid item={true} container={true} xs={true} direction="column">
-        <Paper className={classes.taskListRoot}>
-          <List component="nav">
-            <ListItem>
-              <ListItemText>Fix codegen issues</ListItemText>
-              <Avatar className={classes.orangeAvatar}>LH</Avatar>
-            </ListItem>
-            <Divider />
-            <ListItem>
-              <ListItemText>Make me sandwich</ListItemText>
-              <Avatar className={classes.purpleAvatar}>B</Avatar>
-              <Avatar className={classes.orangeAvatar}>LH</Avatar>
-            </ListItem>
-            <Divider />
-            <ListItem>
-              <ListItemText>Lorem ipsum Dolor sit amet</ListItemText>
-            </ListItem>
-            <Divider />
-            <ListItem>
-              <ListItemText>Make me another sandwich</ListItemText>
-              <Avatar className={classes.purpleAvatar}>B</Avatar>
-            </ListItem>
-            <Divider />
-          </List>
-        </Paper>
+        <Grid item={true} container={true} xs={true} direction="column">
+          <Paper className={classes.taskListRoot}>
+            <List component="nav">
+              {this.state.tasks.map((task, i) => (
+                <React.Fragment key={i}>
+                  <ListItem>
+                    <ListItemText>{task.title}</ListItemText>
+                    {task.assignedTo.map(user => (
+                      <UserAvatar key={user.name} userName={user.name} />
+                    ))}
+                  </ListItem>
+                  <Divider />
+                </React.Fragment>
+              ))}
+            </List>
+          </Paper>
+        </Grid>
       </Grid>
-    </Grid>
-  )
+    )
+  }
 }
 
 export default withStyles(styles)(Mockup)
