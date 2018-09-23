@@ -13,7 +13,13 @@ const RemovableUserAvatar: SFC<RemovableUserAvatarProps> = ({
   userName,
   onRemove,
 }) => (
-  <UserAvatar userName={userName} onClick={onRemove} className={classes.root} />
+  <UserAvatar
+    component="button"
+    aria-label={`Unassigned ${userName} from this task`}
+    userName={userName}
+    onClick={onRemove}
+    className={classes.root}
+  />
 )
 
 const styles = (theme: Theme) =>
