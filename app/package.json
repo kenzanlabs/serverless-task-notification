@@ -4,11 +4,14 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.1.0",
+    "classnames": "^2.2.6",
     "downshift": "^2.2.2",
+    "lodash": "^4.17.11",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts-ts": "2.17.0",
-    "styled-components": "^4.0.0-beta.7"
+    "styled-components": "^4.0.0-beta.7",
+    "textarea-caret": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",
@@ -24,7 +27,9 @@
     "@storybook/addons": "alpha",
     "@storybook/cli": "alpha",
     "@storybook/react": "alpha",
+    "@types/classnames": "^2.2.6",
     "@types/jest": "^23.3.2",
+    "@types/lodash": "^4.14.116",
     "@types/node": "^10.10.1",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",

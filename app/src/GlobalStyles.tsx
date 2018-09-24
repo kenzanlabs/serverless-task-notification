@@ -13,6 +13,7 @@ const AppGlobalStyles = createGlobalStyle`
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     display: flex;
     flex-direction: column;
+    position: relative;
   }
   
   #root {
