@@ -22,7 +22,10 @@ module.exports.get = (event, context, callback) => {
 
     callback(null, {
       statusCode: 200,
-      body: JSON.stringify(result.Items)
+      body: JSON.stringify(
+        { sessionID: Math.floor(1000 + Math.random() * 9000).toString() },
+        result.Items
+      )
     });
   });
 };

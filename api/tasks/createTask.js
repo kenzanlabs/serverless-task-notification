@@ -5,7 +5,7 @@ AWS.config.update({ region: "us-east-1" });
 const dynamoClient = new AWS.DynamoDB.DocumentClient();
 const snsClient = new AWS.SNS();
 
-const topicArn = "arn:aws:sns:us-east-1:884956725745:newTask";
+const topicArn = "arn:aws:sns:us-east-1:884956725745:notify";
 
 module.exports.create = (event, context, callback) => {
   let tablename = event.tablename;
@@ -21,7 +21,7 @@ module.exports.create = (event, context, callback) => {
     body: "error creating task"
   };
 
-  if (event.body !== undefined) {
+  if (event.body) {
     requestBody = event.body;
     item = {
       id: Math.floor(1000 + Math.random() * 9000).toString(),
@@ -43,8 +43,9 @@ module.exports.create = (event, context, callback) => {
 
     snsClient.publish(
       {
+        Protocol: lambda,
         TopicArn: topicArn,
-        Message: item.id
+        Message: requestBody.sessionID + "||" + item.id
       },
       (err, data) => {
         if (err) console.log(err);
