@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.1.0",
-    "@types/classnames": "^2.2.6",
     "classnames": "^2.2.6",
     "downshift": "^2.2.2",
     "lodash": "^4.17.11",
@@ -28,6 +27,7 @@
     "@storybook/addons": "alpha",
     "@storybook/cli": "alpha",
     "@storybook/react": "alpha",
+    "@types/classnames": "^2.2.6",
     "@types/jest": "^23.3.2",
     "@types/lodash": "^4.14.116",
     "@types/node": "^10.10.1",
