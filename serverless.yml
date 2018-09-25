@@ -1,4 +1,4 @@
-service: serverless-task-notification
+service: serverless-task-notification-app
 
 plugins:
   - serverless-finch
@@ -11,91 +11,14 @@ custom:
     errorDocument: index.html
 
   scripts:
-    commands:
-      teardown: serverless remove && serverless client remove --no-confirm
     hooks:
-      "deploy:finalize": serverless client deploy --no-confirm
-
-functions:
-  getUsers:
-    handler: api/users/getAll.handler
-    events:
-      - http:
-          path: users
-          method: get
-  getTasks:
-    handler: api/tasks/getAll.handler
-    events:
-      - http:
-          path: tasks
-          method: get
-  createTask:
-    handler: api/tasks/create.handler
-    events:
-      - http:
-          path: tasks
-          method: post
-  deleteTask:
-    handler: api/tasks/delete.handler
-    events:
-      - http:
-          path: tasks/{id}
-          method: delete
-  notify:
-    handler: api/notifications/process.handler
-    events:
-      - sns: notify
+      "deploy:finalize": bash scripts/deploy.sh
 
 provider:
   name: aws
-  runtime: nodejs8.10
   region: us-east-1
-  memorySize: 128
-
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dynamodb:*
         - s3:*
-        - sns:*
-        - ec2:*
-        - ses:*
       Resource: "*"
-
-resources:
-  Resources:
-    usersTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: users
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-    tasksTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: tasks
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-    socketServer:
-      Type: AWS::EC2::Instance
-      Properties:
-        ImageId: ami-04681a1dbd79675a5
-        InstanceType: t2.micro
-        KeyName: serverless-task-notification
-        Tags:
-          - Key: Name
-            Value: socketServer

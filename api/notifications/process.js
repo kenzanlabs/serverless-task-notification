@@ -92,7 +92,6 @@ function postToInstance(sessionID, taskID) {
           instance = result.Reservations[1].Instances[0].PublicDnsName;
         }
         console.log(instance);
-        console.log(sessionID + "," + taskID);
       }
     }
   );

@@ -1,5 +1,11 @@
 version: 0.2
 phases:
+  install:
+    commands:
+      - bash scripts/install.sh
   build:
     commands:
       - bash scripts/build.sh
+  post_build:
+    commands:
+      - bash scripts/post_build.sh
