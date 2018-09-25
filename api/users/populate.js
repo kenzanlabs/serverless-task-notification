@@ -17,7 +17,7 @@ function populateUsers() {
                 id: "1234",
                 name: "Scott",
                 email: "jnerney@kenzan.com",
-                phone: "+14014306963"
+                phone: "+14568854"
               }
             }
           },
@@ -35,7 +35,7 @@ function populateUsers() {
               Item: {
                 id: "3456",
                 name: "Carlos",
-                phone: "+12345678"
+                phone: "+16658974"
               }
             }
           }
