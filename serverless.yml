@@ -12,8 +12,6 @@ custom:
 
   scripts:
     commands:
-      test: npm test && cd app && npm test && cd ..
-      build: cd app && npm run build && cd ..
       teardown: serverless remove && serverless client remove --no-confirm
     hooks:
       "deploy:finalize": serverless client deploy --no-confirm
