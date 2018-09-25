@@ -36,10 +36,15 @@ module.exports.handler = (event, context, callback) => {
       return;
     }
 
-    snsClient.publish({
-      TopicArn: "arn:aws:sns:us-east-1:884956725745:notify",
-      Message: requestBody.sessionID + "," + item.id
-    });
+    snsClient.publish(
+      {
+        TopicArn: "arn:aws:sns:us-east-1:884956725745:notify",
+        Message: requestBody.sessionID + "," + item.id
+      },
+      (err, res) => {
+        if (err) console.log(err);
+      }
+    );
 
     callback(null, {
       statusCode: 200,

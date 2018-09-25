@@ -6,17 +6,19 @@ const dynamoClient = new AWS.DynamoDB.DocumentClient();
 module.exports.handler = event => {
   let ids = event.Records[0].Sns.Message.split(",");
   let taskID = ids[1];
+  console.log(ids);
 
   beginProcessing(taskID);
   postToInstance(ids[0], taskID);
 };
 
 function beginProcessing(taskID) {
+  console.log("START PROCESSING");
   dynamoClient.get(
-    { TableName: "tasks", Key: { HashKey: taskID } },
+    { TableName: "tasks", Key: { id: taskID } },
     (err, result) => {
       if (err) {
-        console.log(err);
+        console.log(err.stack);
         return;
       } else {
         processTask(result.Item);
@@ -26,14 +28,15 @@ function beginProcessing(taskID) {
 }
 
 function processTask(task) {
+  console.log("PROCESSING TASK");
   dynamoClient.get(
     {
-      Tablename: "users",
-      Key: { HashKey: task.contactID }
+      TableName: "users",
+      Key: { id: task.contactID }
     },
     (e, res) => {
       if (e) {
-        console.log(e);
+        console.log(e.stack);
         return;
       } else {
         let user = res.Item;
@@ -62,7 +65,7 @@ function emailUser(emailAddress, msg) {
       }
     },
     (err, res) => {
-      if (err) console.log(err);
+      if (err) console.log(err.stack);
     }
   );
 }
@@ -76,7 +79,7 @@ function smsUser(phoneNumber, msg) {
       Message: msg
     },
     (err, res) => {
-      if (err) console.log(err);
+      if (err) console.log(err.stack);
     }
   );
 }
@@ -87,7 +90,7 @@ function postToInstance(sessionID, taskID) {
     { Filters: [{ Name: "tag:Name", Values: ["socketServer"] }] },
     (err, result) => {
       if (err) {
-        console.log(err);
+        console.log(err.stack);
         return;
       } else {
         let instance = result.Reservations[0].Instances[0].PublicDnsName;

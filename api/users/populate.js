@@ -16,8 +16,8 @@ function populateUsers() {
               Item: {
                 id: "1234",
                 name: "Scott",
-                email: "scott@email.com",
-                phone: "+12345678"
+                email: "jnerney@kenzan.com",
+                phone: "+14014306957"
               }
             }
           },

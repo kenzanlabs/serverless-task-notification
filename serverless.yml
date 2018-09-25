@@ -44,7 +44,7 @@ functions:
           path: tasks/{id}
           method: delete
   notify:
-    handler: api/notify/process.handler
+    handler: api/notifications/process.handler
     events:
       - sns: notify
 
@@ -52,7 +52,7 @@ provider:
   name: aws
   runtime: nodejs8.10
   region: us-east-1
-  memorySize: 256
+  memorySize: 128
 
   iamRoleStatements:
     - Effect: Allow
