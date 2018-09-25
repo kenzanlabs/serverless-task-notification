@@ -12,7 +12,6 @@ custom:
 
   scripts:
     commands:
-      fullInstall: npm install && cd app && npm install && cd ..
       test: npm test && cd app && npm test && cd ..
       build: cd app && npm run build && cd ..
       fullDeploy: serverless deploy && serverless client deploy --no-confirm
@@ -101,5 +100,3 @@ resources:
         Tags:
           - Key: Name
             Value: socketServer
-    sendMessage:
-      Type: AWS::SNS::Topic
