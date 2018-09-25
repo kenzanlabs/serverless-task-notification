@@ -2,19 +2,19 @@ service: serverless-tasks
 
 functions:
   getTasks:
-    handler: api/tasks/getAll.handler
+    handler: getAll.handler
     events:
       - http:
           path: tasks
           method: get
   createTask:
-    handler: api/tasks/create.handler
+    handler: create.handler
     events:
       - http:
           path: tasks
           method: post
   deleteTask:
-    handler: api/tasks/delete.handler
+    handler: delete.handler
     events:
       - http:
           path: tasks/{id}

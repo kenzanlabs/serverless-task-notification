@@ -2,7 +2,7 @@ service: serverless-users
 
 functions:
   getUsers:
-    handler: api/users/getAll.handler
+    handler: getAll.handler
     events:
       - http:
           path: users

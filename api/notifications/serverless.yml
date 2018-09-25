@@ -2,7 +2,7 @@ service: serverless-task-notifications
 
 functions:
   notify:
-    handler: api/notifications/process.handler
+    handler: process.handler
     events:
       - sns: notify
 

@@ -14,3 +14,5 @@ serverless deploy
 The build script installs the Serverless framework and all required dependencies, then builds the FE artifacts.
 
 Serverless handles the rest!
+
+To completely teardown your deployment use: `bash scripts/teardown.sh`
