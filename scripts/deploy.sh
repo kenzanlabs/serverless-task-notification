@@ -1,14 +1,13 @@
 cd api/users
-echo "Deploying users service"
+echo "\nDeploying users service"
 serverless deploy
 cd ../tasks
-echo "Deploying tasks service"
+echo "\nDeploying tasks service"
 serverless deploy
 cd ../notifications
 echo "Deploying notifications service"
 serverless deploy
 cd ../..
-echo "Deploying FE app"
+echo "\nDeploying FE app"
 serverless client deploy --no-confirm
-echo "Populating users table"
 node ./api/users/populate.js

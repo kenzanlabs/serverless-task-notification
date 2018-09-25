@@ -12,4 +12,13 @@ custom:
 
   scripts:
     hooks:
-      "deploy:finalize": scripts/deploy.sh
+      "deploy:finalize": bash scripts/deploy.sh
+
+provider:
+  name: aws
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "*"

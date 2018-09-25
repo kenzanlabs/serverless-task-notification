@@ -1,30 +1,6 @@
 service: serverless-task-notifications
 
 functions:
-  getUsers:
-    handler: api/users/getAll.handler
-    events:
-      - http:
-          path: users
-          method: get
-  getTasks:
-    handler: api/tasks/getAll.handler
-    events:
-      - http:
-          path: tasks
-          method: get
-  createTask:
-    handler: api/tasks/create.handler
-    events:
-      - http:
-          path: tasks
-          method: post
-  deleteTask:
-    handler: api/tasks/delete.handler
-    events:
-      - http:
-          path: tasks/{id}
-          method: delete
   notify:
     handler: api/notifications/process.handler
     events:
@@ -34,7 +10,7 @@ provider:
   name: aws
   runtime: nodejs8.10
   region: us-east-1
-  memorySize: 128
+  memorySize: 256
 
   iamRoleStatements:
     - Effect: Allow
@@ -48,32 +24,6 @@ provider:
 
 resources:
   Resources:
-    usersTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: users
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-    tasksTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: tasks
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
     socketServer:
       Type: AWS::EC2::Instance
       Properties:
