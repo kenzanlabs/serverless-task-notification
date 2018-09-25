@@ -4,13 +4,8 @@ const AWS = require("aws-sdk");
 AWS.config.update({ region: "us-east-1" });
 const dynamoClient = new AWS.DynamoDB.DocumentClient();
 
-module.exports.get = (event, context, callback) => {
-  let tablename = event.tablename;
-  if (tablename == "" || tablename == undefined || tablename == null) {
-    tablename = "tasks";
-  }
-
-  dynamoClient.scan({ TableName: tablename }, (err, result) => {
+module.exports.handler = (event, context, callback) => {
+  dynamoClient.scan({ TableName: "tasks" }, (err, result) => {
     if (err) {
       callback(null, {
         statusCode: 500,

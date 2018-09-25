@@ -5,14 +5,7 @@ AWS.config.update({ region: "us-east-1" });
 const dynamoClient = new AWS.DynamoDB.DocumentClient();
 const snsClient = new AWS.SNS();
 
-const topicArn = "arn:aws:sns:us-east-1:884956725745:newTask";
-
-module.exports.create = (event, context, callback) => {
-  let tablename = event.tablename;
-  if (tablename == "" || tablename == undefined || tablename == null) {
-    tablename = "tasks";
-  }
-
+module.exports.handler = (event, context, callback) => {
   let requestBody;
   let item;
   let error = {
@@ -21,21 +14,23 @@ module.exports.create = (event, context, callback) => {
     body: "error creating task"
   };
 
-  if (event.body !== undefined) {
-    requestBody = event.body;
+  if (event.body) {
+    requestBody = JSON.parse(event.body);
+    console.log(requestBody);
     item = {
       id: Math.floor(1000 + Math.random() * 9000).toString(),
+      sessionID: requestBody.sessionID,
       contactID: requestBody.contactID,
       type: requestBody.type,
       body: requestBody.body
     };
   }
 
-  if (item == undefined) {
+  if (!item) {
     callback(null, error);
   }
 
-  dynamoClient.put({ TableName: tablename, Item: item }, err => {
+  dynamoClient.put({ TableName: "tasks", Item: item }, err => {
     if (err) {
       callback(null, error);
       return;
@@ -43,10 +38,10 @@ module.exports.create = (event, context, callback) => {
 
     snsClient.publish(
       {
-        TopicArn: topicArn,
-        Message: item.id
+        TopicArn: "arn:aws:sns:us-east-1:884956725745:notify",
+        Message: requestBody.sessionID + "," + item.id
       },
-      (err, data) => {
+      (err, res) => {
         if (err) console.log(err);
       }
     );

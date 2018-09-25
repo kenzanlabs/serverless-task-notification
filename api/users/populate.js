@@ -14,17 +14,17 @@ function populateUsers() {
           {
             PutRequest: {
               Item: {
-                id: "1",
+                id: "1234",
                 name: "Scott",
-                email: "scott@email.com",
-                phone: 1234568975
+                email: "jnerney@kenzan.com",
+                phone: "+14568854"
               }
             }
           },
           {
             PutRequest: {
               Item: {
-                id: "2",
+                id: "2345",
                 name: "Luis",
                 email: "luis@email.com"
               }
@@ -33,9 +33,9 @@ function populateUsers() {
           {
             PutRequest: {
               Item: {
-                id: "3",
+                id: "3456",
                 name: "Carlos",
-                phone: 5486689475
+                phone: "+16658974"
               }
             }
           }
@@ -43,9 +43,7 @@ function populateUsers() {
       }
     },
     err => {
-      if (err) {
-        console.log(err);
-      }
+      if (err) console.log(err);
     }
   );
 }
