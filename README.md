@@ -12,4 +12,5 @@ serverless deploy
 ```
 
 The build script installs the Serverless framework and all required dependencies, then builds the FE artifacts.
+
 `serverless deploy` handles the rest!
