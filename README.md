@@ -7,11 +7,12 @@ Make sure you have the right AWS access key and secret key set!
 Build & Deploy:
 
 ```bash
+bash scripts/install.sh
 bash scripts/build.sh
 serverless deploy
 ```
 
-The build script installs the Serverless framework and all required dependencies, then builds the FE artifacts.
+The scripts install the Serverless framework and all required dependencies, then build the FE artifacts.
 
 Serverless handles the rest!
 
