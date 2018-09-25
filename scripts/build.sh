@@ -10,5 +10,5 @@ if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
 fi
 
 if [ "$CODEBUILD_GIT_BRANCH" = "master" ] ; then
-  npm install -g serverless && serverless deploy && node ./api/test/populateUsers.js
+  npm install -g serverless && serverless deploy
 fi
