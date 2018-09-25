@@ -5,7 +5,7 @@ phases:
       - npm install && cd app && npm install && cd ..
   build:
     commands:
-      - bash ./scripts/build.sh
+      - bash scripts/build.sh
   post_build:
     commands:
-      - bash ./scripts/post_build.sh
+      - bash scripts/post_build.sh
