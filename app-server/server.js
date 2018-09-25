@@ -1,7 +1,6 @@
 const express = require('express');
 const http = require('http');
-
-const socketIO = require('socket.io')
+const socketIO = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
@@ -21,7 +20,18 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     console.log('user disconnected')
   });
+
+  testInterval(socket)
+    .then(data => {
+      console.log(data, "<<<<<<<<<<<<<");
+    });
 });
+
+async function testInterval(socket ) {
+  return await setInterval(() => {
+    socket.emit('notification sent')
+  }, 3000);
+}
 
 app.use("/notifications", notificationHandler);
 

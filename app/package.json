@@ -10,6 +10,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts-ts": "2.17.0",
+    "socket.io-client": "^2.1.1",
     "styled-components": "^4.0.0-beta.7",
     "textarea-caret": "^3.1.0"
   },
@@ -33,6 +34,7 @@
     "@types/node": "^10.10.1",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
+    "@types/socket.io-client": "^1.4.32",
     "@types/storybook__addon-knobs": "^3.4.1",
     "@types/storybook__react": "^3.0.9",
     "@types/styled-components": "^3.0.1",
