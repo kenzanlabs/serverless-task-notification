@@ -11,8 +11,12 @@ import {
   withStyles,
 } from '@material-ui/core/styles'
 import * as React from 'react'
-import AddTaskForm, { Task } from './components/AddTaskForm/AddTaskForm'
+import AddTaskForm, { Task, TaskStatus } from './components/AddTaskForm/AddTaskForm'
 import UserAvatar from './components/UserAvatar/UserAvatar'
+
+
+import CloudUpload from '@material-ui/icons/CloudUpload';
+import CloudDone from '@material-ui/icons/CloudDone';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -34,7 +38,9 @@ const styles = (theme: Theme) =>
   })
 
 interface MockupProps extends WithStyles<typeof styles> {
-  message: string
+  handleTaskCreate: (task: Task) => void
+  handleTaskUpdate: (task: Task) => void
+  isStatusUpdated: boolean
 }
 
 interface MockupState {
@@ -54,11 +60,24 @@ class Mockup extends React.Component<MockupProps, MockupState> {
   }
 
   handleTaskCreated = (task: Task) => {
+    this.props.handleTaskCreate(task);
     this.setState(({ tasks }) => ({ tasks: [task, ...tasks] }))
   }
 
+  updateTasks(task: Task) {
+    this.setState(({ tasks }) => {
+      const _tasks = tasks;
+      const _task = _tasks.find(item => item.id === task.id);
+      if(_task) {
+        _task.status = task.status;
+      }
+
+      return { tasks: _tasks }
+    })
+  }
+
   render() {
-    const { classes, message } = this.props
+    const { classes } = this.props
 
     //Remove H1 after testing
     return (
@@ -70,24 +89,27 @@ class Mockup extends React.Component<MockupProps, MockupState> {
         className={classes.root}
       >
         <Grid item={true} xs={12} className={classes.taskFormRoot}>
-          <h1>{message}</h1>
           <AddTaskForm users={users} onTaskCreated={this.handleTaskCreated} />
         </Grid>
 
         <Grid item={true} container={true} xs={true} direction="column">
           <Paper className={classes.taskListRoot}>
             <List component="nav">
-              {this.state.tasks.map((task, i) => (
-                <React.Fragment key={i}>
-                  <ListItem>
-                    <ListItemText>{task.title}</ListItemText>
-                    {task.assignedTo.map(user => (
-                      <UserAvatar key={user.name} userName={user.name} />
-                    ))}
-                  </ListItem>
-                  <Divider />
-                </React.Fragment>
-              ))}
+              {this.state.tasks.map((task, i) => {
+
+                return (
+                  <React.Fragment key={i}>
+                    <ListItem>
+                      <ListItemText>{task.title}</ListItemText>
+                      {task.status === TaskStatus.NotSent ? <CloudUpload/> :  <CloudDone/>}
+                      {task.assignedTo.map(user => (
+                        <UserAvatar key={user.name} userName={user.name} />
+                      ))}
+                    </ListItem>
+                    <Divider />
+                  </React.Fragment>
+                )
+              })}
             </List>
           </Paper>
         </Grid>

@@ -1,49 +1,47 @@
 import * as React from 'react'
 import GlobalStyles from './GlobalStyles'
 import Mockup from './Mockup'
+import {Task, TaskStatus} from './components/AddTaskForm/AddTaskForm'
 
 import * as socketIo from 'socket.io-client';
 
 const SERVER_URL = process.env.SERVER_URL || 'http://localhost:9000';
 
 interface AppState {
-  message: string
-}
-
-interface Task {
-  id: string;
-  status: string;
-  user: string;
-  task: string;
+  triggerStatusChange: boolean
 }
 
 class App extends React.Component {
-  public state: AppState;
   private socket: SocketIOClient.Socket;
+  state: AppState = {
+    triggerStatusChange: false
+  }
 
   constructor(props: any) {
     super(props);
 
     this.socket = socketIo(SERVER_URL);
-    this.state = {
-      message: ''
-    }
 
     this.socket.on('task updated', (task: Task) => {
       this.setState({
-        message: task.task
+        triggerStatusChange: true
       });
     });
+
+    this.updateTask = this.updateTask.bind(this);
+    this.registerTask = this.registerTask.bind(this);
   }
 
+  updateTask(task: Task) {
+    this.socket.emit('update task', task);
+  }
 
-  componentDidMount() {
-    this.socket.emit('register task', {user: 'nerney', task: 'Have Breakfast'})
+  registerTask(task: Task) {
+    const status = TaskStatus[task.status];
+    const {id} = task;
+    const task_details = {id, status}
 
-    // this timer is for testing updating task status, remove later
-    setTimeout(() => {
-      this.socket.emit('update task', {id: '62c9a4c0-cb3d-4ea2-81ed-80c38ba5859d', status: 'sent'});
-    }, 5000)
+    this.socket.emit('register task', task_details)
   }
 
   public render() {
@@ -51,7 +49,11 @@ class App extends React.Component {
     return (
       <>
         <GlobalStyles />
-        <Mockup message={this.state.message}/>
+        <Mockup
+          handleTaskCreate={this.registerTask}
+          isStatusUpdated={this.state.triggerStatusChange}
+          handleTaskUpdate={this.updateTask}
+        />
       </>
     )
   }

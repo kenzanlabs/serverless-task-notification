@@ -43,8 +43,8 @@ class SocketService {
 
 // Possible update to promise base if accessing any outside resources
 function registerTask(task) {
-  const _local_task = Object.assign({}, {id: uuid(), status: 'not-sent'}, task)
-  TASK_ARRAY.push(_local_task);
+  console.log("CREATING NEW TASK INTO ARRAY", task);
+  TASK_ARRAY.push(task);
 }
 
 function updateTask(task) {
