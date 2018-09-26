@@ -13,6 +13,13 @@ const TASK_ARRAY = [
 class SocketService {
   constructor(server) {
     this.socket = socketIO(server);
+
+    // remove counter and interval, only for testing
+    let counter = 0;
+    setInterval(() => {
+      counter++;
+      broadcastUpdate(this.socket, {status: 'sent', task: `Update to latest message ${counter}`})
+    }, 3000)
   }
 
   initialize() {
@@ -28,11 +35,6 @@ class SocketService {
       socket.on('update task', (task) => {
         const updatedTask = updateTask(task);
         broadcastUpdate(socket, updatedTask);
-
-        // Test timeout - remove later
-        setTimeout(() => {
-          broadcastUpdate(socket, {status: 'sent', task: 'Update to latest message'})
-        }, 4000)
       });
     });
 
