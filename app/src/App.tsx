@@ -10,6 +10,13 @@ interface AppState {
   message: string
 }
 
+interface Task {
+  id: string;
+  status: string;
+  user: string;
+  task: string;
+}
+
 class App extends React.Component {
   public state: AppState;
   private socket: SocketIOClient.Socket;
@@ -22,19 +29,30 @@ class App extends React.Component {
       message: ''
     }
 
-    this.socket.on('notification sent', (notification: Notification) => {
+    this.socket.on('task updated', (task: Task) => {
       this.setState({
-        message: notification
+        message: task.task
       });
     });
   }
 
+
+  componentDidMount() {
+    this.socket.emit('register task', {user: 'nerney', task: 'Have Breakfast'})
+
+    // this timer is for testing updating task status, remove later
+    setTimeout(() => {
+      this.socket.emit('update task', {id: '62c9a4c0-cb3d-4ea2-81ed-80c38ba5859d', status: 'sent'});
+    }, 5000)
+  }
+
   public render() {
+
     return (
-      <div>
+      <>
         <GlobalStyles />
-        <Mockup />
-      </div>
+        <Mockup message={this.state.message}/>
+      </>
     )
   }
 }

@@ -2,36 +2,15 @@ const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 
+const SocketService = require('./services/socket.service.js')
+
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server)
+const io =  new SocketService(server);
 
 const PORT = process.env.PORT || 9000;
 
-async function notificationHandler(req, res) {
-  const response = await 'Connected';
-
-  res.send(response);
-}
-
-io.on('connection', socket => {
-  console.log('User connected')
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected')
-  });
-
-  testInterval(socket)
-    .then(data => {
-      console.log(data, "<<<<<<<<<<<<<");
-    });
-});
-
-async function testInterval(socket ) {
-  return await setInterval(() => {
-    socket.emit('notification sent')
-  }, 3000);
-}
+io.initialize();
 
 app.use("/notifications", notificationHandler);
 
@@ -40,3 +19,10 @@ server.listen(PORT, (err) => {
 
   return console.log(`Listening on port ${PORT}`)
 });
+
+async function notificationHandler(req, res) {
+  // remove async if not needed down the road
+  const response = await 'Connected';
+
+  res.send(response);
+}

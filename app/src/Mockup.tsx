@@ -33,7 +33,9 @@ const styles = (theme: Theme) =>
     },
   })
 
-interface MockupProps extends WithStyles<typeof styles> {}
+interface MockupProps extends WithStyles<typeof styles> {
+  message: string
+}
 
 interface MockupState {
   tasks: Task[]
@@ -56,7 +58,9 @@ class Mockup extends React.Component<MockupProps, MockupState> {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, message } = this.props
+
+    console.log(message, this.props)
 
     return (
       <Grid
@@ -67,6 +71,7 @@ class Mockup extends React.Component<MockupProps, MockupState> {
         className={classes.root}
       >
         <Grid item={true} xs={12} className={classes.taskFormRoot}>
+          <h1>{message}</h1>
           <AddTaskForm users={users} onTaskCreated={this.handleTaskCreated} />
         </Grid>
 
