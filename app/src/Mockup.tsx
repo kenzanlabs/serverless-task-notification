@@ -19,6 +19,8 @@ const SERVER_URL = process.env.SERVER_URL || 'http://localhost:9000'
 
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import CloudDone from '@material-ui/icons/CloudDone';
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -37,6 +39,12 @@ const styles = (theme: Theme) =>
     taskListRoot: {
       flex: 1,
     },
+    sentIcon: {
+      color: green[800]
+    },
+    pendingIcon: {
+      color: red[800]
+    }
   })
 
 interface MockupProps extends WithStyles<typeof styles> {
@@ -135,7 +143,10 @@ class Mockup extends React.Component<MockupProps, MockupState> {
                   <React.Fragment key={i}>
                     <ListItem>
                       <ListItemText>{task.title}</ListItemText>
-                      {task.status === TaskStatus.NotSent ? <CloudUpload/> :  <CloudDone/>}
+                      {
+                        task.status === TaskStatus.NotSent ?
+                          <CloudUpload className={classes.pendingIcon}/> :
+                          <CloudDone  className={classes.sentIcon}/>}
                       {task.assignedTo.map(user => (
                         <UserAvatar key={user.name} userName={user.name} />
                       ))}
