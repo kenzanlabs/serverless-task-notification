@@ -28,8 +28,6 @@ class SocketService {
       socket.on('update task', (task) => {
         const updatedTask = updateTask(task);
 
-        console.log('server updating task', task)
-
         broadcastUpdate(socket, updatedTask);
       });
     });
@@ -39,7 +37,6 @@ class SocketService {
 // Possible update to promise base if accessing any outside resources
 function registerTask(task) {
   console.log("CREATING NEW TASK INTO ARRAY", task);
-  console.log(task.status)
   TASK_ARRAY.push(task);
 }
 
@@ -54,8 +51,6 @@ function updateTask(task) {
 }
 
 function broadcastUpdate(socket, packet) {
-
-  console.log("broadcasting task update", packet);
   socket.emit('task updated', packet)
 }
 
