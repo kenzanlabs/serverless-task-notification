@@ -11,13 +11,6 @@ const TASK_ARRAY = [
 class SocketService {
   constructor(server) {
     this.socket = socketIO(server);
-
-    // remove counter and interval, only for testing
-    let counter = 0;
-    setInterval(() => {
-      counter++;
-      broadcastUpdate(this.socket, {status: 'sent', task: `Update to latest message ${counter}`})
-    }, 3000)
   }
 
   initialize() {
@@ -28,10 +21,15 @@ class SocketService {
         console.log('user disconnected')
       });
 
-      socket.on('register task', registerTask);
+      socket.on('register task', (task) => {
+        registerTask(task);
+      });
 
       socket.on('update task', (task) => {
         const updatedTask = updateTask(task);
+
+        console.log('server updating task', task)
+
         broadcastUpdate(socket, updatedTask);
       });
     });
@@ -41,6 +39,7 @@ class SocketService {
 // Possible update to promise base if accessing any outside resources
 function registerTask(task) {
   console.log("CREATING NEW TASK INTO ARRAY", task);
+  console.log(task.status)
   TASK_ARRAY.push(task);
 }
 
@@ -55,6 +54,8 @@ function updateTask(task) {
 }
 
 function broadcastUpdate(socket, packet) {
+
+  console.log("broadcasting task update", packet);
   socket.emit('task updated', packet)
 }
 

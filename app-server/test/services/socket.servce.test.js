@@ -1,42 +1,51 @@
 const chai = require('chai');
-const chaiHttp = require('chai-http');
-const expect = chai.expect;
-const io = require('socket.io-client');
 const sinon = require('sinon');
-// const server = require('../server/server');
-const socketService = require('../../server/services/socket.service');
+const sinonChai = require("sinon-chai");
 
-chai.use(chaiHttp);
+const SocketService = require('../../server/service/socket.service.js');
 
+chai.should();
+chai.use(sinonChai);
 
-describe('Socket service', () => {
-  let testSocketService;
-  let mockServer = {
-    on: (i) => (req, res) => {}
-  };
+describe('SocketService', () => {
+  let testService;
+  const mockServer = {
+    on: (a, b) => {
+    }
+  }
 
   beforeEach(() => {
-    testSocketService = new socketService(mockServer)
-  });
+    testService = new SocketService(mockServer);
+  })
 
-  it('should attach socketIO to new object', () => {
-    expect(testSocketService.socket).not.to.be.undefined;
-    expect(testSocketService.socket).not.to.be.null;
-  });
+  it('should attach socket.IO to current class', () => {
+    const socket = testService.socket;
+    socket.should.not.be.undefined;
+    socket.should.not.be.null;
+  })
+  ;
 
-  it('should attach an "initialize" method to new object', function () {
-    expect(testSocketService.initialize).not.to.be.undefined;
-  });
+  it('should have an "initialize" method', () => {
+    const initialize = testService.initialize;
 
-  describe('socketService.initialize method', () => {
+    initialize.should.not.be.undefined;
+    initialize.should.not.be.null;
+    initialize.should.be.a('function');
+  })
+  ;
 
-    it('should not be null, ', (done) =>  {
-      testSocketService.socket.emit('connect', (socket) => {
-        console.log(socket, '@@@')
+  describe('initialize method', () => {
+    it('should call "server.socket.on"', (done) => {
+      const spy = sinon.spy(testService.socket, 'on');
 
-        testSocketService.socket.disconnet()
-        done();
-      })
+      (spy.called).should.be.false;
+
+      testService.initialize();
+
+      spy.should.have.been.calledOnce;
+      spy.should.have.been.calledWithMatch('connection');
+
+      done();
     });
   });
 });
