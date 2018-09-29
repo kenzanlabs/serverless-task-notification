@@ -25,3 +25,5 @@ async function notificationHandler(req, res) {
 
   res.send(response);
 }
+
+if(process.env.NODE_ENV === "test") module.exports = () => server;

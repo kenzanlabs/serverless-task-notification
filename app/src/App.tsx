@@ -12,10 +12,10 @@ interface AppState {
 }
 
 class App extends React.Component {
-  private socket: SocketIOClient.Socket;
   state: AppState = {
     triggerStatusChange: false
   }
+  private socket: SocketIOClient.Socket;
 
   constructor(props: any) {
     super(props);
@@ -39,9 +39,9 @@ class App extends React.Component {
   registerTask(task: Task) {
     const status = TaskStatus[task.status];
     const {id} = task;
-    const task_details = {id, status}
+    const taskDetails = {id, status}
 
-    this.socket.emit('register task', task_details)
+    this.socket.emit('register task', taskDetails)
   }
 
   public render() {

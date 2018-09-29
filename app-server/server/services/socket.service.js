@@ -1,7 +1,5 @@
 "use strict";
-
 const socketIO = require('socket.io');
-const uuid = require('uuidv4');
 
 const TASK_ARRAY = [
   { id: '62c9a4c0-cb3d-4ea2-81ed-80c38ba5859d',
@@ -37,7 +35,6 @@ class SocketService {
         broadcastUpdate(socket, updatedTask);
       });
     });
-
   }
 }
 
@@ -48,18 +45,20 @@ function registerTask(task) {
 }
 
 function updateTask(task) {
-  const _local_task = TASK_ARRAY.find(item => item.id === task.id)
+  const local_task = TASK_ARRAY.find(item => item.id === task.id)
 
-  if(!_local_task) return;
+  if(!local_task) return;
 
-  _local_task.status = task.status;
+  local_task.status = task.status;
 
-  return _local_task;
+  return local_task;
 }
 
 function broadcastUpdate(socket, packet) {
   socket.emit('task updated', packet)
 }
 
-
 module.exports = SocketService;
+
+
+

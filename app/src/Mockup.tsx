@@ -79,7 +79,7 @@ class Mockup extends React.Component<MockupProps, MockupState> {
   render() {
     const { classes } = this.props
 
-    //Remove H1 after testing
+    // Remove H1 after testing
     return (
       <Grid
         direction="column"
