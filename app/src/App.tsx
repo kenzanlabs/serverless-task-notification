@@ -1,7 +1,7 @@
 import * as React from 'react'
 import GlobalStyles from './GlobalStyles'
 import Mockup from './Mockup'
-import {Task, TaskStatus} from './components/AddTaskForm/AddTaskForm'
+import {Task} from './components/AddTaskForm/AddTaskForm'
 
 import * as socketIo from 'socket.io-client';
 
@@ -29,19 +29,10 @@ class App extends React.Component {
     });
 
     this.updateTask = this.updateTask.bind(this);
-    this.registerTask = this.registerTask.bind(this);
   }
 
   updateTask(task: Task) {
     this.socket.emit('update task', task);
-  }
-
-  registerTask(task: Task) {
-    const status = TaskStatus[task.status];
-    const {id} = task;
-    const taskDetails = {id, status}
-
-    this.socket.emit('register task', taskDetails)
   }
 
   public render() {
@@ -49,11 +40,7 @@ class App extends React.Component {
     return (
       <>
         <GlobalStyles />
-        <Mockup
-          handleTaskCreate={this.registerTask}
-          isStatusUpdated={this.state.triggerStatusChange}
-          handleTaskUpdate={this.updateTask}
-        />
+        <Mockup/>
       </>
     )
   }

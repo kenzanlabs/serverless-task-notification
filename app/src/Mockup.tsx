@@ -13,7 +13,9 @@ import {
 import * as React from 'react'
 import AddTaskForm, { Task, TaskStatus } from './components/AddTaskForm/AddTaskForm'
 import UserAvatar from './components/UserAvatar/UserAvatar'
+import * as socketIo from 'socket.io-client'
 
+const SERVER_URL = process.env.SERVER_URL || 'http://localhost:9000'
 
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import CloudDone from '@material-ui/icons/CloudDone';
@@ -38,9 +40,7 @@ const styles = (theme: Theme) =>
   })
 
 interface MockupProps extends WithStyles<typeof styles> {
-  handleTaskCreate: (task: Task) => void
-  handleTaskUpdate: (task: Task) => void
-  isStatusUpdated: boolean
+
 }
 
 interface MockupState {
@@ -58,22 +58,56 @@ class Mockup extends React.Component<MockupProps, MockupState> {
   state: MockupState = {
     tasks: [],
   }
+  socket: SocketIOClient.Socket = socketIo(SERVER_URL);;
 
   handleTaskCreated = (task: Task) => {
-    this.props.handleTaskCreate(task);
-    this.setState(({ tasks }) => ({ tasks: [task, ...tasks] }))
+    this.registerTask(task)
+      .then(res => {
+        this.setState(({ tasks }) => ({ tasks: [task, ...tasks] }))
+      })
+
+  //  Remove this code after implementing updating tasks via lambda
+    setTimeout(() => {
+      const updatedTask = Object.assign({}, task, {status: TaskStatus[TaskStatus[TaskStatus.Sent]]})
+
+      // this will trigger an event from the server 'task updated'
+      this.updateTasks(updatedTask)
+    }, 1000)
   }
 
-  updateTasks(task: Task) {
-    this.setState(({ tasks }) => {
-      const _tasks = tasks;
-      const _task = _tasks.find(item => item.id === task.id);
-      if(_task) {
-        _task.status = task.status;
-      }
+  componentDidMount() {
+    this.socket.on('task updated', (task: Task) => {
+      this.updateTaskArray(task);
+    });
+  }
 
-      return { tasks: _tasks }
-    })
+  updateTaskArray(task: Task) {
+    const tasks = [...this.state.tasks];
+    const foundTask = tasks.find(item => item.id === task.id);
+
+    if(!foundTask) return
+    foundTask.status = TaskStatus[TaskStatus[task.status]]
+    this.setState(({ tasks }) => ({ tasks}))
+  }
+
+  async updateTasks(task: Task) {
+    const taskDetails = this.slimTask(task);
+
+    await this.socket.emit('update task', taskDetails)
+  }
+
+  async registerTask(task: Task) {
+    const taskDetails = this.slimTask(task)
+
+    await this.socket.emit('register task', taskDetails)
+  }
+
+  slimTask(task: Task) {
+    const status = TaskStatus[task.status];
+    const {id} = task;
+    const taskDetails = {id, status}
+
+    return taskDetails;
   }
 
   render() {
