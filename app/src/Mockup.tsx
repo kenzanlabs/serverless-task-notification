@@ -69,6 +69,7 @@ class Mockup extends React.Component<MockupProps, MockupState> {
   socket: SocketIOClient.Socket = socketIo(SERVER_URL);;
 
   handleTaskCreated = (task: Task) => {
+    // This log is only for getting the taskID for use with postman. Remove once all app is connected
     console.log(task.id)
     this.setState(({ tasks }) => ({ tasks: [task, ...tasks] }))
   }

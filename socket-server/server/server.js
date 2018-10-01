@@ -25,7 +25,7 @@ async function postNotificationHandler(req, res) {
   try {
     const {taskID} =  req.body;
     if (taskID)
-      io.broadcastTaskUpdateByID(taskID);
+      await io.broadcastTaskUpdateByID(taskID);
 
     return res.sendStatus(taskID ? 202 : 400);
   } catch (e) {
