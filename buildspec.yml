@@ -3,9 +3,6 @@ phases:
   install:
     commands:
       - bash scripts/install.sh
-  pre_build:
-    commands:
-      - bash scripts/test.sh
   build:
     commands:
       - bash scripts/build.sh

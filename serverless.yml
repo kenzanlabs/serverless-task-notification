@@ -1,98 +1,24 @@
-service: serverless-task-notification
-
-provider:
-  name: aws
-  runtime: nodejs8.10
-  region: us-east-1
-  memorySize: 256
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:*
-        - s3:*
-        - sns:*
-      Resource: "*"
-
-functions:
-  getUsers:
-    handler: api/users/getUsers.get
-    events:
-      - http:
-          path: users
-          method: get
-  getTasks:
-    handler: api/tasks/getTasks.get
-    events:
-      - http:
-          path: tasks
-          method: get
-  createTask:
-    handler: api/tasks/createTask.create
-    events:
-      - http:
-          path: tasks
-          method: post
-  deleteTask:
-    handler: api/tasks/deleteTask.delete
-    events:
-      - http:
-          path: tasks/{id}
-          method: delete
-  processTask:
-    handler: api/tasks/processTask.process
-    events:
-      - sns: newTask
-
-resources:
-  Resources:
-    usersTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: users
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-    tasksTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: tasks
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-    resultsTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: results
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-
-    sendMessage:
-      Type: AWS::SNS::Topic
+service: serverless-task-notification-app
 
 plugins:
   - serverless-finch
+  - serverless-plugin-scripts
 
 custom:
   client:
     bucketName: serverless-task-notification-app
     distributionFolder: app/build
-    indexDocument: index.html
+    errorDocument: index.html
+
+  scripts:
+    hooks:
+      "deploy:finalize": bash scripts/deploy.sh
+
+provider:
+  name: aws
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "*"

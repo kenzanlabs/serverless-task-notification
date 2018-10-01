@@ -1,5 +1,5 @@
-export NO_COLOR=true
-npm install -s
-cd app 
-npm install -s
+npm install -g serverless
+npm install
+cd app
+npm install
 cd ..
