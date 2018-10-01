@@ -4,16 +4,11 @@
 
 Make sure you have the right AWS access key and secret key set!
 
-Build & Deploy:
+Install & Deploy:
 
 ```bash
 bash scripts/install.sh
-bash scripts/build.sh
-serverless deploy
+bash scripts/deploy.sh
 ```
 
-The scripts install the Serverless framework and all required dependencies, then build the FE artifacts.
-
-Serverless handles the rest!
-
-To completely teardown your deployment use: `bash scripts/teardown.sh`
+The scripts handle the installation of dependencies and deployment of the full API and FE application. To deploy a specific service, go into its directory and run `serverless deploy`

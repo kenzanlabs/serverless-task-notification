@@ -1,35 +1,26 @@
-service: serverless-task-notifications
-
-functions:
-  notify:
-    handler: process.handler
-    events:
-      - sns: notify
+service: serverless-notifications
 
 provider:
   name: aws
   runtime: nodejs8.10
   region: us-east-1
-  memorySize: 256
-
+  memorySize: 128
+  environment:
+    UsersAPI:
+      "Fn::ImportValue": "UsersAPI"
+    TasksAPI:
+      "Fn::ImportValue": "TasksAPI"
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dynamodb:*
         - s3:*
         - sns:*
         - ec2:*
         - ses:*
       Resource: "*"
 
-resources:
-  Resources:
-    socketServer:
-      Type: AWS::EC2::Instance
-      Properties:
-        ImageId: ami-04681a1dbd79675a5
-        InstanceType: t2.micro
-        KeyName: serverless-task-notification
-        Tags:
-          - Key: Name
-            Value: socketServer
+functions:
+  notify:
+    handler: process.handler
+    events:
+      - sns: newTask

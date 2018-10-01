@@ -1,5 +1,4 @@
-npm install -g serverless
-npm install
-cd app
-npm install
-cd ..
+#!/bin/bash
+
+npm install -g serverless recursive-install
+npm-recursive-install

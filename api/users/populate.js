@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 "use strict";
 
 const AWS = require("aws-sdk");
@@ -16,8 +15,8 @@ function populateUsers() {
               Item: {
                 id: "1234",
                 name: "Scott",
-                email: "jnerney@kenzan.com",
-                phone: "+14568854"
+                email: "jnerney@kenzan.com", //process.env.SCOTT_EMAIL,
+                phone: "+14014306957" //process.env.SCOTT_PHONE
               }
             }
           },
@@ -35,7 +34,7 @@ function populateUsers() {
               Item: {
                 id: "3456",
                 name: "Carlos",
-                phone: "+16658974"
+                phone: "+15027591445"
               }
             }
           }

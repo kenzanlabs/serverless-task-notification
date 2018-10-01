@@ -16,10 +16,18 @@ import MentionFieldController, {
 } from '../MentionFieldController/MentionFieldController'
 import RemovableUserAvatar from '../RemovableUserAvatar/RemovableUserAvatar'
 import SelectUserMenu from '../SelectUserMenu/SelectUserMenu'
+import * as uuidV4 from 'uuid/v4'
 
 export interface Task {
+  id: string
   title: string
   assignedTo: User[]
+  status: TaskStatus
+}
+
+export enum TaskStatus{
+  Sent,
+  NotSent
 }
 
 interface AddTaskFormProps extends WithStyles<typeof styles> {
@@ -102,6 +110,8 @@ class AddTaskForm extends React.Component<AddTaskFormProps> {
               this.props.onTaskCreated({
                 title: inputValue!,
                 assignedTo: selectedItems,
+                status: TaskStatus[TaskStatus[TaskStatus.NotSent]],
+                id: uuidV4()
               })
             }}
           >

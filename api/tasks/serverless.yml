@@ -49,3 +49,14 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+  Outputs:
+    TasksAPI:
+      Description: URL for the tasks service
+      Export:
+        Name: TasksAPI
+      Value:
+        Fn::Join:
+          - ""
+          - - "https://"
+            - Ref: ApiGatewayRestApi
+            - ".execute-api.us-east-1.amazonaws.com/dev/tasks"
