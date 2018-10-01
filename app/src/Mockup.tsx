@@ -69,53 +69,23 @@ class Mockup extends React.Component<MockupProps, MockupState> {
   socket: SocketIOClient.Socket = socketIo(SERVER_URL);;
 
   handleTaskCreated = (task: Task) => {
-    this.registerTask(task)
-      .then(res => {
-        this.setState(({ tasks }) => ({ tasks: [task, ...tasks] }))
-      })
-
-  //  Remove this code after implementing updating tasks via lambda
-    setTimeout(() => {
-      const updatedTask = Object.assign({}, task, {status: TaskStatus[TaskStatus[TaskStatus.Sent]]})
-
-      // this will trigger an event from the server 'task updated'
-      this.updateTasks(updatedTask)
-    }, 1000)
+    console.log(task.id)
+    this.setState(({ tasks }) => ({ tasks: [task, ...tasks] }))
   }
 
   componentDidMount() {
-    this.socket.on('task updated', (task: Task) => {
-      this.updateTaskArray(task);
+    this.socket.on('task updated', (taskID: string) => {
+      this.updateTaskArray(taskID);
     });
   }
 
-  updateTaskArray(task: Task) {
+  updateTaskArray(taskID: string) {
     const tasks = [...this.state.tasks];
-    const foundTask = tasks.find(item => item.id === task.id);
+    const foundTask = tasks.find(item => item.id === taskID);
 
     if(!foundTask) return
-    foundTask.status = TaskStatus[TaskStatus[task.status]]
+    foundTask.status = TaskStatus[TaskStatus[TaskStatus.Sent]]
     this.setState(({ tasks }) => ({ tasks}))
-  }
-
-  async updateTasks(task: Task) {
-    const taskDetails = this.slimTask(task);
-
-    await this.socket.emit('update task', taskDetails)
-  }
-
-  async registerTask(task: Task) {
-    const taskDetails = this.slimTask(task)
-
-    await this.socket.emit('register task', taskDetails)
-  }
-
-  slimTask(task: Task) {
-    const status = TaskStatus[task.status];
-    const {id} = task;
-    const taskDetails = {id, status}
-
-    return taskDetails;
   }
 
   render() {

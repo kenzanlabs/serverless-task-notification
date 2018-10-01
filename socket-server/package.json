@@ -1,5 +1,5 @@
 {
-  "name": "app-server",
+  "name": "socket-server",
   "version": "1.0.0",
   "description": "",
   "main": "./server/server.js",
@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "socket.io": "^2.1.1",
     "uuidv4": "^2.0.0"
