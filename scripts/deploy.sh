@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ../api/users
+cd api/users
 serverless deploy 
 cd ../tasks
 serverless deploy
