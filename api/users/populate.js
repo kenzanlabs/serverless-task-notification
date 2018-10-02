@@ -13,17 +13,26 @@ function populateUsers() {
           {
             PutRequest: {
               Item: {
-                id: "1234",
-                name: "Scott",
-                email: "jnerney@kenzan.com", //process.env.SCOTT_EMAIL,
-                phone: "+14014306957" //process.env.SCOTT_PHONE
+                id: "0",
+                name: "Elana",
+                phone: process.env.ELANA_PHONE
               }
             }
           },
           {
             PutRequest: {
               Item: {
-                id: "2345",
+                id: "1",
+                name: "Scott",
+                email: process.env.SCOTT_EMAIL,
+                phone: process.env.SCOTT_PHONE
+              }
+            }
+          },
+          {
+            PutRequest: {
+              Item: {
+                id: "2",
                 name: "Luis",
                 email: "luis@email.com"
               }
@@ -32,9 +41,47 @@ function populateUsers() {
           {
             PutRequest: {
               Item: {
-                id: "3456",
+                id: "3",
                 name: "Carlos",
                 phone: "+15027591445"
+              }
+            }
+          },
+          {
+            PutRequest: {
+              Item: {
+                id: "4",
+                name: "Jacob",
+                email: "nern@mail.net",
+                phone: "+12709878898"
+              }
+            }
+          },
+          {
+            PutRequest: {
+              Item: {
+                id: "5",
+                name: "Andrea",
+                email: "andreab@internet.org"
+              }
+            }
+          },
+          {
+            PutRequest: {
+              Item: {
+                id: "6",
+                name: "Jeremy",
+                phone: "+19085564765"
+              }
+            }
+          },
+          {
+            PutRequest: {
+              Item: {
+                id: "7",
+                name: "Kate",
+                email: "katie@yahoo.edu",
+                phone: "+14452122768"
               }
             }
           }
