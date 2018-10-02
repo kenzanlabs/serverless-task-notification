@@ -1,4 +1,4 @@
 #!/bin/bash
 
-npm install -g serverless recursive-install
-npm-recursive-install
+# run 'npm install' recursively for all our packages
+npm install -g recursive-install && npm-recursive-install

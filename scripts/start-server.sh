@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# placeholder for some things to get ec2 instance running
+
 sudo yum install git -y
 git clone https://github.com/kenzanlabs/serverless-task-notification.git
 cd serverless-task-notification/socket-server

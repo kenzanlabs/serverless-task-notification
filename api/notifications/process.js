@@ -1,13 +1,11 @@
 "use strict";
 
 const AWS = require("aws-sdk");
-const http = require("http");
 const https = require("https");
+const http = require("http");
 
 module.exports.handler = event => {
-  let snsMessage = event.Records[0].Sns.Message.split(",");
-  let sessionID = snsMessage[0];
-  let taskID = snsMessage[1];
+  let taskID = event.Records[0].Sns.Message;
 
   https.get(process.env.TasksAPI, res => {
     res.setEncoding("utf8");
@@ -51,7 +49,7 @@ module.exports.handler = event => {
           if (task.type == "sms" || task.type == "both") {
             smsUser(user.phone, msg);
           }
-          postResults(sessionID, taskID);
+          postResults(taskID);
         });
       });
     });
@@ -111,7 +109,6 @@ function postResults(sessionID, taskID) {
         });
         req.write(
           JSON.stringify({
-            sessionID: sessionID,
             taskID: taskID
           })
         );
