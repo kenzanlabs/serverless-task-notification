@@ -97,12 +97,12 @@ function postResults(sessionID, taskID) {
         return console.log(err);
       } else {
         let dns = result.Reservations[0].Instances[0].PublicDnsName;
-        if (!instance) {
+        if (!dns) {
           dns = result.Reservations[1].Instances[0].PublicDnsName;
         }
         const req = http.request({
           hostname: dns,
-          post: 1337,
+          port: 9000,
           path: "/notifications",
           method: "POST"
         });

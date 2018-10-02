@@ -37,10 +37,12 @@ module.exports.handler = (event, context, callback) => {
         statusCode: 200,
         body: newTask.id
       });
+      return;
     });
   } else {
     callback(null, {
       statusCode: 400
     });
+    return;
   }
 };
