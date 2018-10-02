@@ -1,12 +1,21 @@
 #!/bin/bash
 
-# placeholder for some things to get ec2 instance running
+# setup instance
+sudo yum install git docker -y
+sudo usermod -aG docker ec2-user
+logout
 
-sudo yum install git -y
+# run the socket-server
+sudo service docker restart
 git clone https://github.com/kenzanlabs/serverless-task-notification.git
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
-. ~/.nvm/nvm.sh
-nvm install 8.11
 cd serverless-task-notification/socket-server
-npm install 
-node ./server/server.js
+docker build -t socket-server .
+docker run -d -p 9000:9000 socket-server
+
+# restart with changes
+cd serverless-task-notification
+git pull
+cd socket-server
+sudo service docker restart
+docker build -t socket-server .
+docker run -d -p 9000:9000 socket-server
