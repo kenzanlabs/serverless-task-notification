@@ -2,6 +2,7 @@
 
 const AWS = require("aws-sdk");
 const https = require("https");
+const http = require("http");
 
 module.exports.handler = event => {
   let taskID = event.Records[0].Sns.Message;
@@ -97,7 +98,7 @@ function postResults(sessionID, taskID) {
         if (!dns) {
           dns = result.Reservations[1].Instances[0].PublicDnsName;
         }
-        const req = require("http").request({
+        const req = http.request({
           hostname: dns,
           port: 9000,
           path: "/notifications",
