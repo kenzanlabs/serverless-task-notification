@@ -4,6 +4,10 @@ import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import Paper from '@material-ui/core/Paper/Paper'
+import CloudUpload from '@material-ui/icons/CloudUpload';
+import CloudDone from '@material-ui/icons/CloudDone';
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
 import {
   createStyles,
   Theme,
@@ -14,13 +18,6 @@ import * as React from 'react'
 import AddTaskForm, { Task, TaskStatus } from './components/AddTaskForm/AddTaskForm'
 import UserAvatar from './components/UserAvatar/UserAvatar'
 import * as socketIo from 'socket.io-client'
-
-const SERVER_URL = process.env.SERVER_URL || 'http://localhost:9000'
-
-import CloudUpload from '@material-ui/icons/CloudUpload';
-import CloudDone from '@material-ui/icons/CloudDone';
-import red from '@material-ui/core/colors/red';
-import green from '@material-ui/core/colors/green';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -55,6 +52,7 @@ interface MockupState {
   tasks: Task[]
 }
 
+const SERVER_URL = process.env.SERVER_URL || 'http://localhost:9000'
 const users = [
   { name: 'John Connor' },
   { name: 'Luis Hernandez' },
