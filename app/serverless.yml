@@ -1,0 +1,27 @@
+service: serverless-app
+
+plugins:
+  - serverless-finch
+  - serverless-plugin-scripts
+
+custom:
+  client:
+    bucketName: serverless-app-ui
+    distributionFolder: build
+    errorDocument: index.html
+
+  scripts:
+    hooks:
+      'package:createDeploymentArtifacts': npm run build
+      'deploy:finalize': serverless client deploy --no-confirm
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-east-1
+  memorySize: 128
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: '*'

@@ -1,5 +1,12 @@
 service: serverless-users
 
+plugins:
+  - serverless-plugin-scripts
+custom:
+  scripts:
+    hooks:
+      "deploy:finalize": node populate.js
+
 functions:
   getUsers:
     handler: getAll.handler
@@ -35,3 +42,14 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+  Outputs:
+    UsersAPI:
+      Description: URL for the users service
+      Export:
+        Name: UsersAPI
+      Value:
+        Fn::Join:
+          - ""
+          - - "https://"
+            - Ref: ApiGatewayRestApi
+            - ".execute-api.us-east-1.amazonaws.com/dev/users"

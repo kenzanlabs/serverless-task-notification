@@ -1,0 +1,30 @@
+{
+  "name": "socket-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./server/server.js",
+  "scripts": {
+    "test": "PORT=3030 NODE_ENV=test nyc mocha 'test/**/*.test.js' -R spec -w",
+    "coverage": "nyc test",
+    "develop": "nodemon ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1",
+    "uuidv4": "^2.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.4",
+    "nyc": "^13.0.1",
+    "sinon": "^6.3.4",
+    "socket.io-client": "^2.1.1",
+    "supertest": "^3.3.0"
+  }
+}

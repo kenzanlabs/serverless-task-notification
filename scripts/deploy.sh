@@ -1,9 +1,12 @@
+#!/bin/bash
+
 cd api/users
-serverless deploy
+serverless deploy 
 cd ../tasks
 serverless deploy
 cd ../notifications
 serverless deploy
-cd ../..
-serverless client deploy --no-confirm
-node ./api/users/populate.js
+cd ../../app
+serverless deploy
+#cd ../socket-server
+#serverless deploy
