@@ -14,10 +14,7 @@ module.exports.handler = (event, context, callback) => {
 
     callback(null, {
       statusCode: 200,
-      body: JSON.stringify({
-        sessionID: Math.floor(1000 + Math.random() * 9000).toString(),
-        users: result.Items
-      })
+      body: JSON.stringify(result.Items)
     });
   });
 };
