@@ -85,7 +85,8 @@ class Mockup extends React.Component<MockupProps, MockupState> {
     const foundTask = tasks.find(item => item.id === taskID);
 
     if(!foundTask) return
-    foundTask.status = TaskStatus[TaskStatus[TaskStatus.Sent]]
+
+    foundTask.status = TaskStatus.Sent;
     this.setState(({ tasks }) => ({ tasks}))
   }
 
@@ -115,9 +116,9 @@ class Mockup extends React.Component<MockupProps, MockupState> {
                     <ListItem>
                       <ListItemText>{task.title}</ListItemText>
                       {
-                        task.status === TaskStatus.NotSent ?
-                          <CloudUpload className={classes.pendingIcon}/> :
-                          <CloudDone  className={classes.sentIcon}/>}
+                        task.status === TaskStatus.Sent ?
+                          <CloudDone  className={classes.sentIcon}/> :
+                          <CloudUpload className={classes.pendingIcon}/>}
                       {task.assignedTo.map(user => (
                         <UserAvatar key={user.name} userName={user.name} />
                       ))}
