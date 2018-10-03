@@ -18,4 +18,3 @@ serverless deploy --aws-s3-accelerate -v
 # FE build and deploy
 cd ../../app
 serverless deploy --aws-s3-accelerate -v
-
