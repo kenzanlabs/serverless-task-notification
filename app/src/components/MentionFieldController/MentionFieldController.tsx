@@ -5,7 +5,11 @@ import getCaretCoordinates from 'textarea-caret'
 
 type RemoveItem<T> = (item: T, callback?: () => void) => void
 
-export type CaretPosition = { top: number; left: number; height: number }
+export interface CaretPosition {
+  top: number
+  left: number
+  height: number
+}
 
 interface ProvidedState<T> extends ControllerStateAndHelpers<T> {
   selectedItems: T[]
