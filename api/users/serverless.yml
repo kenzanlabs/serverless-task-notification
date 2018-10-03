@@ -14,7 +14,7 @@ functions:
       - http:
           path: users
           method: get
-
+          cors: true
 provider:
   name: aws
   runtime: nodejs8.10
