@@ -9,34 +9,37 @@ import Grid from '@material-ui/core/Grid/Grid'
 import Popper from '@material-ui/core/Popper/Popper'
 import TextField from '@material-ui/core/TextField/TextField'
 import { deburr } from 'lodash'
+import { ChangeEventHandler } from 'react'
 import * as React from 'react'
-import { User } from '../../model/User'
+import { NotificationType } from '../../service/model/Task'
+import { User } from '../../service/model/User'
 import MentionFieldController, {
   CaretPosition,
 } from '../MentionFieldController/MentionFieldController'
 import RemovableUserAvatar from '../RemovableUserAvatar/RemovableUserAvatar'
 import SelectUserMenu from '../SelectUserMenu/SelectUserMenu'
-import * as uuidV4 from 'uuid/v4'
 
-export interface Task {
-  id: string
+export interface TaskFormContent {
   title: string
   assignedTo: User[]
-  status: TaskStatus
-}
-
-export enum TaskStatus{
-  Sent,
-  NotSent
+  notificationType: NotificationType
 }
 
 interface AddTaskFormProps extends WithStyles<typeof styles> {
   users: User[]
-  onTaskCreated: (task: Task) => void
+  onTaskCreated: (task: TaskFormContent) => void
 }
 
-class AddTaskForm extends React.Component<AddTaskFormProps> {
+interface AddTaskFormState {
+  notificationType: NotificationType
+}
+
+class AddTaskForm extends React.Component<AddTaskFormProps, AddTaskFormState> {
   inputRef = React.createRef<HTMLInputElement>()
+
+  state: AddTaskFormState = {
+    notificationType: 'email',
+  }
 
   searchUsers(rawSearch: string) {
     const search = deburr(rawSearch.trim()).toLowerCase()
@@ -78,6 +81,23 @@ class AddTaskForm extends React.Component<AddTaskFormProps> {
     }
   }
 
+  handleNotificationChange: ChangeEventHandler<HTMLInputElement> = ev => {
+    const type = ev.target.value as NotificationType
+
+    this.setState(({ notificationType }) => ({
+      notificationType:
+        notificationType === 'none'
+          ? type
+          : notificationType === type
+            ? 'none'
+            : notificationType === 'both'
+              ? type === 'sms'
+                ? 'email'
+                : 'sms'
+              : 'both',
+    }))
+  }
+
   render() {
     const { classes } = this.props
 
@@ -110,8 +130,7 @@ class AddTaskForm extends React.Component<AddTaskFormProps> {
               this.props.onTaskCreated({
                 title: inputValue!,
                 assignedTo: selectedItems,
-                status: TaskStatus[TaskStatus[TaskStatus.NotSent]],
-                id: uuidV4()
+                notificationType: this.state.notificationType,
               })
             }}
           >
@@ -130,6 +149,7 @@ class AddTaskForm extends React.Component<AddTaskFormProps> {
                     inputProps={getInputProps()}
                     InputLabelProps={getLabelProps()}
                     inputRef={this.inputRef}
+                    placeholder="What needs to be done? Tag users typing @"
                   />
                 </Grid>
                 <Button
@@ -143,29 +163,46 @@ class AddTaskForm extends React.Component<AddTaskFormProps> {
                 </Button>
               </Grid>
 
-              <Grid item={true} container={true} xs={12} alignItems="center"  className={classes.secondRow}>
-                <Grid item={true} xs={3}  >
+              <Grid
+                item={true}
+                container={true}
+                xs={12}
+                alignItems="center"
+                className={classes.secondRow}
+              >
+                <Grid item={true} xs={3}>
                   <FormControl component="fieldset">
                     <FormLabel component="legend">Notify via</FormLabel>
-                    <FormGroup row>
+                    <FormGroup row={true}>
                       <FormControlLabel
-                        control={<Checkbox defaultChecked={true} value="sms" />}
+                        control={
+                          <Checkbox
+                            checked={['sms', 'both'].includes(
+                              this.state.notificationType,
+                            )}
+                            onChange={this.handleNotificationChange}
+                            value="sms"
+                          />
+                        }
                         label="SMS"
                       />
                       <FormControlLabel
-                        control={<Checkbox value="email" />}
+                        control={
+                          <Checkbox
+                            checked={['email', 'both'].includes(
+                              this.state.notificationType,
+                            )}
+                            onChange={this.handleNotificationChange}
+                            value="email"
+                          />
+                        }
                         label="Email"
                       />
                     </FormGroup>
                   </FormControl>
                 </Grid>
 
-                <Grid
-                  item={true}
-                  xs={true}
-                  container={true}
-                  justify="flex-end"
-                >
+                <Grid item={true} xs={true} container={true} justify="flex-end">
                   {selectedItems.map(user => (
                     <RemovableUserAvatar
                       key={user.name}
