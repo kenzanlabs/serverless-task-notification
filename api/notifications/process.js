@@ -30,7 +30,7 @@ module.exports.handler = event => {
           body += data;
         });
         res.on("end", () => {
-          let users = JSON.parse(body).users;
+          let users = JSON.parse(body);
           let user = {};
           let i;
           for (i = 0; i < users.length; i++) {
