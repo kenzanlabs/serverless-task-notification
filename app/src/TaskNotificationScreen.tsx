@@ -47,7 +47,9 @@ interface TaskNotificationScreenState {
   users: User[]
 }
 
-const SERVER_URL = process.env.SERVER_URL || 'http://localhost:9000'
+const SERVER_URL =
+  process.env.SERVER_URL ||
+  'http://ec2-34-229-16-49.compute-1.amazonaws.com:9000'
 
 class TaskNotificationScreen extends React.Component<
   TaskNotificationScreenProps,
@@ -148,6 +150,7 @@ class TaskNotificationScreen extends React.Component<
     this.socket = socketIo(SERVER_URL)
 
     this.socket.on('task updated', (taskId: string) => {
+      console.log('>>>', taskId)
       this.markTaskCommitted(taskId)
     })
   }
