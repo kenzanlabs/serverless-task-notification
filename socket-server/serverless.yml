@@ -25,3 +25,9 @@ resources:
         Tags:
           - Key: Name
             Value: socketServer
+  Outputs:
+    SocketDNS:
+      Description: dns for socket and notification posts ec2 instance
+      Export:
+        Name: SocketDNS
+      Value: { "Fn::GetAtt": ["socketServer", "PublicDnsName"] }

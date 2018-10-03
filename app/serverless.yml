@@ -19,12 +19,13 @@ provider:
   name: aws
   runtime: nodejs8.10
   region: us-east-1
-  memorySize: 128
   environment:
     UsersAPI:
-      'Fn::ImportValue': 'UsersAPI'
+      "Fn::ImportValue": "UsersAPI"
     TasksAPI:
-      'Fn::ImportValue': 'TasksAPI'
+      "Fn::ImportValue": "TasksAPI"
+    SocketDNS:
+      "Fn::ImportValue": "SocketDNS"
   iamRoleStatements:
     - Effect: Allow
       Action:

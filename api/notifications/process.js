@@ -87,32 +87,18 @@ function smsUser(phoneNumber, msg) {
 }
 
 function postResults(sessionID, taskID) {
-  let ec2 = new AWS.EC2();
-  ec2.describeInstances(
-    { Filters: [{ Name: "tag:Name", Values: ["socketServer"] }] },
-    (err, result) => {
-      if (err) {
-        return console.log(err);
-      } else {
-        let dns = result.Reservations[0].Instances[0].PublicDnsName;
-        if (!dns) {
-          dns = result.Reservations[1].Instances[0].PublicDnsName;
-        }
-        const req = http.request({
-          hostname: dns,
-          port: 9000,
-          path: "/notifications",
-          method: "POST"
-        });
-        req.on("error", e => {
-          return console.log(e);
-        });
-        req.write(
-          JSON.stringify({
-            taskID: taskID
-          })
-        );
-      }
-    }
+  const req = http.request({
+    hostname: process.env.SocketDNS,
+    port: 9000,
+    path: "/notifications",
+    method: "POST"
+  });
+  req.on("error", e => {
+    return console.log(e);
+  });
+  req.write(
+    JSON.stringify({
+      taskID: taskID
+    })
   );
 }

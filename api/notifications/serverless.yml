@@ -10,6 +10,9 @@ provider:
       "Fn::ImportValue": "UsersAPI"
     TasksAPI:
       "Fn::ImportValue": "TasksAPI"
+    SocketDNS:
+      "Fn::ImportValue": "SocketDNS"
+
   iamRoleStatements:
     - Effect: Allow
       Action:
