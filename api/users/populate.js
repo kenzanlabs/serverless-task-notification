@@ -52,8 +52,8 @@ function populateUsers() {
               Item: {
                 id: "4",
                 name: "Jacob",
-                email: "nern@mail.net",
-                phone: "+12709878898"
+                email: process.env.JACOB_EMAIL,
+                phone: process.env.JACOB_PHONE
               }
             }
           },
