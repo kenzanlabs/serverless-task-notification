@@ -151,3 +151,6 @@ $RECYCLE.BIN/
 
 # App production build
 app/build
+
+#secrets
+serverless-task-notification.pem
