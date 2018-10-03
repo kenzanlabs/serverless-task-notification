@@ -3,6 +3,9 @@ phases:
   install:
     commands:
       - bash scripts/install.sh
+  build:
+    commands:
+      - bash scripts/test.sh
   post_build:
     commands:
       - bash scripts/post_build.sh
