@@ -47,8 +47,6 @@ const MOCK_TASKS = [
   }
 ];
 function resolveAccionsGET(a, b) {
-
-  console.log("in random function ")
   const res = {
     data: {
       tasks: MOCK_TASKS,
@@ -93,8 +91,6 @@ describe('', () => {
     expect(axios.get).not.to.be.called;
 
     notificationService.fetchFromAPI('api').then((a, b) => {
-      console.log(a);
-
       done();
     })
     // notificationService.fetchFromAPI('api').then((res) => {

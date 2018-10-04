@@ -1,9 +1,11 @@
 const AWS = require("aws-sdk");
 
 const AWS_Service = {
-
-  emailUser: (emailAddress, msg) =>  {
+  emailUser: (emailAddress, msg, cb) =>  {
     const sesClient = new AWS.SES();
+    
+    
+    if(!emailAddress && !msn) return;
     sesClient.sendEmail(
       {
         Destination: { ToAddresses: [emailAddress] },
@@ -12,23 +14,19 @@ const AWS_Service = {
           Subject: { Data: "New MSG from the Serverless-Task-Notication app!" },
           Body: { Text: { Data: msg } }
         }
-      },
-      (err, res) => {
-        if (err) console.log(err);
-      }
+      }, cb
     );
   },
 
-  smsUser: (phoneNumber, msg) =>  {
+  smsUser: (phoneNumber, msg, cb) =>  {
+    console.log("in user")
+
     let snsClient = new AWS.SNS();
     snsClient.publish(
       {
         PhoneNumber: phoneNumber,
         Message: msg
-      },
-      (err, res) => {
-        if (err) console.log(err);
-      }
+      }, cb
     );
   },
 
