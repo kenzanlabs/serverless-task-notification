@@ -2,10 +2,7 @@ const AWS = require("aws-sdk");
 const awsMock = require('aws-sdk-mock');
 const chai = require('chai');
 const expect = chai.expect;
-const sinon = require('sinon');
-const sinonChai = require("sinon-chai");
 const AWSService = require('../../services/AWS.service');
-chai.use(sinonChai);
 
 const STATIC_ASSETS = {
   SES: {
@@ -16,11 +13,9 @@ const STATIC_ASSETS = {
       }
     }
   }
-
 }
 
 describe('AWSService', () =>{
-  let sandbox;
   AWS.config.paramValidation = false;
 
   it('emailUser: should call "AWS" with correct params', (done) => {
