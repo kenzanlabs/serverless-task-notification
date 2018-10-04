@@ -1,5 +1,4 @@
 const AWS = require("aws-sdk");
-const awsMock = require('aws-sdk-mock');
 const chai = require('chai');
 const expect = chai.expect;
 const AWSService = require('../../services/AWS.service');
