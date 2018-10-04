@@ -1,0 +1,26 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha 'test/**/*.test.js' -R spec -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "aws-sdk-mock": "^4.2.0",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "sinon": "^6.3.4",
+    "sinon-chai": "^3.2.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.327.0",
+    "axios": "^0.18.0"
+  }
+}
