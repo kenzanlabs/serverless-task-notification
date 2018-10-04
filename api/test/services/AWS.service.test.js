@@ -3,6 +3,7 @@ const awsMock = require('aws-sdk-mock');
 const chai = require('chai');
 const expect = chai.expect;
 const AWSService = require('../../services/AWS.service');
+const sinon = require('sinon');
 
 const STATIC_ASSETS = {
   SES: {
@@ -16,32 +17,153 @@ const STATIC_ASSETS = {
 }
 
 describe('AWSService', () =>{
-  AWS.config.paramValidation = false;
 
-  it('emailUser: should call "AWS" with correct params', (done) => {
-    awsMock.mock('SES', 'sendEmail', (params, callback) => {
-      callback(null, params);
+  describe('emailUser method', () => {
+    AWS.config.paramValidation = false;
+
+    let sandbox;
+
+    beforeEach((done) => {
+      sandbox = sinon.createSandbox();
+      sendEmail = sandbox.spy()
+
+      sandbox.stub(AWS, 'SES').callsFake(() => {
+        return {sendEmail}
+      })
+      done();
+    })
+
+    afterEach(() => {
+      sandbox.reset();
+      sandbox.restore();
     });
 
-    AWSService.emailUser('test@email.com', "Message1", (err, data) => {
-      const {Destination, Source, Message} = data;
+    it('should not call aws if no email, or message are passed', () => {
+      expect(AWS.SES).not.to.have.been.called;
+      expect(sendEmail).not.to.have.been.called;
 
-      expect(Destination.ToAddresses[0]).to.equal('test@email.com');
-      expect(Source).to.equal(STATIC_ASSETS.SES.Source);
-      expect(Message.Subject.Data).to.equal(STATIC_ASSETS.SES.message.Subject.Data);
-      expect(Message.Body.Text.Data).to.equal('Message1');
+      AWSService.emailUser();
 
-      done()
+      expect(AWS.SES).not.to.have.been.called;
+      expect(sendEmail).not.to.have.been.called;
+    });
+
+    it('emailUser: should call "AWS" with correct params', (done) => {
+      expect(AWS.SES).not.to.have.been.called;
+      expect(sendEmail).not.to.have.been.called;
+
+      AWSService.emailUser('test@email.com', "Message1");
+
+      expect(AWS.SES).to.have.been.called;
+      expect(sendEmail).to.have.been.called;
+      expect(sendEmail.calledWithMatch(
+        {
+          Destination: {ToAddresses: ['test@email.com']},
+          Source: "serverlesstasknotification@gmail.com",
+          Message: {
+            Subject: {Data: "New MSG from the Serverless-Task-Notication app!"},
+            Body: {Text: {Data: 'Message1'}}
+          }
+        }
+      )).to.be.true;
+
+      done();
     });
   });
 
-  it('smsUser: should call "AWS" with correct params', (done) => {
-    awsMock.mock('SNS', 'publish');
+  describe('smsUser method', () => {
+    AWS.config.paramValidation = false;
 
-    AWSService.smsUser('000-000-0000', "Message1", (err, data) => {
-      expect(data.PhoneNumber).to.equal('000-000-0000');
-      expect(data.Message).to.equal('Message1');
-      done()
+    let sandbox, publish;
+
+    beforeEach((done) => {
+      sandbox = sinon.createSandbox();
+      publish = sandbox.spy()
+
+      sandbox.stub(AWS, 'SNS').callsFake(() => {
+        return {publish}
+      })
+      done();
+    })
+
+    afterEach(() => {
+      sandbox.reset();
+      sandbox.restore();
+    });
+
+    it('should not call aws if no phoneNumber, or message are passed', (done) => {
+      expect(AWS.SNS).not.to.have.been.called;
+      expect(publish).not.to.have.been.called;
+
+      AWSService.smsUser();
+
+      expect(AWS.SNS).not.to.have.been.called;
+      expect(publish).not.to.have.been.called;
+      done();
+    });
+
+    it('smsUser: should call "AWS" with correct params', (done) => {
+      expect(AWS.SNS).not.to.have.been.called;
+      expect(publish).not.to.have.been.called;
+
+      AWSService.smsUser('123', 'Message1');
+
+      expect(AWS.SNS).to.have.been.called;
+      expect(publish).to.have.been.called;
+      expect(publish.calledWithMatch(
+        {
+          PhoneNumber: '123',
+          Message: 'Message1'
+        },
+      )).to.be.true;
+
+      done();
+    });
+  });
+
+  describe('postResults method', () => {
+    AWS.config.paramValidation = false;
+
+    let sandbox, describeInstances;
+
+    beforeEach((done) => {
+      sandbox = sinon.createSandbox();
+      describeInstances = sandbox.spy()
+
+      sandbox.stub(AWS, 'EC2').callsFake(() => {
+        return {describeInstances}
+      })
+      done();
+    })
+
+    afterEach(() => {
+      sandbox.reset();
+      sandbox.restore();
+    });
+
+    it('should not call aws if no sessionID, or taskID are passed', (done) => {
+      expect(AWS.EC2).not.to.have.been.called;
+      expect(describeInstances).not.to.have.been.called;
+
+      AWSService.postResults();
+
+      expect(AWS.EC2).not.to.have.been.called;
+      expect(describeInstances).not.to.have.been.called;
+      done();
+    });
+
+    it('smsUser: should call "AWS" with correct params', (done) => {
+      expect(AWS.EC2).not.to.have.been.called;
+      expect(describeInstances).not.to.have.been.called;
+
+      AWSService.postResults('123', 't2');
+
+      expect(AWS.EC2).to.have.been.called;
+      expect(describeInstances).to.have.been.called;
+      expect(describeInstances.calledWithMatch(
+        { Filters: [{ Name: "tag:Name", Values: ["socketServer"] }] }
+      )).to.be.true;
+      done();
     });
   });
 });
