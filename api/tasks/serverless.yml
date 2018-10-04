@@ -7,18 +7,21 @@ functions:
       - http:
           path: tasks
           method: get
+          cors: true
   createTask:
     handler: create.handler
     events:
       - http:
           path: tasks
           method: post
+          cors: true
   deleteTask:
     handler: delete.handler
     events:
       - http:
           path: tasks/{id}
           method: delete
+          cors: true
 
 provider:
   name: aws

@@ -2,6 +2,7 @@
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "defaultSeverity": "warning",
   "rules": {
+    "no-console": false,
     "curly": false,
     "interface-name": false,
     "object-literal-sort-keys": false,

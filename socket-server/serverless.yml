@@ -16,7 +16,7 @@ resources:
       Type: AWS::EC2::Instance
       Properties:
         AvailabilityZone: us-east-1a
-        ImageId: ami-04681a1dbd79675a5
+        ImageId: ami-02757899d9f60cabc
         InstanceType: t2.micro
         KeyName: serverless-task-notification
         SubnetId: subnet-7d85680b
@@ -25,3 +25,9 @@ resources:
         Tags:
           - Key: Name
             Value: socketServer
+  Outputs:
+    SocketDNS:
+      Description: dns for socket and notification posts ec2 instance
+      Export:
+        Name: SocketDNS
+      Value: { "Fn::GetAtt": ["socketServer", "PublicDnsName"] }

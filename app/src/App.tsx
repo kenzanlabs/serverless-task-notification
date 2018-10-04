@@ -1,13 +1,13 @@
 import * as React from 'react'
 import GlobalStyles from './GlobalStyles'
-import Mockup from './Mockup'
+import TaskNotificationScreen from './TaskNotificationScreen'
 
 class App extends React.Component {
   public render() {
     return (
       <>
         <GlobalStyles />
-        <Mockup/>
+        <TaskNotificationScreen />
       </>
     )
   }

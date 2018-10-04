@@ -26,7 +26,6 @@ module.exports.handler = event => {
                 if (task.type == "sms" || task.type == "both") {
                   AWS_Service.smsUser(user.phone, msg);
                 }
-
                 AWS_Service.postResults(taskID);
               }
             })
