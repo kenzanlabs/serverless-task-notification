@@ -33,10 +33,10 @@ const AWS_Service = {
       Message: msg
     };
 
-    return new Promise(resolve => {
-      snsClient.publish(params, (err, data) =>
-        resolve(err ? err.message : data)
-      );
+    return new Promise((resolve, reject) => {
+      snsClient.publish(params, (err, data) => {
+        return err ? reject(err.message) : resolve(data);
+      });
     });
   },
 
