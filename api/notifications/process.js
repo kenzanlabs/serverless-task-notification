@@ -9,15 +9,10 @@ module.exports.handler = event => {
   if (TasksAPI && UsersAPI && taskID) {
     notificationService.fetchFromAPI(TasksAPI, "tasks").then(tasks => {
       const task = notificationService.findByID(tasks, "id", taskID);
-
-      console.log("FOUND TASK-  TASK ", task);
-
       if (task) {
-        console.log("HAVE TASK - ", task);
         notificationService
           .fetchFromAPI(UsersAPI)
           .then(users => {
-            console.log("users", users);
             return notificationService.findByID(users, "id", task.contactID);
           })
           .then(user => {
@@ -36,11 +31,11 @@ module.exports.handler = event => {
                 });
               }
               AWS_Service.postResults(taskID).then(res => {
-                console.log("posted", res.data);
+                console.log("posted", res);
               });
 
               AWS_Service.taskCompleted(taskID).then(res => {
-                console.log("task marked complete", res.data);
+                console.log("task marked complete", res);
               });
             }
           });

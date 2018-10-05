@@ -19,13 +19,6 @@ provider:
   name: aws
   runtime: nodejs8.10
   region: us-east-1
-  environment:
-    REACT_APP_USERS_API:
-      "Fn::ImportValue": "UsersAPI"
-    REACT_APP_TASKS_API:
-      "Fn::ImportValue": "TasksAPI"
-    REACT_APP_SOCKET_DNS:
-      "Fn::ImportValue": "SocketDNS"
   iamRoleStatements:
     - Effect: Allow
       Action:
