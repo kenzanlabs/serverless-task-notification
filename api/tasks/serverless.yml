@@ -22,6 +22,10 @@ functions:
           path: tasks/{id}
           method: delete
           cors: true
+  updateTask:
+    handler: update.handler
+    events:
+      - sns: taskComplete
 
 provider:
   name: aws
