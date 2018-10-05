@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DON'T USE ME YET 
+# DON'T USE ME YET
 
 bash scripts/install.sh
 npm install -g serverless
