@@ -3,7 +3,7 @@ import * as urlJoin from 'url-join'
 import { CreateTaskPayload, Task } from './model/Task'
 
 const TASKS_RESOURCE_ENDPOINT =
-  'https://r6h74drpa2.execute-api.us-east-1.amazonaws.com/dev/tasks'
+  'https://7ino8k0y4l.execute-api.us-east-1.amazonaws.com/dev/tasks'
 
 const tasks = axios.create({
   baseURL: TASKS_RESOURCE_ENDPOINT,

@@ -49,7 +49,7 @@ interface TaskNotificationScreenState {
 
 const SERVER_URL =
   process.env.SERVER_URL ||
-  'http://ec2-34-229-16-49.compute-1.amazonaws.com:9000'
+  'http://ec2-54-161-22-82.compute-1.amazonaws.com:9000'
 
 class TaskNotificationScreen extends React.Component<
   TaskNotificationScreenProps,
