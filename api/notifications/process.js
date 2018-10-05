@@ -8,18 +8,23 @@ module.exports.handler = event => {
 
   if (TasksAPI && UsersAPI && taskID) {
     notificationService.fetchFromAPI(TasksAPI, "tasks").then(tasks => {
-      const task = notificationService.findByID(tasks, "taskID", taskID);
+      const task = notificationService.findByID(tasks, "id", taskID);
+
+      console.log("FOUND TASK-  TASK ", task);
 
       if (task) {
+        console.log("HAVE TASK - ", task);
         notificationService
-          .fetchFromAPI(UsersAPI, "users")
+          .fetchFromAPI(UsersAPI)
           .then(users => {
+            console.log("users", users);
             return notificationService.findByID(users, "id", task.contactID);
           })
           .then(user => {
+            console.log("USER FOUND", user);
+
             if (user) {
               const msg = `Hey ${user.name}, \n ${task.body}`;
-
               if (task.type == "email" || task.type == "both") {
                 AWS_Service.emailUser(user.email, msg).then(res => {
                   console.log("email Sent", res);
@@ -27,7 +32,7 @@ module.exports.handler = event => {
               }
               if (task.type == "sms" || task.type == "both") {
                 AWS_Service.smsUser(user.phone, msg).then(res => {
-                  console.log("sms Sent", res.data);
+                  console.log("sms Sent", res);
                 });
               }
               AWS_Service.postResults(taskID).then(res => {

@@ -5,7 +5,7 @@ const NotificationService = {
     return axios
       .get(API)
       .then(res => {
-        return res.data[item];
+        return res.data;
       })
       .catch(e => e);
   },
