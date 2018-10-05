@@ -9,17 +9,12 @@ module.exports.handler = (event, context, callback) => {
       TableName: "tasks",
       Key: { id: event.pathParameters.id }
     },
-    (err, task) => {
+    (err, result) => {
       if (err) return console.log(err);
-      item = {
-        id: task.id,
-        contactID: task.contactID,
-        type: task.type,
-        body: task.body,
-        complete: true
-      };
-      dynamoClient.put({ TableName: "tasks", Item: item }, err => {
+      result.Item.complete = true;
+      dynamoClient.put({ TableName: "tasks", Item: result.Item }, err => {
         if (err) return console.log(err);
+        callback(null, { statusCode: 200 });
       });
     }
   );
