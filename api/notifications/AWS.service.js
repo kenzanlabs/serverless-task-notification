@@ -43,36 +43,30 @@ const AWS_Service = {
   postResults: taskID => {
     if (!taskID) return;
 
-    const ec2 = new AWS.EC2();
-    const params = {
-      Filters: [
-        {
-          Name: "tag:Name",
-          Values: ["socketServer"]
-        }
-      ]
-    };
-
     return new Promise(resolve => {
-      ec2.describeInstances(params, (err, result) => {
-        if (err) resolve(err.message);
+      const newDNS = `http://${process.env.SocketDNS}:${9000}/notifications`;
 
-        // TODO - it seems better to get the dns from the env variable, check with nerney to see if it was being fetched via ec2
-        //for any other reason
-        // const dns = result.Reservations[0].Instances[0].PublicDnsName || result.Reservations[1].Instances[0].PublicDnsName;
-        const newDNS = `http://${process.env.SocketDNS}:${9000}/notifications`;
+      axios
+        .post(newDNS, { taskID: taskID })
+        .then(response => {
+          console.log("in then", response.data);
+          resolve(response);
+        })
+        .catch(error => {
+          console.log("in error", error.message);
+          resolve(error.message);
+        });
 
-        axios
-          .post(newDNS, { taskID: taskID })
-          .then(response => {
-            console.log("in then", response.data);
-            resolve(response);
-          })
-          .catch(error => {
-            console.log("in error", error.message);
-            resolve(error.message);
-          });
-      });
+      axios
+        .patch(process.env.TasksAPI, { taskID: taskID })
+        .then(response => {
+          console.log("in then", response.data);
+          resolve(response);
+        })
+        .catch(error => {
+          console.log("in error", error.message);
+          resolve(error.message);
+        });
     });
   }
 };

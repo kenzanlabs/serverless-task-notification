@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cd app
 npm test 
 cd ../api
