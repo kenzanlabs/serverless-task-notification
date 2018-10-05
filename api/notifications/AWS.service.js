@@ -56,17 +56,6 @@ const AWS_Service = {
           console.log("in error", error.message);
           resolve(error.message);
         });
-
-      axios
-        .patch(process.env.TasksAPI, { taskID: taskID })
-        .then(response => {
-          console.log("in then", response.data);
-          resolve(response);
-        })
-        .catch(error => {
-          console.log("in error", error.message);
-          resolve(error.message);
-        });
     });
   }
 };
