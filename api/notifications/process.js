@@ -33,6 +33,10 @@ module.exports.handler = event => {
               AWS_Service.postResults(taskID).then(res => {
                 console.log("posted", res.data);
               });
+
+              AWS_Service.taskCompleted(taskID).then(res => {
+                console.log("task marked complete", res.data);
+              });
             }
           });
       }

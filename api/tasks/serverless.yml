@@ -25,10 +25,7 @@ functions:
   updateTask:
     handler: update.handler
     events:
-      - http:
-          path: tasks/{id}
-          method: patch
-          cors: true
+      - sns: taskComplete
 
 provider:
   name: aws

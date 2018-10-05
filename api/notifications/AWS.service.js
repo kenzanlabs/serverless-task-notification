@@ -40,6 +40,22 @@ const AWS_Service = {
     });
   },
 
+  taskCompleted: taskID => {
+    if (!taskID) return;
+
+    const snsClient = new AWS.SNS();
+    const params = {
+      TopicArn: "arn:aws:sns:us-east-1:884956725745:taskComplete",
+      Message: taskID
+    };
+
+    return new Promise(resolve => {
+      snsClient.publish(params, (err, data) => {
+        resolve(err ? err.message : data);
+      });
+    });
+  },
+
   postResults: taskID => {
     if (!taskID) return;
 
