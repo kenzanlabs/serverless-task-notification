@@ -12,6 +12,7 @@ import {
   WithStyles,
   withStyles,
 } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography/Typography'
 import CloudDone from '@material-ui/icons/CloudDone'
 import CloudUpload from '@material-ui/icons/CloudUpload'
 import * as React from 'react'
@@ -47,9 +48,7 @@ interface TaskNotificationScreenState {
   users: User[]
 }
 
-const SERVER_URL =
-  process.env.SERVER_URL ||
-  'http://ec2-34-229-16-49.compute-1.amazonaws.com:9000'
+const SERVER_URL = process.env.REACT_APP_SOCKET_DNS!
 
 class TaskNotificationScreen extends React.Component<
   TaskNotificationScreenProps,
@@ -170,6 +169,10 @@ class TaskNotificationScreen extends React.Component<
         alignItems="center"
         className={classes.root}
       >
+        <Typography variant="headline" gutterBottom={true}>
+          Serverless Task Notification
+        </Typography>
+
         <Grid item={true} xs={12} className={classes.taskFormRoot}>
           <AddTaskForm
             users={this.state.users}

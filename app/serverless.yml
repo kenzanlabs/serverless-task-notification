@@ -20,11 +20,11 @@ provider:
   runtime: nodejs8.10
   region: us-east-1
   environment:
-    UsersAPI:
+    REACT_APP_USERS_API:
       "Fn::ImportValue": "UsersAPI"
-    TasksAPI:
+    REACT_APP_TASKS_API:
       "Fn::ImportValue": "TasksAPI"
-    SocketDNS:
+    REACT_APP_SOCKET_DNS:
       "Fn::ImportValue": "SocketDNS"
   iamRoleStatements:
     - Effect: Allow

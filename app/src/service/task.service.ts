@@ -2,8 +2,7 @@ import axios from 'axios'
 import * as urlJoin from 'url-join'
 import { CreateTaskPayload, Task } from './model/Task'
 
-const TASKS_RESOURCE_ENDPOINT =
-  'https://r6h74drpa2.execute-api.us-east-1.amazonaws.com/dev/tasks'
+const TASKS_RESOURCE_ENDPOINT = process.env.REACT_APP_TASKS_API
 
 const tasks = axios.create({
   baseURL: TASKS_RESOURCE_ENDPOINT,

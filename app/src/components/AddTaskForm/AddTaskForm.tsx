@@ -15,6 +15,7 @@ import { NotificationType } from '../../service/model/Task'
 import { User } from '../../service/model/User'
 import MentionFieldController, {
   CaretPosition,
+  ChangeCallback,
 } from '../MentionFieldController/MentionFieldController'
 import RemovableUserAvatar from '../RemovableUserAvatar/RemovableUserAvatar'
 import SelectUserMenu from '../SelectUserMenu/SelectUserMenu'
@@ -81,6 +82,18 @@ class AddTaskForm extends React.Component<AddTaskFormProps, AddTaskFormState> {
     }
   }
 
+  handleOnSelect: ChangeCallback<User> = ([user]) => {
+    this.setState(({ notificationType }) => ({
+      notificationType: !user
+        ? notificationType
+        : ['email', 'both'].includes(notificationType) && !user.email
+          ? 'sms'
+          : ['sms', 'both'].includes(notificationType) && !user.phone
+            ? 'email'
+            : notificationType,
+    }))
+  }
+
   handleNotificationChange: ChangeEventHandler<HTMLInputElement> = ev => {
     const type = ev.target.value as NotificationType
 
@@ -104,6 +117,7 @@ class AddTaskForm extends React.Component<AddTaskFormProps, AddTaskFormState> {
     return (
       <MentionFieldController<User>
         itemToString={user => (user ? user.name : 'empty')}
+        onSelect={this.handleOnSelect}
       >
         {({
           getRootProps,
@@ -149,7 +163,7 @@ class AddTaskForm extends React.Component<AddTaskFormProps, AddTaskFormState> {
                     inputProps={getInputProps()}
                     InputLabelProps={getLabelProps()}
                     inputRef={this.inputRef}
-                    placeholder="What needs to be done? Tag users typing @"
+                    placeholder="What needs to be done? Tag an user typing @"
                   />
                 </Grid>
                 <Button
@@ -181,6 +195,10 @@ class AddTaskForm extends React.Component<AddTaskFormProps, AddTaskFormState> {
                               this.state.notificationType,
                             )}
                             onChange={this.handleNotificationChange}
+                            disabled={
+                              selectedItems.length > 0 &&
+                              !selectedItems[0].phone
+                            }
                             value="sms"
                           />
                         }
@@ -193,6 +211,10 @@ class AddTaskForm extends React.Component<AddTaskFormProps, AddTaskFormState> {
                               this.state.notificationType,
                             )}
                             onChange={this.handleNotificationChange}
+                            disabled={
+                              selectedItems.length > 0 &&
+                              !selectedItems[0].email
+                            }
                             value="email"
                           />
                         }

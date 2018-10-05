@@ -20,7 +20,7 @@ interface ProvidedState<T> extends ControllerStateAndHelpers<T> {
 
 type ChildrenFunction<T> = (options: ProvidedState<T>) => React.ReactNode
 
-type ChangeCallback<T> = (
+export type ChangeCallback<T> = (
   selectedItems: T[],
   stateAndHelpers: ProvidedState<T>,
 ) => void
@@ -84,7 +84,8 @@ class MentionFieldController<T> extends React.Component<Props<T>, State<T>> {
   removeItem: RemoveItem<T> = (item, cb) => {
     this.setState(
       ({ selectedItems }) => ({
-        selectedItems: selectedItems.filter(i => i !== item),
+        // selectedItems: selectedItems.filter(i => i !== item),
+        selectedItems: [],
       }),
       cb,
     )
@@ -93,7 +94,7 @@ class MentionFieldController<T> extends React.Component<Props<T>, State<T>> {
   addSelectedItem(item: T, cb: () => void) {
     this.setState(
       ({ selectedItems }) => ({
-        selectedItems: [...selectedItems, item],
+        selectedItems: [item],
       }),
       cb,
     )
