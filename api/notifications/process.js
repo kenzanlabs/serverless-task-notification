@@ -29,12 +29,12 @@ module.exports.handler = (event) => {
                 if (task.type == 'sms' || task.type == 'both') {
                   AWS_Service.smsUser(user.phone, msg)
                     .then(res => {
-                      console.log('sms Sent', res);
+                      console.log('sms Sent', res.data);
                     });;
                 }
                 AWS_Service.postResults(taskID)
                   .then(res => {
-                    console.log('posted', res);
+                    console.log('posted', res.data);
                   });
               }
             })

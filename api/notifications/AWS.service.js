@@ -54,15 +54,18 @@ const AWS_Service = {
         if(err)
           resolve(err.message);
 
-        const dns = result.Reservations[0].Instances[0].PublicDnsName || result.Reservations[1].Instances[0].PublicDnsName;
-        const newDNS = `//${dns}:${9000}/notifications`;
+        // TODO - it seems better to get the dns from the env variable, check with nerney to see if it was being fetched via ec2
+        //for any other reason
+        // const dns = result.Reservations[0].Instances[0].PublicDnsName || result.Reservations[1].Instances[0].PublicDnsName;
+        const newDNS = `http://${process.env.SocketDNS}:${9000}/notifications`;
 
-        // This call fails, "ECONNREFUSED 127.0.0.1:80"
         axios.post(newDNS, {taskID: taskID})
           .then((response) => {
+            console.log("in then", response.data);
             resolve(response);
           })
           .catch((error)  =>{
+            console.log("in error", error.message);
             resolve(error.message)
           });
         }
