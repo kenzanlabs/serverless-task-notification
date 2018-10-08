@@ -5,15 +5,15 @@ npm install -g serverless
 
 # Provision EC2 instance, if needed
 cd socket-server
-serverless deploy
+serverless deploy --force -v
 
 # Get in formation, lambdas!
 cd ../api/users
-serverless deploy
+serverless deploy --force -v
 cd ../tasks
-serverless deploy
+serverless deploy --force -v
 cd ../notifications
-serverless deploy
+serverless deploy --force -v
 
 # FE build and deploy
 cd ../..
@@ -22,5 +22,5 @@ node scripts/parse.js
 eval "$(cat config.txt)" # this sets the environment variables for the FE (users and tasks apis, socketDNS)
 cd app
 npm run build
-serverless deploy 
+serverless deploy --force -v
 cd ..
