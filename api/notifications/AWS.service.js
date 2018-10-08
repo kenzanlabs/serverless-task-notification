@@ -2,7 +2,7 @@ const AWS = require("aws-sdk");
 const axios = require("axios");
 
 const SOURCE_EMAIL = "serverlesstasknotification@gmail.com";
-const MESSAGE = "New MSG from the Serverless-Task-Notication app!";
+const MESSAGE = "New MSG from the Serverless Task Notification app!";
 
 const AWS_Service = {
   emailUser: (emailAddress, msg) => {

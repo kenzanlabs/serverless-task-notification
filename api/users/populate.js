@@ -15,7 +15,8 @@ function populateUsers() {
               Item: {
                 id: "0",
                 name: "Elana",
-                phone: process.env.ELANA_PHONE
+                phone: process.env.ELANA_PHONE,
+                email: process.env.ELANA_EMAIL
               }
             }
           },
