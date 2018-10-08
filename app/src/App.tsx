@@ -11,8 +11,13 @@ const theme = createMuiTheme({
   palette: {
     type: 'light',
   },
-});
+})
 
+/**
+ * The main component of the application.
+ *
+ * We setup React's @material-ui component and global styles here.
+ */
 class App extends React.Component<AppProps> {
   public render() {
     return (
@@ -31,7 +36,7 @@ const styles = createStyles({
     padding: '24px',
     flex: 1,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
 })
 

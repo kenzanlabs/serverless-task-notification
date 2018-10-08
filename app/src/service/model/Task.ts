@@ -14,7 +14,7 @@ export interface CreateTaskPayload {
   body: string
 }
 
-export enum TaskStatus{
+export enum TaskStatus {
   Committed,
-  Pending
+  Pending,
 }
