@@ -7,10 +7,10 @@ if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
   export CODEBUILD_GIT_BRANCH=${CODEBUILD_GIT_BRANCH#remotes/origin/};
 fi
 
-# if the branch is master (ie, a PR is merged), run the deploy script
+# if the branch is master (ie, a PR is merged), run the deploy scripts
 if [ "$CODEBUILD_GIT_BRANCH" = "master" ] ; then
   apt-get update -y
-  apt-get install jq -y
+  apt-get install jq -y # used to parse resource exports 
   bash scripts/deploy.sh
 
   # Redeploy socket-server

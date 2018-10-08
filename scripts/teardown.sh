@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# must run install for any serverless plugins
 bash scripts/install.sh
 npm install -g serverless
 

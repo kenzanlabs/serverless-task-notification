@@ -19,7 +19,7 @@ serverless deploy
 cd ../..
 aws cloudformation list-exports | jq ".Exports" > config.json
 node scripts/parse.js
-eval "$(cat config.txt)"
+eval "$(cat config.txt)" # this sets the environment variables for the FE (users and tasks apis, socketDNS)
 cd app
 npm run build
 serverless deploy 
