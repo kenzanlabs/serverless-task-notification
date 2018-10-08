@@ -6,25 +6,20 @@ import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import Paper from '@material-ui/core/Paper/Paper'
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core/styles'
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography/Typography'
 import CloudDone from '@material-ui/icons/CloudDone'
 import CloudUpload from '@material-ui/icons/CloudUpload'
 import * as React from 'react'
+import SwipeToDelete from 'react-swipe-to-delete-component'
+import 'react-swipe-to-delete-component/dist/swipe-to-delete.css'
 import * as socketIo from 'socket.io-client'
 import * as uuidv4 from 'uuid/v4'
-import AddTaskForm, {
-  TaskFormContent,
-} from './components/AddTaskForm/AddTaskForm'
+import AddTaskForm, { TaskFormContent } from './components/AddTaskForm/AddTaskForm'
 import UserAvatar from './components/UserAvatar/UserAvatar'
 import { CreateTaskPayload, Task, TaskStatus } from './service/model/Task'
 import { User } from './service/model/User'
-import { createTask, getTasks } from './service/task.service'
+import { createTask, deleteTask, getTasks } from './service/task.service'
 import { getUsers } from './service/user.service'
 
 interface ExistingTask {
@@ -154,6 +149,12 @@ class TaskNotificationScreen extends React.Component<
     })
   }
 
+  deleteTask(taskState: TaskState) {
+    if (TaskNotificationScreen.isServerTask(taskState)) {
+      deleteTask(taskState.task.id).catch(console.error)
+    }
+  }
+
   componentWillUnmount() {
     if (this.socket) this.socket.disconnect()
   }
@@ -169,7 +170,7 @@ class TaskNotificationScreen extends React.Component<
         alignItems="center"
         className={classes.root}
       >
-        <Typography variant="headline" gutterBottom={true}>
+        <Typography variant="title" color="textSecondary" gutterBottom={true} >
           Serverless Task Notification
         </Typography>
 
@@ -186,23 +187,25 @@ class TaskNotificationScreen extends React.Component<
               {this.state.tasks.map(taskState => {
                 const { task, status } = taskState
 
+                const key = TaskNotificationScreen.isServerTask(taskState)
+                  ? taskState.task.id
+                  : taskState.trackingId
+
                 return (
                   <React.Fragment
-                    key={
-                      TaskNotificationScreen.isServerTask(taskState)
-                        ? taskState.task.id
-                        : taskState.trackingId
-                    }
+                    key={key}
                   >
-                    <ListItem>
-                      <ListItemText>{task.body}</ListItemText>
-                      {status === TaskStatus.Committed ? (
-                        <CloudDone className={classes.sentIcon} />
-                      ) : (
-                        <CloudUpload className={classes.pendingIcon} />
-                      )}
-                      {this.renderAssignees(task)}
-                    </ListItem>
+                    <SwipeToDelete key={key} onDelete={() => this.deleteTask(taskState)}>
+                      <ListItem className={classes.listItem}>
+                        <ListItemText>{task.body}</ListItemText>
+                        {status === TaskStatus.Committed ? (
+                          <CloudDone className={classes.sentIcon} />
+                        ) : (
+                          <CloudUpload className={classes.pendingIcon} />
+                        )}
+                        {this.renderAssignees(task)}
+                      </ListItem>
+                    </SwipeToDelete>
                     <Divider />
                   </React.Fragment>
                 )
@@ -244,6 +247,9 @@ const styles = (theme: Theme) =>
     pendingIcon: {
       color: red[800],
     },
+    listItem: {
+      background: theme.palette.background.paper
+    }
   })
 
 export default withStyles(styles)(TaskNotificationScreen)
