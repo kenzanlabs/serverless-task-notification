@@ -1,3 +1,5 @@
+// This does the work of parsing the cloudformation stack exports for use in the FE build
+
 const fs = require("fs");
 const config = require("../config.json");
 

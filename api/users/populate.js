@@ -33,8 +33,7 @@ function populateUsers() {
             PutRequest: {
               Item: {
                 id: "2",
-                name: "Luis",
-                email: "luis@email.com"
+                name: "Luis"
               }
             }
           },
@@ -42,8 +41,7 @@ function populateUsers() {
             PutRequest: {
               Item: {
                 id: "3",
-                name: "Carlos",
-                phone: "+15027591445"
+                name: "Carlos"
               }
             }
           },
@@ -61,8 +59,7 @@ function populateUsers() {
             PutRequest: {
               Item: {
                 id: "5",
-                name: "Andrea",
-                email: "andreab@internet.org"
+                name: "Andrea"
               }
             }
           },
@@ -70,8 +67,7 @@ function populateUsers() {
             PutRequest: {
               Item: {
                 id: "6",
-                name: "Jeremy",
-                phone: "+19085564765"
+                name: "Jeremy"
               }
             }
           },
@@ -79,9 +75,7 @@ function populateUsers() {
             PutRequest: {
               Item: {
                 id: "7",
-                name: "Kate",
-                email: "katie@yahoo.edu",
-                phone: "+14452122768"
+                name: "Kate"
               }
             }
           }

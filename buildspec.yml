@@ -4,10 +4,12 @@ phases:
   install:
     commands:
       - bash scripts/install.sh
+
   # run tests
   pre_build:
     commands:
       - bash scripts/test.sh
+
   # if master, build and deploy
   build:
     commands:
