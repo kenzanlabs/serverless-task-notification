@@ -17,7 +17,7 @@ serverless deploy
 
 # FE build and deploy
 cd ../..
-aws cloudformation list-exports | jq -cr ".Exports" > config.json
+aws cloudformation list-exports | jq ".Exports" > config.json
 node scripts/parse.js
 eval "$(cat config.txt)"
 cd app
