@@ -154,3 +154,5 @@ app/build
 
 #secrets
 serverless-task-notification.pem
+config.txt
+config.json

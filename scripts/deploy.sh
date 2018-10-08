@@ -16,6 +16,11 @@ cd ../notifications
 serverless deploy
 
 # FE build and deploy
-cd ../../app
+cd ../..
+aws cloudformation list-exports | jq -cr ".Exports" > config.json
+node scripts/parse.js
+eval "$(cat config.txt)"
+cd app
+npm run build
 serverless deploy 
 cd ..
