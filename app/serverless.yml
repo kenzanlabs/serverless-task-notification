@@ -12,7 +12,6 @@ custom:
 
   scripts:
     hooks:
-      'package:createDeploymentArtifacts': npm run build
       'deploy:finalize': serverless client deploy --no-confirm
 
 provider:
