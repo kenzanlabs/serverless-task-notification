@@ -1,11 +1,16 @@
 version: 0.2
 phases:
+  # npm install for all our packages
   install:
     commands:
+      - apt-get update -y
+      - apt-get install jq -y
       - bash scripts/install.sh
-  build:
+  # run tests
+  pre_build:
     commands:
       - bash scripts/test.sh
-  post_build:
+  # if master, build and deploy
+  build:
     commands:
-      - bash scripts/post_build.sh
+      - bash scripts/codebuild-deploy.sh
