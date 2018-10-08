@@ -9,7 +9,6 @@ fi
 
 # if the branch is master (ie, a PR is merged), run the deploy script
 if [ "$CODEBUILD_GIT_BRANCH" = "master" ] ; then
-  bash scripts/build.sh
   bash scripts/deploy.sh
 
   # Redeploy socket-server

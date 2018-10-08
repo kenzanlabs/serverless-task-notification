@@ -3,8 +3,6 @@ phases:
   # npm install for all our packages
   install:
     commands:
-      - apt-get update -y
-      - apt-get install jq -y
       - bash scripts/install.sh
   # run tests
   pre_build:
@@ -13,4 +11,6 @@ phases:
   # if master, build and deploy
   build:
     commands:
+      - apt-get update -y
+      - apt-get install jq -y
       - bash scripts/codebuild-deploy.sh
