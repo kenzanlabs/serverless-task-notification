@@ -11,6 +11,4 @@ phases:
   # if master, build and deploy
   build:
     commands:
-      - apt-get update -y
-      - apt-get install jq -y
       - bash scripts/codebuild-deploy.sh
