@@ -150,7 +150,7 @@ $RECYCLE.BIN/
 .idea/
 
 # App production build
-app/build
+app/build/*
 
 #secrets
 serverless-task-notification.pem
