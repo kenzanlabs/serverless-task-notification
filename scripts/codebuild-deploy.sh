@@ -9,6 +9,8 @@ fi
 
 # if the branch is master (ie, a PR is merged), run the deploy script
 if [ "$CODEBUILD_GIT_BRANCH" = "master" ] ; then
+  apt-get update -y
+  apt-get install jq -y
   bash scripts/deploy.sh
 
   # Redeploy socket-server
