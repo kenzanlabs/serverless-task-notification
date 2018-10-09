@@ -1,0 +1,1 @@
+aws codebuild start-build --project-name serverless-task-notification-pipeline --source-version master >/dev/null

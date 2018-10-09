@@ -6,7 +6,12 @@ import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import Paper from '@material-ui/core/Paper/Paper'
-import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles'
+import {
+  createStyles,
+  Theme,
+  WithStyles,
+  withStyles,
+} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography/Typography'
 import CloudDone from '@material-ui/icons/CloudDone'
 import CloudUpload from '@material-ui/icons/CloudUpload'
@@ -15,7 +20,9 @@ import SwipeToDelete from 'react-swipe-to-delete-component'
 import 'react-swipe-to-delete-component/dist/swipe-to-delete.css'
 import * as socketIo from 'socket.io-client'
 import * as uuidv4 from 'uuid/v4'
-import AddTaskForm, { TaskFormContent } from './components/AddTaskForm/AddTaskForm'
+import AddTaskForm, {
+  TaskFormContent,
+} from './components/AddTaskForm/AddTaskForm'
 import UserAvatar from './components/UserAvatar/UserAvatar'
 import { CreateTaskPayload, Task, TaskStatus } from './service/model/Task'
 import { User } from './service/model/User'
@@ -44,6 +51,7 @@ interface TaskNotificationScreenState {
 }
 
 const SERVER_URL = process.env.REACT_APP_SOCKET_DNS!
+console.log(SERVER_URL)
 
 class TaskNotificationScreen extends React.Component<
   TaskNotificationScreenProps,
@@ -170,7 +178,7 @@ class TaskNotificationScreen extends React.Component<
         alignItems="center"
         className={classes.root}
       >
-        <Typography variant="title" color="textSecondary" gutterBottom={true} >
+        <Typography variant="title" color="textSecondary" gutterBottom={true}>
           Serverless Task Notification
         </Typography>
 
@@ -192,10 +200,11 @@ class TaskNotificationScreen extends React.Component<
                   : taskState.trackingId
 
                 return (
-                  <React.Fragment
-                    key={key}
-                  >
-                    <SwipeToDelete key={key} onDelete={() => this.deleteTask(taskState)}>
+                  <React.Fragment key={key}>
+                    <SwipeToDelete
+                      key={key}
+                      onDelete={() => this.deleteTask(taskState)}
+                    >
                       <ListItem className={classes.listItem}>
                         <ListItemText>{task.body}</ListItemText>
                         {status === TaskStatus.Committed ? (
@@ -248,8 +257,8 @@ const styles = (theme: Theme) =>
       color: red[800],
     },
     listItem: {
-      background: theme.palette.background.paper
-    }
+      background: theme.palette.background.paper,
+    },
   })
 
 export default withStyles(styles)(TaskNotificationScreen)
