@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# update instance and redeploy
+# (from within instance) update and redeploy
 cd serverless-task-notification/socket-server
 git pull
 sudo service docker restart

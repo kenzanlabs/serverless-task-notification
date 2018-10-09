@@ -16,9 +16,7 @@ cd ../notifications
 serverless deploy 
 
 # FE build and deploy
-cd ../..
-bash scripts/get-env.sh
-cd app
+cd ../../app
 npm run build
 serverless deploy
 cd ..

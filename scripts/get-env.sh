@@ -4,4 +4,4 @@
 aws cloudformation list-exports > config.json
 node scripts/parse.js
 eval "$(cat config.txt)" # this sets the environment variables
-rm config.txt && rm config.json
+rm config.json && rm config.txt

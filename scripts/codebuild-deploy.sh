@@ -14,6 +14,7 @@ if [ "$GIT_BRANCH" = "master" ] ; then
   bash scripts/deploy.sh
 
   # Redeploy socket-server -- must set pem to $EC2_KEY environment variable -- this is done in CodeBuild
+  bash scripts/get-env.sh
   echo -e "$EC2_KEY" > serverless-task-notification.pem
   chmod 400 serverless-task-notification.pem
   ssh -o StrictHostKeyChecking=no -i "serverless-task-notification.pem" ec2-user@$SOCKET_DNS 'bash -s' < socket-server/redeploy.sh

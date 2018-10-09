@@ -22,8 +22,8 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "start": "cd .. && bash scripts/get-env.sh && cd app && react-scripts-ts start",
+    "build": "cd .. && bash scripts/get-env.sh && cd app && react-scripts-ts build",
     "test": "CI=true react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "storybook": "start-storybook -p 9001 -c .storybook"
