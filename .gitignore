@@ -153,3 +153,5 @@ $RECYCLE.BIN/
 serverless-task-notification.pem
 config.txt
 config.json
+app/build/*
+!app/build/.gitignore
