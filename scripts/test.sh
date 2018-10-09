@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# run tests for FE, socket-server, and API
 cd app
 npm test 
 cd ../api
