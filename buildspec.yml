@@ -10,7 +10,7 @@ phases:
     commands:
       - bash scripts/test.sh
 
-  # if master, build and deploy
+  # checks for master branch, then runs
   build:
     commands:
       - bash scripts/codebuild-deploy.sh

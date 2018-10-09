@@ -71,10 +71,11 @@ See the original [Serverless documentation AWS - Credentials](https://serverless
 
 _Make sure you have the appropriate AWS access key and secret key set!_
 
-Install & Deploy (Installation script for serverless is provided to assure that Serverless is installed):
+Scripts are provided for installing dependencies, running tests, and deploying
 
 ```bash
 bash scripts/install.sh
+bash scripts/test.sh
 bash scripts/deploy.sh
 ```
 

@@ -16,12 +16,7 @@ cd ../notifications
 serverless deploy 
 
 # FE build and deploy
-cd ../..
-aws cloudformation list-exports | jq ".Exports" > config.json
-node scripts/parse.js
-eval "$(cat config.txt)" # this sets the environment variables for the FE (users and tasks apis, socketDNS)
-rm config.txt && rm config.json
-cd app
+cd ../../app
 npm run build
 serverless deploy
 cd ..
