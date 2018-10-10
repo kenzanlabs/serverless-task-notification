@@ -22,25 +22,33 @@ import * as socketIo from 'socket.io-client'
 import * as uuidv4 from 'uuid/v4'
 import AddTaskForm, {
   TaskFormContent,
-} from './components/AddTaskForm/AddTaskForm'
-import UserAvatar from './components/UserAvatar/UserAvatar'
+} from './components/AddTaskForm'
+import UserAvatar from './components/UserAvatar'
 import { CreateTaskPayload, Task, TaskStatus } from './service/model/Task'
 import { User } from './service/model/User'
 import { createTask, deleteTask, getTasks } from './service/task.service'
 import { getUsers } from './service/user.service'
 
+/**
+ * An exsting task comming from the server.
+ */
 interface ExistingTask {
   task: Task
   trackingId: null
   status: TaskStatus.Committed
 }
 
+/**
+ * A task added in the current session, optimistically added to the task list
+ * before its accepted by the API.
+ */
 interface OptimisticTask {
   task: CreateTaskPayload | Task
   trackingId: string
   status: TaskStatus
 }
 
+// Tasks in the UI are either optimistic or existing
 type TaskState = ExistingTask | OptimisticTask
 
 interface TaskNotificationScreenProps extends WithStyles<typeof styles> {}
@@ -57,6 +65,9 @@ class TaskNotificationScreen extends React.Component<
   TaskNotificationScreenProps,
   TaskNotificationScreenState
 > {
+  /**
+   * A server task doesn't have a trackingId, as that's a FE fabricated concept
+   */
   static isServerTask(task: TaskState): task is ExistingTask {
     return !task.trackingId
   }
@@ -81,7 +92,7 @@ class TaskNotificationScreen extends React.Component<
 
     const trackingId = uuidv4()
 
-    // optimistically add a new task
+    // Optimistically add a new task to the UI
     this.setState(({ tasks }) => ({
       tasks: [{ task, trackingId, status: TaskStatus.Pending }, ...tasks],
     }))
@@ -89,8 +100,8 @@ class TaskNotificationScreen extends React.Component<
     try {
       const taskId = await createTask(task)
 
-      // when we have the ID, we update the optimistic task so we can latter commit it when it comes
-      // over the websocket
+      // When the task is created and we've its ID, we update the optimistic task so we
+      // can latter mark it as committed when it comes over the websocket
       this.setState(({ tasks }) => ({
         tasks: tasks.map(
           optimisticTask =>
@@ -104,14 +115,22 @@ class TaskNotificationScreen extends React.Component<
       }))
     } catch (e) {
       console.error(e)
+
+      // If an error happens, we remove the optimistically added task
+      // TODO: Show an error notification
+      this.setState(({ tasks }) => ({
+        tasks: tasks.filter(
+          optimisticTask => optimisticTask.trackingId !== trackingId,
+        ),
+      }))
     }
   }
 
-  markTaskCommitted(taskID: string) {
+  markTaskCommitted(taskId: string) {
     this.setState(({ tasks }) => ({
       tasks: tasks.map(
         optimisticTask =>
-          (optimisticTask.task as Task).id === taskID
+          (optimisticTask.task as Task).id === taskId
             ? ({
                 ...optimisticTask,
                 status: TaskStatus.Committed,
@@ -132,10 +151,12 @@ class TaskNotificationScreen extends React.Component<
       .then(tasksFromServer => {
         this.setState(({ tasks: existingLocalTasks }) => ({
           tasks: [
-            // the user might have created some tasks before getTasks was able to resolve them, keep them at the top
+            // The user might have created some tasks before getTasks was able to resolve them,
+            // keep them at the top
             ...existingLocalTasks,
 
-            // tasks coming from the server are already in the committed state
+            // Tasks coming from the server are already in the committed state, so we just
+            // map them to an appropriate object shape
             ...tasksFromServer.map(
               task =>
                 ({
@@ -151,13 +172,17 @@ class TaskNotificationScreen extends React.Component<
 
     this.socket = socketIo(SERVER_URL)
 
+    // When the server acknowledges a created task, we mark it as committed,
+    // which means the assignee of the task has or soon will-be notified
     this.socket.on('task updated', (taskId: string) => {
-      console.log('>>>', taskId)
       this.markTaskCommitted(taskId)
     })
   }
 
   deleteTask(taskState: TaskState) {
+    // There's a small window of time when a task doesn't have an ID
+    // (e.g. is in the process on being created by the server) in that case we
+    // avoid deleting it as it's not possible to delete a task without an ID
     if (TaskNotificationScreen.isServerTask(taskState)) {
       deleteTask(taskState.task.id).catch(console.error)
     }

@@ -11,14 +11,14 @@ import TextField from '@material-ui/core/TextField/TextField'
 import { deburr } from 'lodash'
 import { ChangeEventHandler } from 'react'
 import * as React from 'react'
-import { NotificationType } from '../../service/model/Task'
-import { User } from '../../service/model/User'
+import { NotificationType } from '../service/model/Task'
+import { User } from '../service/model/User'
 import MentionFieldController, {
   CaretPosition,
   ChangeCallback,
-} from '../MentionFieldController/MentionFieldController'
-import RemovableUserAvatar from '../RemovableUserAvatar/RemovableUserAvatar'
-import SelectUserMenu from '../SelectUserMenu/SelectUserMenu'
+} from './MentionFieldController'
+import RemovableUserAvatar from './RemovableUserAvatar'
+import SelectUserMenu from './SelectUserMenu'
 
 export interface TaskFormContent {
   title: string
