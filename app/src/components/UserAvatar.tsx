@@ -7,17 +7,15 @@ import { SFC } from 'react'
 type UserAvatarProps = AvatarProps &
   WithStyles<typeof styles> & { userName: string }
 
-const UserAvatar: SFC<UserAvatarProps> = ({
-  classes,
-  userName,
-  ...other
-}) => (
+const UserAvatar: SFC<UserAvatarProps> = ({ classes, userName, ...other }) => (
   <Avatar {...other} className={cx(classes.root, other.className)}>
     {userName
       .split(' ')
       .map(
         (namePart, i, parts) =>
-          i === 0 || i === parts.length - 1 ? namePart.charAt(0) : null,
+          i === 0 || i === parts.length - 1
+            ? namePart.charAt(0).toLocaleUpperCase()
+            : null,
       )
       .join('')}
   </Avatar>

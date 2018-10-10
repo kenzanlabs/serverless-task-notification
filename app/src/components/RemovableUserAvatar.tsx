@@ -1,7 +1,7 @@
 import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core'
 import * as React from 'react'
 import { SFC } from 'react'
-import UserAvatar from '../UserAvatar/UserAvatar'
+import UserAvatar from './UserAvatar'
 
 interface RemovableUserAvatarProps extends WithStyles<typeof styles> {
   userName: string

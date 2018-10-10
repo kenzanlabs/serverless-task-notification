@@ -195,6 +195,7 @@ class MentionFieldController<T> extends React.Component<Props<T>, State<T>> {
         isOpen={this.state.mentionStartAnchor !== null}
         onOuterClick={this.handleOuterClick}
         inputValue={this.state.inputValue}
+        suppressRefError={true}
       >
         {downshift => children(this.getStateAndHelpers(downshift))}
       </Downshift>
