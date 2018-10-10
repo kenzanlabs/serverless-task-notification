@@ -81,5 +81,4 @@ The scripts handle the installation of dependencies and deployment of the full A
 
 **Running the front-end**
 1. Go into `app/` and run `npm i`
-1. Copy and rename `app/.env.development.sample` to `app/.env` and change the variables inside to match those from the infrastructure setup above
-1. Run `npm start`. The app is now running on http://localhost:3000
+2. Run `npm start`. The app is now running on http://localhost:3000
