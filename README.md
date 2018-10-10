@@ -31,12 +31,10 @@ The **Serverless Framework** is an open-source CLI for building and deploying se
   - Dynamo DB
   - CodeBuild
 
-[//]: <> (Make sure to update this diagram if needed, or change to lucidchart image link)
 ![Architecture Diagram](./images/app-architecture.png "Architecture Diagram")
 
 ## CI/CD Workflow
 
-[//]: <> (Make sure to update this diagram if needed, or change to lucidchart image link)
 ![Workflow](./images/workflow.png "Workflow Diagram")
 
 ## How to run
