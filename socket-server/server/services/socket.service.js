@@ -1,27 +1,29 @@
 "use strict";
-const socketIO = require('socket.io');
+const socketIO = require("socket.io");
+
+let clients = new Map();
 
 class SocketService {
   constructor(server) {
-    this.socket = socketIO(server);
+    this.socketServer = socketIO(server);
   }
 
   initialize() {
-    this.socket.on('connection', socket => {
-      console.log('User connected')
+    this.socketServer.on("connection", socket => {
+      console.log(socket.id.concat(" connected"));
+      clients.set(socket.id, socket);
 
-      socket.on('disconnect', () => {
-        console.log('user disconnected')
+      socket.on("disconnect", () => {
+        console.log(socket.id.concat(" disconnected"));
+        clients.delete(socket.id);
       });
     });
   }
 
-  broadcastTaskUpdateByID(taskID) {
-    this.socket.emit('task updated',  taskID)
+  emitResult(clientID, taskID) {
+    let client = clients.get(clientID);
+    client.emit("task updated", taskID);
   }
 }
 
 module.exports = SocketService;
-
-
-

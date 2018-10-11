@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # get the branch name
 export GIT_BRANCH="$(git symbolic-ref HEAD --short 2>/dev/null)"
 if [ "$GIT_BRANCH" = "" ] ; then

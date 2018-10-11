@@ -56,14 +56,14 @@ const AWS_Service = {
     });
   },
 
-  postResults: taskID => {
-    if (!taskID) return;
+  postResults: (clientID, taskID) => {
+    if (!(taskID && clientID)) return;
 
     return new Promise(resolve => {
       const newDNS = `http://${process.env.SocketDNS}:${9000}/notifications`;
 
       axios
-        .post(newDNS, { taskID: taskID })
+        .post(newDNS, { clientID: clientID, taskID: taskID })
         .then(response => {
           console.log("in then", response.data);
           resolve(response);

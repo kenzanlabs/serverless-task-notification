@@ -3,10 +3,13 @@ const notificationService = require("./notification.service");
 const AWS_Service = require("./AWS.service");
 
 module.exports.handler = event => {
-  const taskID = event.Records[0].Sns.Message;
+  const snsMessage = event.Records[0].Sns.Message;
+  const clientAndTaskIDs = snsMessage.split(",");
+  const clientID = clientAndTaskIDs[0];
+  const taskID = clientAndTaskIDs[1];
   const { TasksAPI, UsersAPI } = process.env;
 
-  if (TasksAPI && UsersAPI && taskID) {
+  if (TasksAPI && UsersAPI && taskID && clientID) {
     notificationService.fetchFromAPI(TasksAPI, "tasks").then(tasks => {
       const task = notificationService.findByID(tasks, "id", taskID);
       if (task) {
@@ -30,7 +33,7 @@ module.exports.handler = event => {
                   console.log("sms Sent", res);
                 });
               }
-              AWS_Service.postResults(taskID).then(res => {
+              AWS_Service.postResults(clientID, taskID).then(res => {
                 console.log("posted", res);
               });
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # install serverless framework
 npm install -g serverless
 
