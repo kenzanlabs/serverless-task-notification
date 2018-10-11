@@ -10,6 +10,7 @@ class SocketService {
 
   initialize() {
     this.socketServer.on("connection", socket => {
+      socket.emit("clientID", socket.id);
       console.log(socket.id.concat(" connected"));
       clients.set(socket.id, socket);
 
