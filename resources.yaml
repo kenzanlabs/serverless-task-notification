@@ -1,0 +1,79 @@
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 172.31.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      InstanceTenancy: default
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Fn::Join:
+          - ""
+          - - Ref: VPC
+      InternetGatewayId:
+        Fn::Join:
+          - ""
+          - - Ref: InternetGateway
+  SubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1a
+      VpcId:
+        Fn::Join:
+          - ""
+          - - Ref: VPC
+      CidrBlock: 172.31.0.0/20
+      MapPublicIpOnLaunch: true
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Fn::Join:
+          - ""
+          - - Ref: VPC
+  InternetRoute:
+    Type: AWS::EC2::Route
+    DependsOn: InternetGateway
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Fn::Join:
+          - ""
+          - - Ref: InternetGateway
+      RouteTableId:
+        Fn::Join:
+          - ""
+          - - Ref: RouteTable
+  SubnetARouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Fn::Join:
+          - ""
+          - - Ref: RouteTable
+      SubnetId:
+        Fn::Join:
+          - ""
+          - - Ref: SubnetA
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: "Internet Group"
+      GroupDescription: "SSH traffic in, all traffic out."
+      VpcId:
+        Fn::Join:
+          - ""
+          - - Ref: VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: "22"
+          ToPort: "22"
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0

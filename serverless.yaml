@@ -1,0 +1,7 @@
+service: serverless-security
+
+provider:
+  name: aws
+  region: us-east-1
+
+resources: ${file(resources.yaml)}
