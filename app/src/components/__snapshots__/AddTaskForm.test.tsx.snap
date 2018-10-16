@@ -2016,7 +2016,6 @@ exports[`AddTaskForm renders and matches our snapshot 1`] = `
                 </WithStyles(Grid)>
                 <WithTheme(Popper)
                   anchorEl={null}
-                  disablePortal={true}
                   keepMounted={true}
                   modifiers={
                     Object {
@@ -2030,7 +2029,7 @@ exports[`AddTaskForm renders and matches our snapshot 1`] = `
                 >
                   <Popper
                     anchorEl={null}
-                    disablePortal={true}
+                    disablePortal={false}
                     keepMounted={true}
                     modifiers={
                       Object {
@@ -2299,72 +2298,93 @@ exports[`AddTaskForm renders and matches our snapshot 1`] = `
                     transition={false}
                   >
                     <Portal
-                      disablePortal={true}
+                      disablePortal={false}
                       onRendered={[Function]}
                     >
-                      <div
-                        role="tooltip"
-                        style={
-                          Object {
-                            "position": "absolute",
-                          }
+                      <Portal
+                        containerInfo={
+                          <body>
+                            <div
+                              role="tooltip"
+                              style="position: absolute;"
+                            >
+                              <div
+                                aria-labelledby="downshift-1-label"
+                                id="downshift-1-menu"
+                                role="listbox"
+                              >
+                                <div
+                                  class="MuiPaper-root-510 MuiPaper-elevation2-514"
+                                />
+                              </div>
+                            </div>
+                          </body>
                         }
                       >
                         <div
-                          aria-labelledby="downshift-1-label"
-                          id="downshift-1-menu"
-                          role="listbox"
+                          role="tooltip"
+                          style={
+                            Object {
+                              "position": "absolute",
+                            }
+                          }
                         >
-                          <SelectUserMenu
-                            userItems={Array []}
+                          <div
+                            aria-labelledby="downshift-1-label"
+                            id="downshift-1-menu"
+                            role="listbox"
                           >
-                            <WithStyles(Paper)
-                              square={true}
+                            <SelectUserMenu
+                              userItems={Array []}
                             >
-                              <Paper
-                                classes={
-                                  Object {
-                                    "elevation0": "MuiPaper-elevation0-512",
-                                    "elevation1": "MuiPaper-elevation1-513",
-                                    "elevation10": "MuiPaper-elevation10-522",
-                                    "elevation11": "MuiPaper-elevation11-523",
-                                    "elevation12": "MuiPaper-elevation12-524",
-                                    "elevation13": "MuiPaper-elevation13-525",
-                                    "elevation14": "MuiPaper-elevation14-526",
-                                    "elevation15": "MuiPaper-elevation15-527",
-                                    "elevation16": "MuiPaper-elevation16-528",
-                                    "elevation17": "MuiPaper-elevation17-529",
-                                    "elevation18": "MuiPaper-elevation18-530",
-                                    "elevation19": "MuiPaper-elevation19-531",
-                                    "elevation2": "MuiPaper-elevation2-514",
-                                    "elevation20": "MuiPaper-elevation20-532",
-                                    "elevation21": "MuiPaper-elevation21-533",
-                                    "elevation22": "MuiPaper-elevation22-534",
-                                    "elevation23": "MuiPaper-elevation23-535",
-                                    "elevation24": "MuiPaper-elevation24-536",
-                                    "elevation3": "MuiPaper-elevation3-515",
-                                    "elevation4": "MuiPaper-elevation4-516",
-                                    "elevation5": "MuiPaper-elevation5-517",
-                                    "elevation6": "MuiPaper-elevation6-518",
-                                    "elevation7": "MuiPaper-elevation7-519",
-                                    "elevation8": "MuiPaper-elevation8-520",
-                                    "elevation9": "MuiPaper-elevation9-521",
-                                    "root": "MuiPaper-root-510",
-                                    "rounded": "MuiPaper-rounded-511",
-                                  }
-                                }
-                                component="div"
-                                elevation={2}
+                              <WithStyles(Paper)
                                 square={true}
                               >
-                                <div
-                                  className="MuiPaper-root-510 MuiPaper-elevation2-514"
-                                />
-                              </Paper>
-                            </WithStyles(Paper)>
-                          </SelectUserMenu>
+                                <Paper
+                                  classes={
+                                    Object {
+                                      "elevation0": "MuiPaper-elevation0-512",
+                                      "elevation1": "MuiPaper-elevation1-513",
+                                      "elevation10": "MuiPaper-elevation10-522",
+                                      "elevation11": "MuiPaper-elevation11-523",
+                                      "elevation12": "MuiPaper-elevation12-524",
+                                      "elevation13": "MuiPaper-elevation13-525",
+                                      "elevation14": "MuiPaper-elevation14-526",
+                                      "elevation15": "MuiPaper-elevation15-527",
+                                      "elevation16": "MuiPaper-elevation16-528",
+                                      "elevation17": "MuiPaper-elevation17-529",
+                                      "elevation18": "MuiPaper-elevation18-530",
+                                      "elevation19": "MuiPaper-elevation19-531",
+                                      "elevation2": "MuiPaper-elevation2-514",
+                                      "elevation20": "MuiPaper-elevation20-532",
+                                      "elevation21": "MuiPaper-elevation21-533",
+                                      "elevation22": "MuiPaper-elevation22-534",
+                                      "elevation23": "MuiPaper-elevation23-535",
+                                      "elevation24": "MuiPaper-elevation24-536",
+                                      "elevation3": "MuiPaper-elevation3-515",
+                                      "elevation4": "MuiPaper-elevation4-516",
+                                      "elevation5": "MuiPaper-elevation5-517",
+                                      "elevation6": "MuiPaper-elevation6-518",
+                                      "elevation7": "MuiPaper-elevation7-519",
+                                      "elevation8": "MuiPaper-elevation8-520",
+                                      "elevation9": "MuiPaper-elevation9-521",
+                                      "root": "MuiPaper-root-510",
+                                      "rounded": "MuiPaper-rounded-511",
+                                    }
+                                  }
+                                  component="div"
+                                  elevation={2}
+                                  square={true}
+                                >
+                                  <div
+                                    className="MuiPaper-root-510 MuiPaper-elevation2-514"
+                                  />
+                                </Paper>
+                              </WithStyles(Paper)>
+                            </SelectUserMenu>
+                          </div>
                         </div>
-                      </div>
+                      </Portal>
                     </Portal>
                   </Popper>
                 </WithTheme(Popper)>
