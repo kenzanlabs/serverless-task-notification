@@ -33,7 +33,7 @@ import { getUsers } from './service/user.service'
 interface ExistingTask {
   task: Task
   trackingId: null
-  status: TaskStatus.Committed
+  status: TaskStatus
 }
 
 /**
@@ -130,13 +130,13 @@ class TaskNotificationScreen extends React.Component<
   markTaskCommitted(taskId: string) {
     this.setState(({ tasks }) => ({
       tasks: tasks.map(
-        optimisticTask =>
-          (optimisticTask.task as Task).id === taskId
-            ? ({
-                ...optimisticTask,
+        task =>
+          (task.task as Task).id === taskId
+            ? {
+                ...task,
                 status: TaskStatus.Committed,
-              } as OptimisticTask)
-            : optimisticTask,
+              }
+            : task,
       ),
     }))
   }
@@ -162,7 +162,9 @@ class TaskNotificationScreen extends React.Component<
               task =>
                 ({
                   task,
-                  status: TaskStatus.Committed,
+                  status: task.complete
+                    ? TaskStatus.Committed
+                    : TaskStatus.Pending,
                   trackingId: null,
                 } as ExistingTask),
             ),
