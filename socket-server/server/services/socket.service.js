@@ -13,7 +13,6 @@ class SocketService {
       socket.emit("clientID", socket.id);
       console.log(socket.id.concat(" connected"));
       clients.set(socket.id, socket);
-
       socket.on("disconnect", () => {
         console.log(socket.id.concat(" disconnected"));
         clients.delete(socket.id);
@@ -23,6 +22,7 @@ class SocketService {
 
   emitResult(clientID, taskID) {
     let client = clients.get(clientID);
+    console.log("client " + clientID + " received response");
     client.emit("task updated", taskID);
   }
 }

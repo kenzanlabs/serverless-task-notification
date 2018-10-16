@@ -16,7 +16,6 @@ app.route("/notifications").post(postNotificationHandler);
 
 server.listen(PORT, err => {
   if (err) return console.log(err);
-
   return console.log(`Listening on port ${PORT}`);
 });
 
@@ -25,7 +24,6 @@ async function postNotificationHandler(req, res) {
     const { clientID, taskID } = req.body;
     let validPost = clientID && taskID;
     if (validPost) await io.emitResult(clientID, taskID);
-
     return res.sendStatus(validPost ? 202 : 400);
   } catch (e) {
     return res.sendStatus(400);
