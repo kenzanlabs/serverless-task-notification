@@ -6,7 +6,12 @@ import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import Paper from '@material-ui/core/Paper/Paper'
-import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles'
+import {
+  createStyles,
+  Theme,
+  WithStyles,
+  withStyles,
+} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography/Typography'
 import CloudDone from '@material-ui/icons/CloudDone'
 import CloudUpload from '@material-ui/icons/CloudUpload'
@@ -157,7 +162,9 @@ class TaskNotificationScreen extends React.Component<
               task =>
                 ({
                   task,
-                  status: task.complete? TaskStatus.Committed : TaskStatus.Pending,
+                  status: task.complete
+                    ? TaskStatus.Committed
+                    : TaskStatus.Pending,
                   trackingId: null,
                 } as ExistingTask),
             ),
