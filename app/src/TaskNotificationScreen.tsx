@@ -20,9 +20,7 @@ import SwipeToDelete from 'react-swipe-to-delete-component'
 import 'react-swipe-to-delete-component/dist/swipe-to-delete.css'
 import * as socketIo from 'socket.io-client'
 import * as uuidv4 from 'uuid/v4'
-import AddTaskForm, {
-  TaskFormContent,
-} from './components/AddTaskForm'
+import AddTaskForm, { TaskFormContent } from './components/AddTaskForm'
 import UserAvatar from './components/UserAvatar'
 import { CreateTaskPayload, Task, TaskStatus } from './service/model/Task'
 import { User } from './service/model/User'
@@ -35,7 +33,7 @@ import { getUsers } from './service/user.service'
 interface ExistingTask {
   task: Task
   trackingId: null
-  status: TaskStatus.Committed
+  status: TaskStatus
 }
 
 /**
@@ -79,6 +77,8 @@ class TaskNotificationScreen extends React.Component<
 
   socket?: SocketIOClient.Socket
 
+  clientId?: string
+
   handleTaskCreated = async ({
     title,
     assignedTo,
@@ -88,6 +88,7 @@ class TaskNotificationScreen extends React.Component<
       body: title,
       contactID: assignedTo.length > 0 ? assignedTo[0].id : null,
       type: notificationType,
+      clientID: this.clientId as string,
     }
 
     const trackingId = uuidv4()
@@ -129,13 +130,13 @@ class TaskNotificationScreen extends React.Component<
   markTaskCommitted(taskId: string) {
     this.setState(({ tasks }) => ({
       tasks: tasks.map(
-        optimisticTask =>
-          (optimisticTask.task as Task).id === taskId
-            ? ({
-                ...optimisticTask,
+        task =>
+          (task.task as Task).id === taskId
+            ? {
+                ...task,
                 status: TaskStatus.Committed,
-              } as OptimisticTask)
-            : optimisticTask,
+              }
+            : task,
       ),
     }))
   }
@@ -161,7 +162,9 @@ class TaskNotificationScreen extends React.Component<
               task =>
                 ({
                   task,
-                  status: TaskStatus.Committed,
+                  status: task.complete
+                    ? TaskStatus.Committed
+                    : TaskStatus.Pending,
                   trackingId: null,
                 } as ExistingTask),
             ),
@@ -171,6 +174,10 @@ class TaskNotificationScreen extends React.Component<
       .catch(console.error)
 
     this.socket = socketIo(SERVER_URL)
+
+    this.socket.on('clientID', (clientId: string) => {
+      this.clientId = clientId
+    })
 
     // When the server acknowledges a created task, we mark it as committed,
     // which means the assignee of the task has or soon will-be notified

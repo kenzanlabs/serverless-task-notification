@@ -6,12 +6,14 @@ export interface Task {
   id: string
   type: NotificationType
   body: string
+  complete?: boolean
 }
 
 export interface CreateTaskPayload {
   contactID: string | null
   type: NotificationType
   body: string
+  clientID: string
 }
 
 export enum TaskStatus {

@@ -1,11 +1,13 @@
 #!/bin/bash
 
+set -e
+
 # install serverless framework
 npm install -g serverless
 
 # Provision EC2 instance, if needed
 cd socket-server
-serverless deploy
+serverless deploy -v
 
 # Get in formation, lambdas!
 cd ../api/users
