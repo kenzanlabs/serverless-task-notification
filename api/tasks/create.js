@@ -10,6 +10,7 @@ module.exports.handler = (event, context, callback) => {
     let requestBody = JSON.parse(event.body);
     let newTask = {
       id: shortid.generate(),
+      clientID: requestBody.clientID,
       contactID: requestBody.contactID,
       type: requestBody.type,
       body: requestBody.body
@@ -26,7 +27,7 @@ module.exports.handler = (event, context, callback) => {
       snsClient.publish(
         {
           TopicArn: "arn:aws:sns:us-east-1:884956725745:newTask",
-          Message: newTask.id
+          Message: newTask.clientID.concat("," + newTask.id)
         },
         (err, res) => {
           if (err) console.log(err);

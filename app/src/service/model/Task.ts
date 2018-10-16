@@ -12,6 +12,7 @@ export interface CreateTaskPayload {
   contactID: string | null
   type: NotificationType
   body: string
+  clientID: string
 }
 
 export enum TaskStatus {
