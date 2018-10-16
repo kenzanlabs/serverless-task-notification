@@ -23,6 +23,7 @@ class SocketService {
 
   emitResult(clientID, taskID) {
     let client = clients.get(clientID);
+    console.log("client " + clientID + " received response");
     client.emit("task updated", taskID);
   }
 }
