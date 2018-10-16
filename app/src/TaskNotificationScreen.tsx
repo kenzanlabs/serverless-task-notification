@@ -6,12 +6,7 @@ import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import Paper from '@material-ui/core/Paper/Paper'
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core/styles'
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography/Typography'
 import CloudDone from '@material-ui/icons/CloudDone'
 import CloudUpload from '@material-ui/icons/CloudUpload'
@@ -33,7 +28,7 @@ import { getUsers } from './service/user.service'
 interface ExistingTask {
   task: Task
   trackingId: null
-  status: TaskStatus.Committed
+  status: TaskStatus
 }
 
 /**
@@ -130,13 +125,13 @@ class TaskNotificationScreen extends React.Component<
   markTaskCommitted(taskId: string) {
     this.setState(({ tasks }) => ({
       tasks: tasks.map(
-        optimisticTask =>
-          (optimisticTask.task as Task).id === taskId
-            ? ({
-                ...optimisticTask,
+        task =>
+          (task.task as Task).id === taskId
+            ? {
+                ...task,
                 status: TaskStatus.Committed,
-              } as OptimisticTask)
-            : optimisticTask,
+              }
+            : task,
       ),
     }))
   }
@@ -162,7 +157,7 @@ class TaskNotificationScreen extends React.Component<
               task =>
                 ({
                   task,
-                  status: TaskStatus.Committed,
+                  status: task.complete? TaskStatus.Committed : TaskStatus.Pending,
                   trackingId: null,
                 } as ExistingTask),
             ),

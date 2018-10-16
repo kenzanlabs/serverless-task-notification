@@ -6,6 +6,7 @@ export interface Task {
   id: string
   type: NotificationType
   body: string
+  complete?: boolean
 }
 
 export interface CreateTaskPayload {
