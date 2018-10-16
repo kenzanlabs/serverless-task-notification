@@ -6,9 +6,9 @@ phases:
       - bash scripts/install.sh
 
   # run tests
-  pre_build:
-    commands:
-      - bash scripts/test.sh
+  # pre_build:
+  # commands:
+  #   - bash scripts/test.sh
 
   # checks for master branch, then runs
   build:
