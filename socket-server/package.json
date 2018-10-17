@@ -1,11 +1,19 @@
 {
   "name": "socket-server",
   "description": "socket-server for ec2",
-  "main": "./server/server.js",
+  "main": "./server/index.js",
   "scripts": {
-    "test": "PORT=3030 NODE_ENV=test nyc mocha 'test/**/*.test.js' -R spec",
     "coverage": "nyc test",
-    "develop": "nodemon ."
+    "develop": "nodemon .",
+    "build-ts": "tsc",
+    "dev": "npm run lint && npm run start",
+    "lint": "tslint -t stylish --project \"tsconfig.json\"; exit 0",
+    "start": "ts-node server/index.ts",
+    "pretest": "npm run lint",
+    "test": "jest",
+    "test:watch": "npx jest --watch",
+    "watch-node": "nodemon dist/index.js --exec \"npm run dev\"",
+    "watch-ts": "tsc -w"
   },
   "license": "ISC",
   "repository": {
@@ -15,18 +23,31 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "morgan": "^1.9.1",
     "socket.io": "^2.1.1",
     "uuidv4": "^2.0.0"
   },
   "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/jest": "^23.3.5",
+    "@types/morgan": "^1.7.35",
+    "@types/node": "^10.11.6",
+    "@types/socket.io": "^1.4.38",
+    "@types/supertest": "^2.0.6",
     "chai": "^4.1.2",
     "chai-http": "^4.2.0",
+    "jest": "^23.6.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
     "nyc": "^13.0.1",
     "sinon": "^6.3.4",
     "sinon-chai": "^3.2.0",
     "socket.io-client": "^2.1.1",
-    "supertest": "^3.3.0"
+    "supertest": "^3.3.0",
+    "ts-jest": "^23.10.4",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.0",
+    "typescript": "^3.1.2"
   }
 }

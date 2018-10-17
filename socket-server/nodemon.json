@@ -1,0 +1,9 @@
+{
+  "ignore": ["**/*.test.ts", "**/*.spec.ts", ".git", "node_modules"],
+  "watch": ["server"],
+  "exec": "npm start",
+  "ext": "ts",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

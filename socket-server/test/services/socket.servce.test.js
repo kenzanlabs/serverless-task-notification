@@ -2,7 +2,7 @@ const chai = require("chai");
 const sinon = require("sinon");
 const sinonChai = require("sinon-chai");
 
-const SocketService = require("../../server/services/socket.service.js");
+const SocketService = require("../../server/services/socket.service.ts");
 
 chai.should();
 chai.use(sinonChai);
