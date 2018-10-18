@@ -16,7 +16,7 @@ export default class SocketServer {
   public static readonly PORT = 9000;
   private app: express.Application;
   private server: Server;
-  private port: string | number;
+  private _port: string | number;
   private io: SocketService;
 
   constructor() {
@@ -28,7 +28,7 @@ export default class SocketServer {
   }
 
   config = (): void =>  {
-    this.port = process.env.PORT || SocketServer.PORT;
+    this._port = Number(process.env.PORT) || SocketServer.PORT;
   }
 
   createApp = (): void =>  {
@@ -52,7 +52,7 @@ export default class SocketServer {
   }
 
   listen = (): void => {
-    this.server.listen(this.port, () => console.log('Running server on port %s', this.port));
+    this.server.listen(this._port, () => console.log(`Running server on port ${this._port}`));
   }
 
   postNotificationHandler = (req: Request, res: Response): Response => {
@@ -66,5 +66,13 @@ export default class SocketServer {
 
   getApp = (): express.Application =>  {
     return this.app;
+  }
+
+  getServer = () : Server  => {
+    return this.server;
+  }
+
+  get port(): string | number {
+    return this._port;
   }
 }
