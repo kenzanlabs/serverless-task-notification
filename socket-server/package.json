@@ -10,7 +10,7 @@
     "lint": "tslint -t stylish --project \"tsconfig.json\"; exit 0",
     "start": "ts-node server/index.ts",
     "pretest": "npm run lint",
-    "test": "mocha -r ts-node/register test/**/**.test.ts",
+    "test": "mocha --require ts-node/register 'test/**/*.test.ts'",
     "test:watch": "npm run test -- --watch-extensions ts --watch -R min",
     "watch-node": "nodemon dist/index.js --exec \"npm run dev\"",
     "watch-ts": "tsc -w"

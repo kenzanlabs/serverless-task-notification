@@ -131,7 +131,7 @@ describe('Server.ts', () => {
 
   describe('setRoutes', () => {
     it('should only expose a "/notifications" route', (done) => {
-      let testServer: SocketServer | undefined = new SocketServer();
+      const testServer: SocketServer | undefined = new SocketServer();
       const app: express.Application = testServer.getApp();
 
       const availableRoutes = app._router.stack

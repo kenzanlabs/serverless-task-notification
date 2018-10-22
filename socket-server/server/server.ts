@@ -16,7 +16,7 @@ export default class SocketServer {
   public static readonly PORT = 9000;
   private app: express.Application;
   private server: Server;
-  private _port: string | number;
+  private _port: string | number; // tslint:disable-line
   private io: SocketService;
 
   constructor() {
