@@ -1,4 +1,4 @@
 FROM node:8-alpine
 COPY . .
 RUN npm install
-CMD ["node", "./server/server.js"]
+CMD ["node", "./server/server.ts"]
