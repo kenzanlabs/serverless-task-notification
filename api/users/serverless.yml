@@ -5,16 +5,8 @@ plugins:
 custom:
   scripts:
     hooks:
-      "deploy:finalize": node populate.js
+      'deploy:finalize': node populate.js
 
-functions:
-  getUsers:
-    handler: getAll.handler
-    events:
-      - http:
-          path: users
-          method: get
-          cors: true
 provider:
   name: aws
   runtime: nodejs8.10
@@ -25,7 +17,18 @@ provider:
       Action:
         - dynamodb:*
         - s3:*
-      Resource: "*"
+      Resource: '*'
+  environment:
+    TABLENAME: users
+
+functions:
+  getUsers:
+    handler: getAll.handler
+    events:
+      - http:
+          path: users
+          method: get
+          cors: true
 
 resources:
   Resources:
@@ -49,7 +52,7 @@ resources:
         Name: UsersAPI
       Value:
         Fn::Join:
-          - ""
-          - - "https://"
+          - ''
+          - - 'https://'
             - Ref: ApiGatewayRestApi
-            - ".execute-api.us-east-1.amazonaws.com/dev/users"
+            - '.execute-api.us-east-1.amazonaws.com/dev/users'

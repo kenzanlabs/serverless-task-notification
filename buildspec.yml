@@ -3,6 +3,7 @@ phases:
   # npm install for all our packages
   install:
     commands:
+      - npm install -g serverless
       - bash scripts/install.sh
 
   # run tests

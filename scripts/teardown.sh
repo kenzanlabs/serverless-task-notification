@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # must run install for any serverless plugins
 bash scripts/install.sh
 npm install -g serverless
@@ -18,7 +16,7 @@ serverless remove
 cd ../..
 
 # remove tasks API
-cd ../tasks
+cd ../task
 serverless remove
 
 # remove users API
