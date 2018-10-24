@@ -5,7 +5,7 @@ plugins:
 custom:
   scripts:
     hooks:
-      'deploy:finalize': node populateUsers.js && echo "Sleeping for 2 minutes..." && sleep 30 && echo "1m30s remaining..." && sleep 30 && echo "1m remaining..." && sleep 30 && echo "30s remaining..." && sleep 20 && echo "10s remaining..." && sleep 5 && echo "5s..." && sleep 5 && echo "Continuing!"
+      'deploy:finalize': node populateUsers.js
 
 provider: aws
 iamRoleStatements:
