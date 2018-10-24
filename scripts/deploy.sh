@@ -1,19 +1,25 @@
 #!/bin/bash
 
 # Provision EC2 instance, if needed
-cd socket-server
-serverless deploy -v
+echo 'Deploying resources'
+cd resources
+serverless deploy
+cd ..
 
 # Get in formation, lambdas!
-cd ../api/users
+echo 'Deploying API'
+cd api/users
 serverless deploy
 cd ../task
 serverless deploy
+echo 'Deploying notifications service'
 cd ../notifications
 serverless deploy 
+cd ../..
 
 # FE build and deploy
-cd ../../app
+echo 'Deploying UI'
+cd app
 npm run build
 serverless deploy
 cd ..

@@ -47,20 +47,6 @@ functions:
       - sns: taskComplete
 
 resources:
-  Resources:
-    tasksTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: tasks
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
   Outputs:
     TasksAPI:
       Description: URL for the tasks service

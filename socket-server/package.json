@@ -15,11 +15,7 @@
     "watch-node": "nodemon dist/index.js --exec \"npm run dev\"",
     "watch-ts": "tsc -w"
   },
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kenzanlabs/serverless-task-notification.git"
-  },
+  "private": true,
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
