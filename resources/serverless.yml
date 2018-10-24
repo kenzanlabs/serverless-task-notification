@@ -1,0 +1,68 @@
+service: serverless-resources
+
+plugins:
+  - serverless-plugin-scripts
+custom:
+  scripts:
+    hooks:
+      'deploy:finalize': node populateUsers.js && echo "Sleeping for 2 minutes..." && sleep 30 && echo "1m30s remaining..." && sleep 30 && echo "1m remaining..." && sleep 30 && echo "30s remaining..." && sleep 20 && echo "10s remaining..." && sleep 5 && echo "5s..." && sleep 5 && echo "Continuing!"
+
+provider: aws
+iamRoleStatements:
+  - Effect: Allow
+    Action:
+      - dynamodb:*
+      - s3:*
+      - ec2:*
+    Resource: '*'
+
+resources:
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: users
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    tasksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: tasks
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    socketServer:
+      Type: AWS::EC2::Instance
+      Properties:
+        AvailabilityZone: us-east-1a
+        ImageId: ${env:IMAGE_ID}
+        InstanceType: t2.micro
+        KeyName: serverless-task-notification
+        SubnetId: ${env:SUBNET_ID}
+        SecurityGroupIds:
+          - ${env:SG_ID}
+        Tags:
+          - Key: Name
+            Value: socketServer
+
+  Outputs:
+    SocketDNS:
+      Description: dns for socket and notification posts ec2 instance
+      Export:
+        Name: SocketDNS
+      Value: { 'Fn::GetAtt': ['socketServer', 'PublicDnsName'] }

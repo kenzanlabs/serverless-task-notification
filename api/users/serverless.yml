@@ -1,20 +1,5 @@
 service: serverless-users
 
-plugins:
-  - serverless-plugin-scripts
-custom:
-  scripts:
-    hooks:
-      "deploy:finalize": node populate.js
-
-functions:
-  getUsers:
-    handler: getAll.handler
-    events:
-      - http:
-          path: users
-          method: get
-          cors: true
 provider:
   name: aws
   runtime: nodejs8.10
@@ -25,23 +10,20 @@ provider:
       Action:
         - dynamodb:*
         - s3:*
-      Resource: "*"
+      Resource: '*'
+  environment:
+    TABLENAME: users
+
+functions:
+  getUsers:
+    handler: getAll.handler
+    events:
+      - http:
+          path: users
+          method: get
+          cors: true
 
 resources:
-  Resources:
-    usersTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: users
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
   Outputs:
     UsersAPI:
       Description: URL for the users service
@@ -49,7 +31,7 @@ resources:
         Name: UsersAPI
       Value:
         Fn::Join:
-          - ""
-          - - "https://"
+          - ''
+          - - 'https://'
             - Ref: ApiGatewayRestApi
-            - ".execute-api.us-east-1.amazonaws.com/dev/users"
+            - '.execute-api.us-east-1.amazonaws.com/dev/users'

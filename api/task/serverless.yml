@@ -1,5 +1,24 @@
 service: serverless-tasks
 
+plugins:
+  - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-east-1
+  memorySize: 128
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+        - s3:*
+        - sns:*
+      Resource: '*'
+  environment:
+    AcctID: #{AWS::AccountId}
+    TABLENAME: tasks
+
 functions:
   getTasks:
     handler: getAll.handler
@@ -27,34 +46,7 @@ functions:
     events:
       - sns: taskComplete
 
-provider:
-  name: aws
-  runtime: nodejs8.10
-  region: us-east-1
-  memorySize: 128
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:*
-        - s3:*
-        - sns:*
-      Resource: "*"
-
 resources:
-  Resources:
-    tasksTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: tasks
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
   Outputs:
     TasksAPI:
       Description: URL for the tasks service
@@ -62,7 +54,7 @@ resources:
         Name: TasksAPI
       Value:
         Fn::Join:
-          - ""
-          - - "https://"
+          - ''
+          - - 'https://'
             - Ref: ApiGatewayRestApi
-            - ".execute-api.us-east-1.amazonaws.com/dev/tasks"
+            - '.execute-api.us-east-1.amazonaws.com/dev/tasks'

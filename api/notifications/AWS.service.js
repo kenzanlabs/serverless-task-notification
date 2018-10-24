@@ -1,40 +1,38 @@
-const AWS = require("aws-sdk");
-const axios = require("axios");
+const AWS = require('aws-sdk');
+const axios = require('axios');
 
-const SOURCE_EMAIL = "serverlesstasknotification@gmail.com";
-const MESSAGE = "New MSG from the Serverless Task Notification app!";
+const SOURCE_EMAIL = 'serverlesstasknotification@gmail.com';
+const SUBJECT = 'New MSG from the Serverless Task Notification app!';
+
+const SNS = new AWS.SNS();
 
 const AWS_Service = {
   emailUser: (emailAddress, msg) => {
     if (!emailAddress && !msg) return;
-    const sesClient = new AWS.SES();
+    const SES = new AWS.SES();
     const params = {
       Destination: { ToAddresses: [emailAddress] },
       Source: SOURCE_EMAIL,
       Message: {
-        Subject: { Data: MESSAGE },
+        Subject: { Data: SUBJECT },
         Body: { Text: { Data: msg } }
       }
     };
 
     return new Promise(resolve => {
-      sesClient.sendEmail(params, (err, data) =>
-        resolve(err ? err.message : data)
-      );
+      SES.sendEmail(params, (err, data) => resolve(err ? err.message : data));
     });
   },
 
   smsUser: (phoneNumber, msg) => {
-    if (!phoneNumber && !msg) return;
-
-    const snsClient = new AWS.SNS();
+    if (!phoneNumber || !msg) return;
     const params = {
       PhoneNumber: phoneNumber,
       Message: msg
     };
 
     return new Promise((resolve, reject) => {
-      snsClient.publish(params, (err, data) => {
+      SNS.publish(params, (err, data) => {
         return err ? reject(err.message) : resolve(data);
       });
     });
@@ -42,15 +40,13 @@ const AWS_Service = {
 
   taskCompleted: taskID => {
     if (!taskID) return;
-
-    const snsClient = new AWS.SNS();
     const params = {
-      TopicArn: "arn:aws:sns:us-east-1:884956725745:taskComplete",
+      TopicArn: 'arn:aws:sns:us-east-1:' + process.env.AcctID + ':taskComplete',
       Message: taskID
     };
 
     return new Promise(resolve => {
-      snsClient.publish(params, (err, data) => {
+      SNS.publish(params, (err, data) => {
         resolve(err ? err.message : data);
       });
     });
@@ -65,11 +61,11 @@ const AWS_Service = {
       axios
         .post(newDNS, { clientID: clientID, taskID: taskID })
         .then(response => {
-          console.log("in then", response.data);
+          console.log('in then', response.data);
           resolve(response);
         })
         .catch(error => {
-          console.log("in error", error.message);
+          console.log('in error', error.message);
           resolve(error.message);
         });
     });

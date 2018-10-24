@@ -1,16 +1,16 @@
-const AWS = require("aws-sdk");
+const AWS = require('aws-sdk');
 
 const AWS_Service = {
-  emailUser: (emailAddress, msg) =>  {
-    if(!emailAddress && !msg) return;
+  emailUser: (emailAddress, msg) => {
+    if (!emailAddress && !msg) return;
     const sesClient = new AWS.SES();
 
     sesClient.sendEmail(
       {
         Destination: { ToAddresses: [emailAddress] },
-        Source: "serverlesstasknotification@gmail.com",
+        Source: 'serverlesstasknotification@gmail.com',
         Message: {
-          Subject: { Data: "New MSG from the Serverless-Task-Notication app!" },
+          Subject: { Data: 'New MSG from the Serverless-Task-Notication app!' },
           Body: { Text: { Data: msg } }
         }
       },
@@ -20,8 +20,8 @@ const AWS_Service = {
     );
   },
 
-  smsUser: (phoneNumber, msg) =>  {
-    if(!phoneNumber && !msg) return;
+  smsUser: (phoneNumber, msg) => {
+    if (!phoneNumber && !msg) return;
 
     let snsClient = new AWS.SNS();
     snsClient.publish(
@@ -35,13 +35,13 @@ const AWS_Service = {
     );
   },
 
-  postResults : (sessionID, taskID)  => {
-    if(!sessionID && !taskID) return;
+  postResults: (sessionID, taskID) => {
+    if (!sessionID && !taskID) return;
 
     const ec2 = new AWS.EC2();
 
     ec2.describeInstances(
-      { Filters: [{ Name: "tag:Name", Values: ["socketServer"] }] },
+      { Filters: [{ Name: 'tag:Name', Values: ['socketServer'] }] },
       (err, result) => {
         if (err) {
           return console.log(err);
@@ -53,10 +53,10 @@ const AWS_Service = {
           const req = http.request({
             hostname: dns,
             port: 9000,
-            path: "/notifications",
-            method: "POST"
+            path: '/notifications',
+            method: 'POST'
           });
-          req.on("error", e => {
+          req.on('error', e => {
             return console.log(e);
           });
           req.write(
@@ -68,6 +68,6 @@ const AWS_Service = {
       }
     );
   }
-}
+};
 
 module.exports = AWS_Service;

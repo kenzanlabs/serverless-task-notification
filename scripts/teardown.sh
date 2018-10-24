@@ -1,30 +1,35 @@
 #!/bin/bash
 
-set -e
-
 # must run install for any serverless plugins
 bash scripts/install.sh
 npm install -g serverless
 
+echo 'Removing resources'
+cd resources
+serverless remove
+cd ..
+
 # remove FE client and serverless deployment
+echo 'Removing UI'
 cd app
 mkdir -p build # required for serverless-finch
 serverless client remove --no-confirm
 serverless remove
+cd ..
 
 # remove notifications service
-cd ../notifications
+echo 'Removing notifications service'
+cd api/notifications
 serverless remove
-cd ../..
+cd ..
 
 # remove tasks API
-cd ../tasks
+echo 'Removing tasks API'
+cd task
 serverless remove
+cd ..
 
 # remove users API
-cd ../api/users
-serverless remove
-
-# remove the socket-server ec2 instance
-cd ../socket-server
+echo 'Removing users API'
+cd users
 serverless remove

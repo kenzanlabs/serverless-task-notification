@@ -1,5 +1,8 @@
 service: serverless-notifications
 
+plugins:
+  - serverless-pseudo-parameters
+
 provider:
   name: aws
   runtime: nodejs8.10
@@ -7,11 +10,12 @@ provider:
   memorySize: 256
   environment:
     UsersAPI:
-      "Fn::ImportValue": "UsersAPI"
+      'Fn::ImportValue': 'UsersAPI'
     TasksAPI:
-      "Fn::ImportValue": "TasksAPI"
+      'Fn::ImportValue': 'TasksAPI'
     SocketDNS:
-      "Fn::ImportValue": "SocketDNS"
+      'Fn::ImportValue': 'SocketDNS'
+    AcctID: #{AWS::AccountId}
 
   iamRoleStatements:
     - Effect: Allow
@@ -20,10 +24,10 @@ provider:
         - sns:*
         - ec2:*
         - ses:*
-      Resource: "*"
+      Resource: '*'
 
 functions:
   notify:
-    handler: process.handler
+    handler: handler.handler
     events:
       - sns: newTask

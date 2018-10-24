@@ -1,13 +1,13 @@
 #!/bin/bash
 
-set -e
-
 # get the branch name
 export GIT_BRANCH="$(git symbolic-ref HEAD --short 2>/dev/null)"
 if [ "$GIT_BRANCH" = "" ] ; then
   GIT_BRANCH="$(git branch -a --contains HEAD 2>/dev/null | sed -n 2p | awk '{ printf $1 }')";
   export GIT_BRANCH=${GIT_BRANCH#remotes/origin/};
 fi
+
+echo "On Branch $GIT_BRANCH"
 
 # if the branch is master (ie, a PR is merged), run the deploy scripts
 if [ "$GIT_BRANCH" = "master" ] ; then

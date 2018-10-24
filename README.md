@@ -31,11 +31,11 @@ The **Serverless Framework** is an open-source CLI for building and deploying se
   - Dynamo DB
   - CodeBuild
 
-![Architecture Diagram](./images/app-architecture.png "Architecture Diagram")
+![Architecture Diagram](./images/app-architecture.png 'Architecture Diagram')
 
 ## CI/CD Workflow
 
-![Workflow](./images/workflow.png "Workflow Diagram")
+![Workflow](./images/workflow.png 'Workflow Diagram')
 
 ## How to run
 
@@ -69,16 +69,16 @@ See the original [Serverless documentation AWS - Credentials](https://serverless
 
 _Make sure you have the appropriate AWS access key and secret key set!_
 
-Scripts are provided for installing dependencies, running tests, and deploying
+Scripts are provided for installing dependencies and running tests.
 
 ```bash
 bash scripts/install.sh
 bash scripts/test.sh
-bash scripts/deploy.sh
 ```
 
-The scripts handle the installation of dependencies and deployment of the full API and FE application. To deploy a specific service, go into its directory and run `serverless deploy`
+CodeBuild takes care of deployment.
 
 **Running the front-end**
+
 1. Go into `app/` and run `npm i`
 2. Run `npm start`. The app is now running on http://localhost:3000
