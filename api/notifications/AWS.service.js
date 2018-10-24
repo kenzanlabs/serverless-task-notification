@@ -41,7 +41,7 @@ const AWS_Service = {
   taskCompleted: taskID => {
     if (!taskID) return;
     const params = {
-      TopicArn: 'arn:aws:sns:us-east-1:' + process.env.AcctID + ':taskComplete',
+      TopicArn: process.env.TOPIC + ':taskComplete',
       Message: taskID
     };
 

@@ -28,7 +28,7 @@ module.exports.handler = (event, context, callback) => {
 
       SNS.publish(
         {
-          TopicArn: 'arn:aws:sns:us-east-1:' + process.env.AcctID + ':newTask',
+          TopicArn: process.env.TOPIC + ':newTask',
           Message: newTask.clientID.concat(',' + newTask.id)
         },
         (err, res) => {
