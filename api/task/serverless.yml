@@ -16,7 +16,7 @@ provider:
         - sns:*
       Resource: '*'
   environment:
-    AcctID: #{AWS::AccountId}
+    TOPIC: arn:aws:sns:us-east-1:#{AWS::AccountId}
     TABLENAME: tasks
 
 functions:

@@ -15,7 +15,7 @@ provider:
       'Fn::ImportValue': 'TasksAPI'
     SocketDNS:
       'Fn::ImportValue': 'SocketDNS'
-    AcctID: #{AWS::AccountId}
+    TOPIC: arn:aws:sns:us-east-1:#{AWS::AccountId}
 
   iamRoleStatements:
     - Effect: Allow
