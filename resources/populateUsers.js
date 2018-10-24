@@ -12,8 +12,8 @@ DocumentClient.batchWrite(
             Item: {
               id: '0',
               name: 'Elana',
-              phone: process.env.ELANA_PHONE,
-              email: process.env.ELANA_EMAIL
+              phone: '12345',
+              email: 'email@email.com'
             }
           }
         },
@@ -22,8 +22,8 @@ DocumentClient.batchWrite(
             Item: {
               id: '1',
               name: 'Scott',
-              email: process.env.SCOTT_EMAIL,
-              phone: process.env.SCOTT_PHONE
+              email: 'anotheremail@email.com',
+              phone: '67890'
             }
           }
         },
@@ -31,7 +31,8 @@ DocumentClient.batchWrite(
           PutRequest: {
             Item: {
               id: '2',
-              name: 'Luis'
+              name: 'Luis',
+              email: 'yetanotheremail@email.com'
             }
           }
         },
@@ -39,7 +40,8 @@ DocumentClient.batchWrite(
           PutRequest: {
             Item: {
               id: '3',
-              name: 'Carlos'
+              name: 'Carlos',
+              phone: '987654321'
             }
           }
         },
@@ -47,9 +49,7 @@ DocumentClient.batchWrite(
           PutRequest: {
             Item: {
               id: '4',
-              name: 'Jacob',
-              email: process.env.JACOB_EMAIL,
-              phone: process.env.JACOB_PHONE
+              name: 'Jacob'
             }
           }
         },
