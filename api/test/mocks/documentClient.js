@@ -6,7 +6,7 @@ class db {
     this.params = params;
   }
   promise() {
-    if (!this.params) return Promise.reject('error');
+    if (!this.params.Tablename) return Promise.reject('error');
     return Promise.resolve({
       Items: { key: 'value' },
       Item: { key: 'value' }

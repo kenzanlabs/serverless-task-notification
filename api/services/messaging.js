@@ -7,8 +7,8 @@ let SNS = new AWS.SNS();
 
 /* istanbul ignore next */
 if (process.env.NODE_ENV == 'development') {
-  SES = require('../test/mocks/ses');
-  SNS = require('../test/mocks/sns');
+  SES = require('../test/mocks/messengers');
+  SNS = require('../test/mocks/messengers');
 }
 
 const SOURCE_EMAIL = 'serverlesstasknotification@gmail.com';
@@ -20,7 +20,7 @@ const sendSMS = (phoneNumber, msg) => {
 };
 
 const publishToTopic = (topicArn, msg) => {
-  if (!topic || !msg) return;
+  if (!topicArn || !msg) return;
   return SNS.publish({ TopicArn: topicArn, Message: msg }).promise();
 };
 

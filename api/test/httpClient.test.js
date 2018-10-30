@@ -7,5 +7,13 @@ test('should post', () => {
 });
 
 test('should get', () => {
-  expect(httpClient.get('test')).toBeTruthy();
+  expect(httpClient.get('test')).resolves.toBeTruthy();
+});
+
+test('should not post', () => {
+  expect(httpClient.post()).rejects.toBeTruthy();
+});
+
+test('should not get', () => {
+  expect(httpClient.get()).rejects.toBeTruthy();
 });

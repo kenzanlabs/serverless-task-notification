@@ -17,3 +17,19 @@ test('should put', () => {
 test('should delete', () => {
   expect(dynamo.deleteOne('test')).resolves.toBeTruthy();
 });
+
+test('should not getAll', () => {
+  expect(dynamo.getAll()).rejects.toBeTruthy();
+});
+
+test('should not getOne', () => {
+  expect(dynamo.getOne()).rejects.toBeTruthy();
+});
+
+test('should not put', () => {
+  expect(dynamo.putItem()).rejects.toBeTruthy();
+});
+
+test('should not delete', () => {
+  expect(dynamo.deleteOne()).rejects.toBeTruthy();
+});
