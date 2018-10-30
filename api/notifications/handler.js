@@ -10,11 +10,11 @@ module.exports.handler = event => {
   let { TasksAPI, UsersAPI } = process.env;
 
   if (TasksAPI && UsersAPI && taskID && clientID) {
-    let tasks = httpClient.get(TasksAPI);
-    if (tasks) {
+    httpClient.get(TasksAPI).then(result => {
+      let tasks = result.data;
       let task = tasks.find(i => i['id'] == taskID);
-      let users = httpClient.get(UsersAPI);
-      if (users) {
+      httpClient.get(UsersAPI).then(result => {
+        let users = result.data;
         let user = users.find(i => i['id'] == task.contactID);
         let msg = `Hey ${user.name}, \n ${task.body}`;
         if (task.type == 'email' || task.type == 'both') {
@@ -35,7 +35,7 @@ module.exports.handler = event => {
           .then(res => {
             console.log('task complete');
           });
-      }
-    }
+      });
+    });
   }
 };

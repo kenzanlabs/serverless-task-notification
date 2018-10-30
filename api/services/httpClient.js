@@ -1,16 +1,14 @@
 'use strict';
 
-const axios = require('axios').default;
+let axios = require('axios').default;
+
+/* istanbul ignore next */
+if (process.env.NODE_ENV == 'development') {
+  axios = require('../test/mocks/axios');
+}
 
 const get = api => {
-  axios
-    .get(api)
-    .then(result => {
-      return result.data;
-    })
-    .catch(err => {
-      return console.log(err);
-    });
+  return axios.get(api);
 };
 
 const post = (clientID, taskID) => {

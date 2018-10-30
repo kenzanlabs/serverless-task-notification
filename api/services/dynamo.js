@@ -2,6 +2,8 @@
 
 const AWS = require('aws-sdk');
 let DocumentClient = new AWS.DynamoDB.DocumentClient();
+
+/* istanbul ignore next */
 if (process.env.NODE_ENV == 'development') {
   DocumentClient = require('../test/mocks/documentClient');
 }

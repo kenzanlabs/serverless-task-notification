@@ -1,8 +1,15 @@
 'use strict';
 
 const AWS = require('aws-sdk');
-const SES = new AWS.SES();
-const SNS = new AWS.SNS();
+
+let SES = new AWS.SES();
+let SNS = new AWS.SNS();
+
+/* istanbul ignore next */
+if (process.env.NODE_ENV == 'development') {
+  SES = require('../test/mocks/ses');
+  SNS = require('../test/mocks/sns');
+}
 
 const SOURCE_EMAIL = 'serverlesstasknotification@gmail.com';
 const SUBJECT = 'New MSG from the Serverless Task Notification app!';
