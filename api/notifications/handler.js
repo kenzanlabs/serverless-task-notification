@@ -1,5 +1,8 @@
 'use strict';
 const notificationService = require('./notification.service');
+const ses = require('../services/ses');
+const sns = require('../services/sns');
+
 const AWS_Service = require('./AWS.service');
 
 module.exports.handler = event => {
@@ -21,12 +24,12 @@ module.exports.handler = event => {
             if (user) {
               const msg = `Hey ${user.name}, \n ${task.body}`;
               if (task.type == 'email' || task.type == 'both') {
-                AWS_Service.emailUser(user.email, msg).then(res => {
+                ses.sendEmail(user.email, msg).then(res => {
                   console.log('email sent');
                 });
               }
               if (task.type == 'sms' || task.type == 'both') {
-                AWS_Service.smsUser(user.phone, msg).then(res => {
+                sns.sms(user.phone, msg).then(res => {
                   console.log('sms sent');
                 });
               }
@@ -34,9 +37,11 @@ module.exports.handler = event => {
                 console.log('results posted');
               });
 
-              AWS_Service.taskCompleted(taskID).then(res => {
-                console.log('task complete');
-              });
+              sns
+                .publish(process.env.TOPIC + ':taskComplete', taskID)
+                .then(res => {
+                  console.log('task complete');
+                });
             }
           });
       }
