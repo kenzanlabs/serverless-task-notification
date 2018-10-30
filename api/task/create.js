@@ -1,14 +1,14 @@
 'use strict';
 
 const shortid = require('shortid');
-const sns = require('../services/sns');
+const messaging = require('../services/messaging');
 const dynamo = require('../services/dynamo');
 
 module.exports.handler = (event, context, callback) => {
   let newTask;
 
   try {
-    const requestBody = JSON.parse(event.body);
+    let requestBody = JSON.parse(event.body);
     newTask = {
       id: shortid.generate(),
       clientID: requestBody.clientID,
@@ -23,8 +23,9 @@ module.exports.handler = (event, context, callback) => {
   dynamo
     .putItem(process.env.TABLENAME, newTask)
     .then(result => {
-      sns
-        .publish(
+      messaging
+        .send(
+          'topic',
           process.env.TOPIC + ':newTask',
           newTask.clientID.concat(',' + newTask.id)
         )
