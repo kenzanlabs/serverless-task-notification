@@ -1,9 +1,8 @@
 'use strict';
 
-const AWS = require('aws-sdk');
 const shortid = require('shortid');
-const DocumentClient = new AWS.DynamoDB.DocumentClient();
-const SNS = new AWS.SNS();
+const sns = require('../services/sns');
+const dynamo = require('../services/dynamo');
 
 module.exports.handler = (event, context, callback) => {
   let newTask;
@@ -21,26 +20,24 @@ module.exports.handler = (event, context, callback) => {
     return console.log(err);
   }
 
-  DocumentClient.put(
-    { TableName: process.env.TABLENAME, Item: newTask },
-    err => {
-      if (err) return console.log(err);
-
-      SNS.publish(
-        {
-          TopicArn: process.env.TOPIC + ':newTask',
-          Message: newTask.clientID.concat(',' + newTask.id)
-        },
-        (err, res) => {
-          if (err) console.log(err);
-        }
-      );
-
+  dynamo
+    .putItem(process.env.TABLENAME, newTask)
+    .then(result => {
+      sns
+        .publish(
+          process.env.TOPIC + ':newTask',
+          newTask.clientID.concat(',' + newTask.id)
+        )
+        .catch(err => {
+          console.log(err);
+        });
       callback(null, {
         statusCode: 200,
         headers: { 'Access-Control-Allow-Origin': '*' },
         body: newTask.id
       });
-    }
-  );
+    })
+    .catch(err => {
+      console.log(err);
+    });
 };

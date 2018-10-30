@@ -1,16 +1,18 @@
 'use strict';
 
-const AWS = require('aws-sdk');
-const DocumentClient = new AWS.DynamoDB.DocumentClient();
+const dynamo = require('../services/dynamo');
 
 module.exports.handler = (event, context, callback) => {
-  DocumentClient.scan({ TableName: process.env.TABLENAME }, (err, result) => {
-    if (err) return console.log(err);
-
-    callback(null, {
-      statusCode: 200,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify(result.Items)
+  dynamo
+    .getAll(process.env.TABLENAME)
+    .then(result => {
+      callback(null, {
+        statusCode: 200,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify(result.Items)
+      });
+    })
+    .catch(err => {
+      return console.log(err);
     });
-  });
 };

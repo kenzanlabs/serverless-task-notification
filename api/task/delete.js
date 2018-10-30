@@ -1,17 +1,23 @@
 'use strict';
 
-const AWS = require('aws-sdk');
-const DocumentClient = new AWS.DynamoDB.DocumentClient();
+const dynamo = require('../services/dynamo');
 
 module.exports.handler = (event, context, callback) => {
-  DocumentClient.delete(
-    { TableName: process.env.TABLENAME, Key: { id: event.pathParameters.id } },
-    err => {
-      if (err) return console.log(err);
+  let id;
+  try {
+    id = event.pathParameters.id;
+  } catch (err) {
+    return console.log(err);
+  }
+  dynamo
+    .deleteOne(process.env.TABLENAME, id)
+    .then(result => {
       callback(null, {
         statusCode: 200,
         headers: { 'Access-Control-Allow-Origin': '*' }
       });
-    }
-  );
+    })
+    .catch(err => {
+      console.log(err);
+    });
 };
