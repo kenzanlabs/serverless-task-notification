@@ -1,14 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "test": "nyc mocha test/**/*.test.js --exit"
+    "test": "NODE_ENV=development jest --coverage"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "nyc": "^13.0.1",
-    "sinon": "^6.3.4",
-    "sinon-chai": "^3.2.0"
+    "jest": "^23.6.0"
   },
   "dependencies": {
     "aws-sdk": "^2.327.0",

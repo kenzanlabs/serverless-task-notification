@@ -1,7 +1,10 @@
 'use strict';
 
 const AWS = require('aws-sdk');
-const DocumentClient = new AWS.DynamoDB.DocumentClient();
+let DocumentClient = new AWS.DynamoDB.DocumentClient();
+if (process.env.NODE_ENV == 'development') {
+  DocumentClient = require('../test/mocks/documentClient');
+}
 
 const getAll = tablename => {
   return DocumentClient.scan({ Tablename: tablename }).promise();
